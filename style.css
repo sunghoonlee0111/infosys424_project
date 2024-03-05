@@ -129,16 +129,19 @@ body {
 .main2_photo {
   flex: 1; /* make each take up an equal amount of space */
   height: 450px;
-
-  background-image: url("image/who_we_are.png");
-  border-radius: 50%;
   align-items: center;
   justify-content: center;
 }
+.main2_photo_real {
+  width: 60%;
+  height: 80%;
+  border-radius: 50%;
+  background-image: url("image/who_we_are.png");
+  background-size: cover;
+  border: 3px solid black;
+}
 .main2_content {
-  flex: 1; /* make each take up an equal amount of space */
   height: 450px;
-  display: flex;
   align-items: center;
   justify-content: center;
 }
