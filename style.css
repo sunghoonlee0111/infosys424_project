@@ -1,0 +1,43 @@
+/* Path: infosys424_project/styles.css */
+
+/* MAIN STYLE */
+body {
+  font-family: Arial, sans-serif;
+  margin: 0 auto;
+  padding: 0;
+}
+
+.max_width_1920 {
+  max-width: 1920px;
+  margin: 0 auto;
+}
+
+.max_width_1200 {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.header {
+  background-color: orange;
+  padding-bottom: 20px;
+  text-align: center;
+  width: 100%;
+}
+
+.navbar1 {
+  background-color: red;
+  vertical-align: middle;
+  padding: 10px;
+  margin-left: auto;
+  margin-right: auto;
+  display: flex;
+}
+
+.navbar2 {
+  background-color: blue;
+  text-align: center;
+  padding: 10px;
+  margin-left: auto;
+  margin-right: auto;
+  display: flex;
+}
