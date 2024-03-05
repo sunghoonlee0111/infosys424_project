@@ -41,3 +41,45 @@ body {
   margin-right: auto;
   display: flex;
 }
+.container_main1 {
+  display: flex;
+  width: 100%;
+  background-color: green;
+  justify-content: center;
+  align-items: center;
+  gap: 1%;
+}
+.recent_post_content_1 {
+  background-color: yellow;
+  height: 100px;
+  width: 20%;
+  border-radius: 12px;
+}
+.recent_post_content_2 {
+  background-color: pink;
+  height: 100px;
+  width: 20%;
+  border-radius: 12px;
+}
+.recent_post_content_3 {
+  background-color: purple;
+  height: 100px;
+  width: 20%;
+  border-radius: 12px;
+}
+.recent_post_title {
+  font-size: 10px;
+  text-align: center;
+}
+.recent_post_event_1,
+.recent_post_event_2,
+.recent_post_event_3 {
+  font-size: 17px;
+  text-align: center;
+  margin-top: 1%;
+}
+.recent_post_photo_1,
+.recent_post_photo_2,
+.recent_post_photo_3 {
+  border: 1px solid black;
+}
