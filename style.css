@@ -34,7 +34,7 @@ body {
   margin-left: auto;
   margin-right: auto;
   display: flex;
-  height: 110px;
+  height: 70px;
   justify-content: space-between;
   align-items: center;
 }
@@ -46,7 +46,7 @@ body {
   margin-left: auto;
   margin-right: auto;
   display: flex;
-  height: 110px;
+  height: 70px;
   justify-content: space-between;
   align-items: center;
 }
@@ -60,8 +60,6 @@ body {
   background-image: url(image/index_banner.png);
   background-size: cover;
 }
-
-/* main1_recent_post */
 .container_main1 {
   display: flex;
   width: 100%;
@@ -154,3 +152,89 @@ body {
   background-position: center;
   border: 3px solid black;
 } */
+
+/*index_gallery*/
+.index_gallery {
+  width: 100%;
+  background-color: beige;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+.gallery_text {
+  text-align: center;
+  width: 100%;
+}
+
+.gallery_text_up {
+  font-size: 20px;
+  color: tomato;
+  font-weight: 400;
+  margin: 0;
+  padding-top: 10px;
+}
+.gallery_text_down {
+  font-size: 40px;
+  margin-top: 0;
+  margin-bottom: 0;
+  font-weight: bolder;
+}
+
+.gallery_pictures {
+  max-width: 1480px;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 10px;
+  padding: 0 10px 50px 10px;
+}
+
+.gallery_picture1 {
+  width: 250px;
+  height: 450px;
+  background-color: pink;
+  border-radius: 20px;
+  background-image: url(image/samplepic2.jpg);
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  border: none;
+}
+
+.gallery_picture2 {
+  width: 250px;
+  height: 450px;
+  background-color: pink;
+  border-radius: 20px;
+  background-image: url(image/samplepic5.jpg);
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  border: none;
+}
+.gallery_picture3 {
+  width: 250px;
+  height: 450px;
+  background-color: pink;
+  border-radius: 20px;
+  background-image: url(image/samplepic3.jpg);
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  border: none;
+}
+.gallery_picture4 {
+  width: 250px;
+  height: 450px;
+  background-color: pink;
+  border-radius: 20px;
+  background-image: url(image/samplepic4.jpg);
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  border: none;
+}
