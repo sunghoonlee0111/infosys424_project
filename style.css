@@ -325,33 +325,35 @@ footer {
 }
 
 .footer_content {
-  display: flex;
-
   width: 100%;
-  align-items: center; /* changed from 'left' to 'center' */
+  display: flex;
+  padding-top: 5px;
+  padding-bottom: 5px;
+  flex-wrap: wrap;
 }
 
 .footer_logo {
   flex: 1;
-  background-size: cover;
-  background-position: center;
+  width: 250px;
   height: 80px;
-  margin-left: 20%;
 }
 
-.footer_contents {
-  flex: 4;
-  justify-content: flex-start;
-  margin-bottom: 2px;
-  width: 100%;
-  padding-left: 3%;
-}
 .footer_logo_photo {
+  width: 250px;
   height: 80px;
   background-image: url(image/Footer_logo.png);
   background-size: cover;
   background-position: center;
 }
+
+.footer_contents {
+  flex: 4;
+  margin-bottom: 2px;
+  width: 100%;
+  padding-left: 3%;
+  padding-top: 5px;
+}
+
 .footer_about {
   margin-bottom: 2px;
   color: rgba(165, 164, 154, 1);
