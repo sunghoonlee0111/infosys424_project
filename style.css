@@ -19,7 +19,6 @@ body {
 
 /*Header*/
 .header {
-  background-color: orange;
   padding: 0px;
   width: 100%;
   margin: 0 auto;
@@ -29,7 +28,6 @@ body {
 /*navigation bar*/
 
 .navbar1 {
-  background-color: yellow;
   padding-left: 30px;
   padding-right: 30px;
   margin-left: auto;
@@ -41,7 +39,7 @@ body {
 }
 
 .navbar2 {
-  background-color: green;
+  background-color: rgba(248, 247, 241, 1);
   padding-left: 80px;
   padding-right: 80px;
   margin-left: auto;
@@ -63,7 +61,6 @@ body {
 .container_main1 {
   display: flex;
   width: 100%;
-  background-color: green;
   justify-content: center;
   align-items: center;
   gap: 1%;
@@ -122,7 +119,7 @@ body {
 .container_main2 {
   display: flex;
   width: 100%;
-  background-color: green;
+
   flex-wrap: wrap;
 }
 
@@ -233,45 +230,6 @@ body {
   border: none;
 }
 
-/* footer */
-footer {
-  background-color: rgb(0, 255, 255);
-}
-
-.footer_content {
-  display: flex;
-  background-color: brown;
-  width: 100%;
-  align-items: center; /* changed from 'left' to 'center' */
-}
-
-.footer_logo {
-  flex: 1;
-  background-size: cover;
-  background-position: center;
-  height: 80px;
-  padding-right: 10px;
-}
-
-.footer_contents {
-  flex: 4;
-  justify-content: flex-start;
-  margin-bottom: 2px;
-}
-.footer_logo_photo {
-  height: 80px;
-  background-image: url(image/Footer_logo.png);
-  background-size: cover;
-  background-position: center;
-}
-.footer_about {
-  margin-bottom: 2px;
-}
-.footer_policy {
-  border-left: 1px solid black;
-  padding-left: 2px;
-}
-
 /*main4*/
 .main4 {
   width: 100%;
@@ -338,4 +296,46 @@ footer {
   height: 48px;
   color: rgba(238, 192, 68, 1);
   padding-right: 15px;
+}
+
+/* footer */
+footer {
+  background-color: rgb(0, 0, 0);
+}
+
+.footer_content {
+  display: flex;
+
+  width: 100%;
+  align-items: center; /* changed from 'left' to 'center' */
+}
+
+.footer_logo {
+  flex: 1;
+  background-size: cover;
+  background-position: center;
+  height: 80px;
+  margin-left: 10px;
+}
+
+.footer_contents {
+  flex: 4;
+  justify-content: flex-start;
+  margin-bottom: 2px;
+  width: 100%;
+  padding-left: 3%;
+}
+.footer_logo_photo {
+  height: 80px;
+  background-image: url(image/Footer_logo.png);
+  background-size: cover;
+  background-position: center;
+}
+.footer_about {
+  margin-bottom: 2px;
+  color: rgba(165, 164, 154, 1);
+}
+.footer_policy {
+  border-left: 1px solid black;
+  padding-left: 2px;
 }
