@@ -2,7 +2,8 @@
 
 /* MAIN STYLE */
 body {
-  font-family: Arial, sans-serif;
+  font-family: "Manrope", sans-serif;
+  font-style: normal;
   margin: 0 auto;
   padding: 0;
 }
@@ -49,7 +50,7 @@ body {
   justify-content: space-between;
   align-items: center;
 }
-
+/* Banner */
 .index_banner {
   padding: 0;
   margin: 0;
@@ -58,6 +59,7 @@ body {
   background-position: center;
   background-repeat: no-repeat;
 }
+/* main1 */
 .container_main1 {
   display: flex;
   width: 100%;
@@ -86,15 +88,22 @@ body {
   border-radius: 12px;
 }
 .recent_post_title {
+  font-family: "Covered By Your Grace", cursive;
+  font-weight: 400;
+  font-style: normal;
   font-size: 10px;
   text-align: center;
+  font-size: 15px;
+  margin-bottom: 0;
+  color: rgba(238, 192, 68, 1);
 }
 .recent_post_event {
-  font-size: 17px;
+  font-size: 20px;
   text-align: center;
-  margin-top: 1%;
+  margin-top: 2px;
   padding-bottom: 1px;
   margin-bottom: 1%;
+  font-weight: bold;
 }
 .recent_post_photo_1 {
   border: 1px solid black;
@@ -122,9 +131,14 @@ body {
 
   flex-wrap: wrap;
 }
-
+.main2_title_first {
+  font-family: "Covered By Your Grace", cursive;
+  font-weight: 400;
+  font-style: normal;
+  color: rgba(238, 192, 68, 1);
+}
 .main2_photo {
-  flex: 1; /* make each take up an equal amount of space */
+  flex: 1;
   padding: 20px;
   align-self: center;
   display: flex;
@@ -161,6 +175,10 @@ body {
 
 .gallery_text_up {
   font-size: 20px;
+  font-family: "Covered By Your Grace", cursive;
+  font-weight: 400;
+  font-style: normal;
+
   color: rgba(238, 192, 68, 1);
   font-weight: 400;
   margin: 0;
@@ -244,6 +262,9 @@ body {
 }
 
 .meeting_title_upper {
+  font-family: "Covered By Your Grace", cursive;
+  font-weight: 400;
+  font-style: normal;
   font-size: 24px;
   color: rgba(238, 192, 68, 1);
   font-weight: 400;
@@ -315,7 +336,7 @@ footer {
   background-size: cover;
   background-position: center;
   height: 80px;
-  margin-left: 10px;
+  margin-left: 20%;
 }
 
 .footer_contents {
