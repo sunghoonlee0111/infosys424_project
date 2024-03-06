@@ -320,22 +320,22 @@ footer {
   padding: 0;
 }
 .icon1 {
-  width: 4%;
-  height: 4%;
+  width: 48px;
+  height: 48px;
   color: rgba(75, 175, 71, 1);
   padding-right: 15px;
 }
 
 .icon2 {
-  width: 4%;
-  height: 4%;
+  width: 48px;
+  height: 48px;
   color: rgba(197, 206, 56, 1);
   padding-right: 15px;
 }
 
 .icon3 {
-  width: 4%;
-  height: 4%;
+  width: 48px;
+  height: 48px;
   color: rgba(238, 192, 68, 1);
   padding-right: 15px;
 }
