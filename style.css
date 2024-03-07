@@ -349,7 +349,7 @@ body {
 }
 
 .meeting_title_lower {
-  font-size: 35px;
+  font-size: 33px;
   margin-top: 0;
   margin-bottom: 0;
   font-weight: bolder;
@@ -358,8 +358,8 @@ body {
 .meeting_detail {
   text-align: left;
   margin: 0;
-  padding: 0 20px 20px 20px;
-  font-size: 24px;
+  padding: 0 20px 10px 20px;
+  font-size: 10px;
   font-weight: 500;
 }
 
@@ -371,27 +371,27 @@ body {
 }
 
 .meeting_detail_text {
-  margin: 15px 0;
+  margin: 10px 0;
   padding: 0;
   font-size: 20px;
 }
 .icon1 {
-  width: 40px;
-  height: 40px;
+  width: 30px;
+  height: 30px;
   color: rgba(75, 175, 71, 1);
   padding-right: 15px;
 }
 
 .icon2 {
-  width: 40px;
-  height: 40px;
+  width: 30px;
+  height: 30px;
   color: rgba(197, 206, 56, 1);
   padding-right: 15px;
 }
 
 .icon3 {
-  width: 40px;
-  height: 40px;
+  width: 30px;
+  height: 30px;
   color: rgba(238, 192, 68, 1);
   padding-right: 15px;
 }
