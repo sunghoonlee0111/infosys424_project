@@ -149,10 +149,61 @@ body {
 }
 .main2_title_first {
   font-family: "Covered By Your Grace", cursive;
-  font-weight: 400;
-  font-style: normal;
   color: rgba(238, 192, 68, 1);
+  margin-bottom: 1px;
+  font-size: 20px;
 }
+.main2_title_second {
+  margin-top: 0px;
+  font-size: 40px;
+  font-weight: 800;
+  margin-bottom: 0px;
+}
+.main2_title_third {
+  color: rgba(75, 175, 71, 1);
+  font-size: 27px;
+  font-weight: bolder;
+  margin-top: 7px;
+}
+.main_2_title_content {
+  font-size: 15px;
+  line-height: 22px;
+  color: rgba(135, 134, 128, 1);
+}
+.main2_detail_1 {
+  display: flex;
+  margin: 0;
+  padding: 0;
+  align-items: center;
+  margin-top: 30px;
+  margin-left: 10px;
+  margin-bottom: 7px;
+  font-weight: 500;
+}
+.main2_detail_2 {
+  display: flex;
+  margin: 0;
+  padding: 0;
+  align-items: center;
+  margin-left: 10px;
+  color: black;
+  font-weight: 500;
+}
+.main2_content {
+  flex: 1;
+  padding: 30px;
+}
+.main_2_icon {
+  background-image: url(image/icons/check_2.svg);
+  background-size: cover;
+  height: 12px;
+  width: 12px;
+}
+.main_2_icon_content {
+  margin-left: 8px;
+  font-size: 15px;
+}
+
 .main2_photo {
   flex: 1;
   padding: 20px;
@@ -169,11 +220,19 @@ body {
   background-position: center;
   align-self: center;
 }
-.main2_content {
-  flex: 1;
-  padding: 30px;
+.main2_button {
+  margin-top: 37px;
+  border-radius: 7px;
+  border: 0px;
+  width: 150px;
+  height: 50px;
+  background-color: rgba(75, 175, 71, 1);
+  font-size: 13px;
 }
-
+.button_text {
+  text-decoration: none;
+  color: white;
+}
 /*index_gallery*/
 .index_gallery {
   width: 100%;
