@@ -398,7 +398,7 @@ body {
 
 /* footer */
 footer {
-  background-color: rgb(0, 0, 0);
+  background-color: #282728;
 }
 
 .footer_content {
@@ -407,6 +407,7 @@ footer {
   padding-top: 5px;
   padding-bottom: 5px;
   flex-wrap: wrap;
+  height: 90px;
 }
 
 .footer_logo {
@@ -416,26 +417,32 @@ footer {
 }
 
 .footer_logo_photo {
-  width: 250px;
-  height: 80px;
-  background-image: url(image/logos/Footer_logo.png);
+  padding: 0;
+  margin: 0;
   background-size: cover;
   background-position: center;
+  width: 100%;
 }
 
 .footer_contents {
   flex: 4;
-  margin-bottom: 2px;
+  justify-content: center;
+  align-items: center;
   width: 100%;
-  padding-left: 3%;
+  padding-left: 1%;
   padding-top: 5px;
+}
+.footer_a_tag {
+  text-decoration: none;
+  color: rgba(165, 164, 154, 1);
 }
 
 .footer_about {
+  margin-top: 19px;
   margin-bottom: 2px;
   color: rgba(165, 164, 154, 1) !important;
 }
 .footer_policy {
-  border-left: 1px solid black;
-  padding-left: 2px;
+  border-left: 1px solid rgba(165, 164, 154, 1);
+  padding-left: 5px;
 }
