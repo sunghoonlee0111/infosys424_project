@@ -417,7 +417,7 @@ footer {
   padding-top: 5px;
   padding-bottom: 5px;
   flex-wrap: wrap;
-  height: 90px;
+  height: 70px;
 }
 
 .footer_logo {
@@ -431,7 +431,7 @@ footer {
   margin: 0;
   background-size: cover;
   background-position: center;
-  width: 100%;
+  width: 90%;
 }
 
 .footer_contents {
@@ -439,8 +439,8 @@ footer {
   justify-content: center;
   align-items: center;
   width: 100%;
-  padding-left: 1%;
-  padding-top: 5px;
+  padding-left: 0.5%;
+  padding-top: 7px;
 }
 .footer_a_tag {
   text-decoration: none;
