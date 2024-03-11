@@ -355,7 +355,7 @@ body {
   font-weight: 400;
   font-style: normal;
   font-size: 20px;
-  color: rgba(238, 192, 68, 1);
+  color: rgba(238, 191, 68, 1);
   font-weight: 400;
   margin-top: 0;
   margin-bottom: 0;
@@ -474,4 +474,13 @@ footer {
 .footer_policy {
   border-left: 1px solid rgba(165, 164, 154, 1);
   padding-left: 5px;
+}
+
+.temp {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  margin-top: 50px;
+  margin-bottom: 50px;
 }
