@@ -6,7 +6,7 @@ body {
   font-style: normal;
   margin: 0 auto;
   padding: 0;
-  background-color: rgb(245, 245, 245);
+  background-color: white;
 }
 
 .max_width_1920 {
@@ -35,7 +35,7 @@ body {
 /*navigation bar*/
 
 .navbar {
-  background-color: beige;
+  background-color: #8ecae6;
   padding-left: 40px;
   padding-right: 60px;
   margin-left: auto;
@@ -44,7 +44,7 @@ body {
   height: 70px;
   justify-content: space-between;
   align-items: center;
-  font-weight: 1000;
+  font-weight: 600;
 }
 .navbar .nav_home,
 .navbar .nav_about,
@@ -54,7 +54,7 @@ body {
 .navbar .nav_event,
 .navbar .nav_signin,
 .navbar .nav_signup {
-  color: #7bb661;
+  color: black;
 }
 .nav_logo {
   width: 200px;
@@ -108,12 +108,12 @@ body {
   box-shadow: 0px 4px 8px 0px rgb(0, 0, 10);
 }
 .recent_post_title {
-  font-weight: bolder;
+  font-weight: 550;
   font-style: normal;
-  font-size: 16px;
+  font-size: 17px;
   text-align: center;
   margin-bottom: 5px;
-  color: #7bb661;
+  color: black;
 }
 .recent_post_photo_1 {
   background-color: white;
@@ -122,7 +122,7 @@ body {
   border-bottom-left-radius: 12px;
   border-bottom-right-radius: 12px;
   margin: 0;
-  background-image: url(image/samplepic5.JPG);
+  background-image: url(image/samplepic5.jpg);
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
@@ -134,7 +134,7 @@ body {
   border-bottom-left-radius: 12px;
   border-bottom-right-radius: 12px;
   margin: 0;
-  background-image: url(image/samplepic4.JPG);
+  background-image: url(image/samplepic4.jpg);
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
@@ -146,7 +146,7 @@ body {
   border-bottom-left-radius: 12px;
   border-bottom-right-radius: 12px;
   margin: 0;
-  background-image: url(image/samplepic5.JPG);
+  background-image: url(image/samplepic5.jpg);
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
@@ -161,7 +161,7 @@ body {
 }
 .main2_title_first {
   font-family: "Covered By Your Grace", cursive;
-  color: rgba(238, 192, 68, 1);
+  color: #ffb703;
   margin-bottom: 1px;
   font-size: 20px;
 }
@@ -172,7 +172,7 @@ body {
   margin-bottom: 0px;
 }
 .main2_title_third {
-  color: rgba(75, 175, 71, 1);
+  color: #219ebc;
   font-size: 27px;
   font-weight: bolder;
   margin-top: 7px;
@@ -238,8 +238,10 @@ body {
   border: 0px;
   width: 150px;
   height: 50px;
-  background-color: rgba(75, 175, 71, 1);
-  font-size: 13px;
+  background-color: #fb8500;
+  font-size: 17px;
+  font-weight: 550;
+  letter-spacing: 1.2px; /* Adjust as needed */
 }
 .button_text {
   text-decoration: none;
@@ -248,7 +250,7 @@ body {
 /*index_gallery*/
 .index_gallery {
   width: 100%;
-  background-color: beige;
+  background-color: #8ecae63e;
   display: flex;
   justify-content: center;
   align-items: center;
