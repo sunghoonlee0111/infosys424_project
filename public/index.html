@@ -3,6 +3,10 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bulma@0.9.0/css/bulma.min.css"
+    />
     <link rel="stylesheet" href="style.css" />
     <title>Habitat for Humanity</title>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -34,6 +38,106 @@
   </script>
 
   <body>
+    <!-- sign in modal -->
+    <div class="modal is-active">
+      <div class="modal-background"></div>
+      <div class="signin modal-content p-6 has-background-white box">
+        <h1 class="login_title">Sign In</h1>
+        <form>
+          <!-- Email -->
+          <div class="field">
+            <label class="label" for="email"></label>
+            <div class="email control">
+              <input
+                type="email"
+                id="email"
+                class="input_email"
+                placeholder="Email"
+                required
+              />
+            </div>
+          </div>
+          <!-- Password -->
+          <div class="field">
+            <label class="label" for="password"></label>
+            <div class="password control">
+              <input
+                type="password"
+                id="password"
+                class="input_password"
+                placeholder="Password"
+                required
+              />
+            </div>
+          </div>
+          <!-- submit -->
+          <div class="field">
+            <div class="submit control">
+              <button type="submit" class="login_button">Sign In</button>
+            </div>
+          </div>
+          <p class="have_account">
+            Don't have an account? <a href="">Sign Up!</a>
+          </p>
+        </form>
+      </div>
+    </div>
+    <!-- sign in modal -->
+    <div class="modal">
+      <div class="modal-background"></div>
+      <div class="signup modal-content p-6 has-background-white box">
+        <h1 class="login_title">Sign Up</h1>
+        <form id="signup_form">
+          <!-- User Name -->
+          <div class="field">
+            <div class="label_username">Username</div>
+            <div class="email control">
+              <input
+                type="name"
+                id="username"
+                class="input_email"
+                placeholder="Full Name"
+                required
+              />
+            </div>
+          </div>
+          <!-- Email -->
+          <div class="field">
+            <div class="label_email">Email</div>
+            <div class="email control">
+              <input
+                type="email"
+                id="email"
+                class="input_email"
+                placeholder="Email"
+                required
+              />
+            </div>
+          </div>
+          <!-- Password -->
+          <div class="field">
+            <div class="label_password">Password</div>
+            <div class="password control">
+              <input
+                type="password"
+                class="input_password"
+                placeholder="Password"
+                required
+              />
+            </div>
+          </div>
+          <!-- submit -->
+          <div class="field">
+            <div class="submit control">
+              <button type="submit" class="login_button">Sign Up</button>
+            </div>
+          </div>
+          <p class="have_account">
+            Already have an account? <a href="">Sign In!</a>
+          </p>
+        </form>
+      </div>
+    </div>
     <header>
       <div class="header max_width_1920">
         <!-- navbar -->
