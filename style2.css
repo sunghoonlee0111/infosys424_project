@@ -6,6 +6,7 @@
   padding: 20px 20px 0 20px;
   margin-bottom: 20px;
   color: rgba(182, 182, 182, 1);
+  font-family: "Manrope", sans-serif;
 }
 
 .email.control {
@@ -19,6 +20,7 @@
   height: 40px;
   padding-left: 20px;
   border: 1px solid rgba(182, 182, 182, 1);
+  font-family: "Manrope", sans-serif;
 }
 .password.control {
   display: flex;
@@ -31,6 +33,7 @@
   height: 40px;
   padding-left: 20px;
   border: 1px solid rgba(182, 182, 182, 1);
+  font-family: "Manrope", sans-serif;
 }
 
 .submit.control {
@@ -45,4 +48,37 @@
   background: linear-gradient(to right, rgb(124, 155, 239), rgb(147, 236, 147));
   border: rgba(182, 182, 182, 1);
   color: white;
+  font-family: "Manrope", sans-serif;
+}
+
+.label_username {
+  margin-bottom: 0px;
+  color: rgb(0, 0, 0);
+  margin-left: 160px !important;
+  font-size: 15px;
+  font-family: "Manrope", sans-serif;
+}
+.label_email {
+  margin-bottom: 0px;
+  color: rgb(0, 0, 0);
+  margin-left: 160px !important;
+  font-size: 15px;
+  font-family: "Manrope", sans-serif;
+}
+
+.label_password {
+  margin-bottom: 0px;
+  color: rgb(0, 0, 0);
+  margin-left: 160px !important;
+  font-size: 15px;
+  font-family: "Manrope", sans-serif;
+}
+
+.have_account {
+  margin-top: 10px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  font-size: 10px;
+  font-family: "Manrope", sans-serif;
 }

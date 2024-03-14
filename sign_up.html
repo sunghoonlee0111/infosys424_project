@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Signin</title>
+    <title>SignUp</title>
     <link
       href="https://fonts.googleapis.com/css2?family=Covered+By+Your+Grace&family=Manrope:wght@200..800&display=swap"
       rel="stylesheet"
@@ -19,9 +19,22 @@
     <div class="modal-content p-6 has-background-white box">
       <h1 class="login_title">Sign Up</h1>
       <form id="signup_form">
+        <!-- User Name -->
+        <div class="field">
+          <div class="label_username">Username</div>
+          <div class="email control">
+            <input
+              type="name"
+              id="username"
+              class="input_email"
+              placeholder="Full Name"
+              required
+            />
+          </div>
+        </div>
         <!-- Email -->
         <div class="field">
-          <label class="label" for="email"></label>
+          <div class="label_email">Email</div>
           <div class="email control">
             <input
               type="email"
@@ -34,7 +47,7 @@
         </div>
         <!-- Password -->
         <div class="field">
-          <label class="label" for="password"></label>
+          <div class="label_password">Password</div>
           <div class="password control">
             <input
               type="password"
@@ -45,12 +58,16 @@
             />
           </div>
         </div>
+
         <!-- submit -->
         <div class="field">
           <div class="submit control">
-            <button type="submit" class="login_button">Sign In</button>
+            <button type="submit" class="login_button">Sign Up</button>
           </div>
         </div>
+        <p class="have_account">
+          Already have an account? <a href="">Log in now !</a>
+        </p>
       </form>
     </div>
   </body>
