@@ -74,6 +74,17 @@ body {
   background-position: center;
   width: 100%;
 }
+
+/*banner for the other pages*/
+
+.others_banner {
+  padding: 0;
+  margin: 0;
+  background-size: cover;
+  background-position: center;
+  width: 100%;
+}
+
 /* main1 */
 .container_main1 {
   display: flex;
@@ -566,4 +577,37 @@ footer {
 }
 .signup.modal-content {
   width: 600px;
+}
+
+/*gallery page*/
+
+.gallery_main {
+  padding: 0;
+  margin: 0;
+  background-color: #8ecae63e;
+  border-radius: 5px;
+  padding: 5px 20px 0 20px;
+}
+
+.gallery_title {
+  text-align: center;
+  margin: 0;
+  font-size: 40px;
+  margin-top: 0;
+  margin-bottom: 10px;
+  font-weight: bolder;
+}
+
+.gallery_content {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 5px;
+  padding: 0 0 20px 0;
+}
+
+.gallery_pics {
+  height: 250px;
+  border-radius: 3px;
 }
