@@ -596,6 +596,7 @@ footer {
   margin-top: 0;
   margin-bottom: 10px;
   font-weight: bolder;
+  letter-spacing: 4px;
 }
 
 .gallery_content {
@@ -603,11 +604,11 @@ footer {
   justify-content: center;
   align-items: center;
   flex-wrap: wrap;
-  gap: 5px;
+  gap: 20px;
   padding: 0 0 20px 0;
 }
 
 .gallery_pics {
   height: 250px;
-  border-radius: 3px;
+  border-radius: 20px;
 }
