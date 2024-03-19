@@ -278,18 +278,17 @@ body {
   font-family: "Covered By Your Grace", cursive;
   font-weight: 400;
   font-style: normal;
-  margin-bottom: 2px;
+  margin: 0;
   color: rgba(238, 192, 68, 1);
   font-weight: 400;
-  margin: 0;
   padding-top: 10px;
-  height: 20px;
 }
 .gallery_text_down {
   font-size: 40px;
   margin-top: 0;
   margin-bottom: 0;
-  font-weight: bolder;
+  font-weight: normal;
+  letter-spacing: 10px;
 }
 
 .gallery_pictures {
