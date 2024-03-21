@@ -771,3 +771,13 @@ footer {
   margin: auto;
   padding: 10px;
 }
+
+/* CONTACT */
+.contact_title {
+  text-align: center;
+  margin: 0;
+  font-size: 40px;
+  margin-top: 0;
+  margin-bottom: 10px;
+  font-weight: bolder;
+}
