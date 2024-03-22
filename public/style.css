@@ -641,3 +641,67 @@ footer {
   height: 250px;
   border-radius: 20px;
 }
+
+/* POSTS */
+.post_main {
+  padding: 0;
+  margin: 0;
+  background-color: #8ecae63e;
+  border-radius: 5px;
+  padding: 5px 20px 0 20px;
+}
+.post_title {
+  text-align: center;
+  margin: 0;
+  font-size: 40px;
+  margin-top: 0;
+  margin-bottom: 10px;
+  font-weight: bolder;
+  letter-spacing: 4px;
+}
+
+.post_content_box {
+  justify-self: center;
+  justify-content: center;
+  align-items: center;
+  padding: 10px 20px 20px 20px;
+  background-color: rgba(248, 247, 240, 1);
+  border-radius: 5px;
+  margin-bottom: 10px;
+}
+
+.post_thumbnail {
+  display: flex;
+  width: 600px;
+  background-size: auto;
+  border-radius: 5px;
+  margin: 0 auto;
+  padding: 0;
+}
+
+.post_nameanddate {
+  display: flex;
+  justify-content: space-between;
+  font-size: 14px;
+  font-weight: bolder;
+  padding-bottom: 5px;
+  margin-top: 5px;
+}
+
+.post_text_title {
+  font-size: 30px;
+  font-weight: bolder;
+  padding-bottom: 5px;
+}
+
+.post_text {
+  font-size: 20px;
+  padding-bottom: 5px;
+  font-weight: normal;
+}
+
+.post_readmore {
+  text-align: right;
+  font-size: 15px;
+  font-weight: 500;
+}

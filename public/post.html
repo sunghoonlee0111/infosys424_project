@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bulma@0.9.0/css/bulma.min.css"
+    />
+    <link rel="stylesheet" href="style.css" />
+    <title>Habitat for Humanity</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Covered+By+Your+Grace&family=Manrope:wght@200..800&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+
+  <script type="module">
+    // Import the functions you need from the SDKs you need
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-app.js";
+    // TODO: Add SDKs for Firebase products that you want to use
+    // https://firebase.google.com/docs/web/setup#available-libraries
+
+    // Your web app's Firebase configuration
+    const firebaseConfig = {
+      apiKey: "AIzaSyDiIV3d6YfEggsk3KKLgdWkDI8F4rV8nMk",
+      authDomain: "habitat-uw-madison-c.firebaseapp.com",
+      projectId: "habitat-uw-madison-c",
+      storageBucket: "habitat-uw-madison-c.appspot.com",
+      messagingSenderId: "99694309511",
+      appId: "1:99694309511:web:44ea8bf5c7db69f4254822",
+    };
+
+    // Initialize Firebase
+    const app = initializeApp(firebaseConfig);
+  </script>
+
+  <body>
+    <!-- header -->
+    <header>
+      <div class="header max_width_1920">
+        <!-- navbar -->
+        <div class="navbar">
+          <a href="#" class="nav_logo"></a>
+          <a href="#" class="nav_home">HOME</a>
+          <a href="#" class="nav_about">ABOUT</a>
+          <a href="#" class="nav_gallery">GALLERY</a>
+          <a href="#" class="nav_post">POST</a>
+          <a href="#" class="nav_contact">CONTACT</a>
+          <a href="#" class="nav_event">EVENT</a>
+          <a href="#" class="nav_signin">SIGN-IN</a>
+          <a href="#" class="nav_signup">SIGN UP</a>
+        </div>
+        <!-- banner -->
+        <img
+          class="others_banner"
+          src="image/small_banner.png"
+          alt="Banner Image"
+        />
+      </div>
+    </header>
+    <main class="max_width_1200">
+      <!-- post -->
+      <div class="post_main">
+        <!-- post title -->
+        <div class="post_title">
+          <p>POST</p>
+        </div>
+        <!-- post content -->
+        <div class="post_content_box">
+          <!-- thumbnail -->
+          <img
+            class="post_thumbnail"
+            src="image/samplepic2.jpg"
+            alt="Post Thumbnail"
+          />
+          <!-- texts -->
+          <div class="post_texts">
+            <!-- username and date -->
+            <div class="post_nameanddate">
+              <div class="post_username">Sunghoon Lee</div>
+              <div class="post_time">Jan 11, 1999</div>
+            </div>
+            <!-- title and texts -->
+            <span class="post_text_title"> <a href="#">Title</a></span>
+            <p class="post_text">
+              Lorem ipsum dolor sit amet consectetur, adipisicing elit. Vitae
+              architecto suscipit necessitatibus, dolores enim aperiam
+              repudiandae porro corporis. Distinctio nemo sit nesciunt cum a,
+              omnis est. Corrupti error dolorem quas. Aliquid aliquam ipsa
+              laudantium accusantium nobis blanditiis excepturi accusamus autem.
+            </p>
+            <span class="post_readmore">
+              <a href="#">Read More</a>
+            </span>
+          </div>
+        </div>
+
+        <div class="post_content_box">
+          <!-- thumbnail -->
+          <img
+            class="post_thumbnail"
+            src="image/samplepic4.jpg"
+            alt="Post Thumbnail"
+          />
+          <!-- texts -->
+          <div class="post_texts">
+            <!-- username and date -->
+            <div class="post_nameanddate">
+              <div class="post_username">Sunghoon Lee</div>
+              <div class="post_time">Jan 11, 1999</div>
+            </div>
+            <!-- title and texts -->
+            <span class="post_text_title"> <a href="#">Title</a></span>
+            <p class="post_text">
+              Lorem ipsum dolor sit amet consectetur, adipisicing elit. Vitae
+              architecto suscipit necessitatibus, dolores enim aperiam
+              repudiandae porro corporis. Distinctio nemo sit nesciunt cum a,
+              omnis est. Corrupti error dolorem quas. Aliquid aliquam ipsa
+              laudantium accusantium nobis blanditiis excepturi accusamus autem.
+            </p>
+            <span class="post_readmore">
+              <a href="#">Read More</a>
+            </span>
+          </div>
+        </div>
+
+        <div class="post_content_box">
+          <!-- thumbnail -->
+          <img
+            class="post_thumbnail"
+            src="image/samplepic3.jpg"
+            alt="Post Thumbnail"
+          />
+          <!-- texts -->
+          <div class="post_texts">
+            <!-- username and date -->
+            <div class="post_nameanddate">
+              <div class="post_username">Sunghoon Lee</div>
+              <div class="post_time">Jan 11, 1999</div>
+            </div>
+            <!-- title and texts -->
+            <span class="post_text_title"> <a href="#">Title</a></span>
+            <p class="post_text">
+              Lorem ipsum dolor sit amet consectetur, adipisicing elit. Vitae
+              architecto suscipit necessitatibus, dolores enim aperiam
+              repudiandae porro corporis. Distinctio nemo sit nesciunt cum a,
+              omnis est. Corrupti error dolorem quas. Aliquid aliquam ipsa
+              laudantium accusantium nobis blanditiis excepturi accusamus autem.
+            </p>
+            <span class="post_readmore">
+              <a href="#">Read More</a>
+            </span>
+          </div>
+        </div>
+      </div>
+    </main>
+
+    <!-- footer -->
+    <footer class="max_width_1920">
+      <div class="footer_content max_width_1200">
+        <!-- footer logo -->
+        <div class="footer_logo">
+          <div>
+            <img
+              class="footer_logo_photo"
+              src="image/logos/Footer_logo.png"
+              style="height: 70px"
+              alt=""
+            />
+          </div>
+        </div>
+        <!-- footer contents -->
+        <div class="footer_contents">
+          <p class="footer_about">
+            Humanity Campus Chapter at the University of Wisconsin – Madison is
+            <span><a href="#" class="footer_a_tag">Term of Use</a></span>
+            <span class="footer_policy"
+              ><a href="#" class="footer_a_tag">Privacy Policy</a></span
+            >
+          </p>
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>
