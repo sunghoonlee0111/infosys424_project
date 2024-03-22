@@ -737,6 +737,7 @@ footer {
   padding: 15px;
   margin-top: 5px;
   background-color: beige;
+  border-radius: 5px;
 }
 
 .inside_post_comments_title {
