@@ -720,7 +720,7 @@ footer {
   margin: 0;
   font-size: 30px;
   margin-top: 0;
-  margin-bottom: 10px;
+  margin-bottom: 5px;
   font-weight: bolder;
 }
 
@@ -730,6 +730,12 @@ footer {
   margin: 0 auto;
   background-color: rgba(248, 247, 240, 1);
   border-radius: 5px;
+}
+
+.inside_post_author_date {
+  display: flex;
+  justify-content: space-between;
+  font-weight: bolder;
 }
 
 .inside_post_comments_section {
