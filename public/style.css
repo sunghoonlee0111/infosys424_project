@@ -806,3 +806,10 @@ footer {
   margin-bottom: 5px;
   font-weight: bolder;
 }
+
+.events_list {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+}
