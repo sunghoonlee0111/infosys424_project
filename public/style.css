@@ -788,3 +788,21 @@ footer {
   color: white;
   font-weight: bolder;
 }
+
+/* Events */
+.events_main {
+  padding: 0;
+  margin: 0;
+  background-color: #8ecae63e;
+  border-radius: 5px;
+  padding: 5px 20px 0 20px;
+}
+
+.events_title {
+  text-align: left;
+  margin: 0;
+  font-size: 30px;
+  margin-top: 0;
+  margin-bottom: 5px;
+  font-weight: bolder;
+}
