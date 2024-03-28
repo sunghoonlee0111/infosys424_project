@@ -1110,3 +1110,67 @@ footer {
   background-color: mediumvioletred;
   color: white;
 }
+
+/* Write post */
+.write_post_main {
+  margin: 0;
+  background-color: #8ecae63e;
+  border-radius: 5px;
+  padding: 5px 20px 10px 20px;
+}
+
+.write_post_title {
+  text-align: left;
+  margin: 0;
+  font-size: 30px;
+  margin-top: 0;
+  margin-bottom: 5px;
+  font-weight: bolder;
+}
+
+.write_post_title_box {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: rgba(248, 247, 240, 1);
+  border-radius: 5px;
+  margin-bottom: 10px;
+}
+
+.write_post_title_input {
+  width: 100%;
+  border: 1px solid rgba(182, 182, 182, 1);
+  border-radius: 5px;
+  padding: 10px;
+  background-color: rgba(248, 247, 240, 1);
+}
+
+#toolbar,
+#editor {
+  border: 1px solid rgba(182, 182, 182, 1);
+  border-radius: 5px;
+  padding: 10px;
+  margin-bottom: 10px;
+  background-color: rgba(248, 247, 240, 1);
+}
+
+.ql-editor {
+  min-height: 200px;
+}
+
+.write_post_button_box {
+  display: flex;
+  justify-content: right;
+  border-radius: 5px;
+  margin-bottom: 10px;
+}
+
+.write_post_button {
+  width: 30%;
+  background-color: #fb8500;
+  border: none;
+  border-radius: 5px;
+  color: white;
+  font-weight: bolder;
+  padding: 10px;
+}
