@@ -669,8 +669,7 @@ footer {
   border: 1px solid black;
   max-width: 1920px;
   width: 100%;
-  background-image: url(image/logos/logo_wide.png);
-  background-size: contain;
+  background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
 }
