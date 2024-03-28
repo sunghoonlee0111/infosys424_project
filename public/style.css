@@ -1,4 +1,4 @@
-/* Path: infosys424_project/styles.css */
+/*th: infosys424_project/styles.css */
 
 /* MAIN STYLE */
 body {
@@ -813,4 +813,300 @@ footer {
   justify-content: center;
   align-items: center;
   flex-wrap: wrap;
+}
+
+/* About page */
+.about_main_2,
+.about_main_1 {
+  padding: 0;
+  margin: 0;
+  background-color: #8ecae63e;
+  border-radius: 5px;
+  padding: 5px 20px 0 20px;
+}
+.about_title {
+  text-align: center;
+  margin: 0;
+  font-size: 40px;
+  margin-top: 0;
+  margin-bottom: 10px;
+  font-weight: bolder;
+}
+
+.about_content {
+  margin-left: 10%;
+  margin-right: 10%;
+  font-weight: 600;
+}
+.about_overview {
+  padding-bottom: 20px;
+}
+.about_today_title,
+.about_our_history_title,
+.about_who_we_are_title,
+.about_our_mission_title,
+.about_overview_title {
+  font-size: 30px;
+  margin-top: 0;
+  margin-bottom: 10px;
+  font-weight: bolder;
+  color: black;
+}
+
+.about_who_we_are_contents,
+.about_our_mission_contents,
+.about_overview_contents {
+  font-size: 18px;
+  margin-top: 0;
+  margin-bottom: 10px;
+  color: black;
+}
+.about_today_contents {
+  font-size: 18px;
+  margin-top: 0;
+  margin-bottom: 30px;
+  color: black;
+}
+.about_video {
+  height: 500px;
+  border: 1px solid black;
+  max-width: 1920px;
+  width: 100%;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+.about_our_mission_contents_detail {
+  margin-top: 0;
+  font-size: 16px;
+  margin-bottom: 30px;
+  color: black;
+}
+.about_our_mission_contents_detail_main {
+  font-weight: 650;
+  color: black;
+  font-size: 21px;
+  margin-top: 20px;
+  margin-bottom: 0;
+}
+.about_our_history_contents_1 {
+  font-size: 18px;
+  margin-top: 0;
+  margin-bottom: 30px;
+  color: black;
+}
+.about_our_history_contents_2 {
+  font-size: 18px;
+  color: black;
+  margin-bottom: 30px;
+}
+.about_main_3 {
+  padding: 0;
+  margin: 0;
+  height: auto;
+  background-color: #e0dcdc3e;
+  border-radius: 5px;
+  padding: 5px 20px 0 20px;
+  justify-content: center;
+  align-items: center;
+  margin-top: 30px;
+}
+.about_main_3_title {
+  text-align: center;
+  margin: 0;
+  font-size: 40px;
+  margin-bottom: 10px;
+}
+.about_main_3_title_1 {
+  font-family: "Covered By Your Grace", cursive;
+  color: #ffb703;
+  margin-bottom: 1px;
+  font-size: 24px;
+}
+.about_main_3_title_2 {
+  font-size: 30px;
+  margin-top: 0;
+  margin-bottom: 0;
+  font-weight: 1000;
+  color: black;
+}
+.about_main_3_content {
+  width: 60%;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  margin: auto;
+}
+
+.about_main_3_photo {
+  flex: 1;
+  align-self: center;
+  display: flex;
+  flex-direction: column;
+  height: 300px;
+}
+.about_main_3_photo_real {
+  width: 300px;
+  height: 200px;
+  border: 0px solid rgb(0, 0, 10, 10);
+  border-radius: 10%;
+  background-image: url(image/who_we_are.png);
+  background-size: cover;
+  margin: auto;
+  align-self: center;
+}
+
+.about_main_3_photo_content {
+  flex: 1;
+  margin: auto;
+  border-radius: 5%;
+  height: auto;
+  justify-content: center;
+  align-items: center;
+}
+.about_main_3_photo_content_detail {
+  width: 300px;
+  height: 200px;
+  border-radius: 5%;
+  background-color: rgba(243, 223, 174, 1);
+  margin: auto;
+  padding: 10px;
+}
+
+/* CONTACT */
+.contact_title {
+  text-align: center;
+  margin: 0;
+  font-size: 40px;
+  margin-top: 0;
+  margin-bottom: 10px;
+  font-weight: bolder;
+  letter-spacing: 4px;
+}
+.contact_main_1 {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  padding-top: 40px;
+  padding-bottom: 40px;
+  color: white;
+}
+.contact_main_1_detail_1 {
+  flex: 1;
+  height: 170px;
+  width: 350px;
+  border-radius: 5%;
+  background-color: rgba(75, 175, 71, 1);
+  padding-top: 20px;
+  padding-left: 3%;
+  padding-right: 1%;
+}
+.contact_main_1_detail_2 {
+  flex: 1;
+  height: 170px;
+  margin: 0 3% 0 3%;
+  width: 350px;
+  border-radius: 5%;
+  background-color: rgba(197, 206, 56, 1);
+  padding-top: 20px;
+  padding-left: 3%;
+  padding-right: 1%;
+}
+.contact_main_1_detail_3 {
+  flex: 1;
+  height: 170px;
+  width: 350px;
+  border-radius: 5%;
+  background-color: rgba(238, 192, 68, 1);
+  padding-top: 20px;
+  padding-left: 3%;
+  padding-right: 1%;
+}
+.contact_main_1_detail_1_content {
+  font-size: 15px;
+}
+.contact_main_1_detail_2_content {
+  font-size: 15px;
+}
+.contact_main_1_detail_3_content {
+  font-size: 15px;
+}
+.contact_main_1_title {
+  font-family: "Covered By Your Grace", cursive;
+  font-size: 22px;
+  margin-bottom: 3px;
+}
+.contact_main_2 {
+  height: auto;
+  padding-top: 10px;
+  background-color: #ffb703;
+}
+.contact_main_2_detail {
+  height: auto;
+  width: 100%;
+  margin-top: 40px;
+}
+.contact_main_1_detail_2_content {
+  margin-right: 4%;
+}
+.contact_main_1_detail_2_content_detail {
+  margin-top: 10px;
+  margin-bottom: 0;
+}
+.contact_main_1_detail_2_content_icon {
+  margin-top: 20px;
+  display: flex;
+  gap: 3px;
+}
+.contact_main_1_icon_1,
+.contact_main_1_icon_2,
+.contact_main_1_icon_3,
+.contact_main_1_icon_4 {
+  flex: 1;
+}
+.contact_main_2_title {
+  font-family: "Covered By Your Grace", cursive;
+  color: yellow;
+  font-size: 22px;
+}
+.contact_main_2_title_2 {
+  font-weight: 700;
+  font-size: 30px;
+}
+.contact_main_2_name {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 14%;
+  margin-top: 20px;
+}
+.contact_main_2_name_box {
+  height: 50px;
+  width: 21.5%;
+  border-radius: 10px;
+  padding-left: 7px;
+}
+
+.contact_main_2_email_box {
+  height: 50px;
+  width: 61%;
+  border-radius: 10px;
+  padding-right: 13px;
+  padding-left: 7px;
+}
+.contact_main_2_message {
+  margin-top: 10px;
+  height: 160px;
+  width: 99%;
+  border-radius: 10px;
+  margin-bottom: 20px;
+}
+.contact_main_2_send {
+  height: 50px;
+  width: 14%;
+  border-radius: 10px;
+  margin-bottom: 20px;
+  background-color: mediumvioletred;
+  color: white;
 }
