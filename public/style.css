@@ -32,10 +32,52 @@ body {
   color: black;
 }
 
+/* navigation buger */
+@media screen and (max-width: 1023px) {
+  .navbar-menu.is-active {
+    position: absolute;
+    width: 30%;
+    top: 100%;
+    left: 60%;
+    background: white;
+    box-shadow: 0px 8px 10px rgba(0, 0, 0, 0.2);
+    z-index: 999;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+  }
+  .navbar-menu.is-active .navbar-start .navbar-item,
+  .navbar-menu.is-active .navbar-end .navbar-item,
+  .navbar-menu.is-active .navbar-end .button {
+    min-height: 3rem;
+    box-sizing: border-box;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+    flex-grow: 1;
+  }
+
+  .navbar-menu.is-active .navbar-start .navbar-item,
+  .navbar-menu.is-active .navbar-end .navbar-item,
+  .navbar-menu.is-active .navbar-end .button {
+    border-bottom: 1px solid rgba(0, 0, 0, 0.2);
+  }
+
+  .navbar-menu.is-active .navbar-end .navbar-item:last-child {
+    border-bottom: none;
+  }
+}
+.navbar-brand {
+  flex-grow: 1;
+}
+
+.navbar-burger {
+  align-self: flex-end;
+  margin-bottom: 20px;
+}
+
 /*navigation bar*/
 
 .navbar {
-  background-color: #8ecae6;
   padding-left: 40px;
   padding-right: 60px;
   margin-left: auto;
