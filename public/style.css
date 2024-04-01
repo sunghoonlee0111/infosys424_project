@@ -78,6 +78,7 @@ body {
 /*navigation bar*/
 
 .navbar {
+  background-color: rgba(248, 247, 240, 1);
   padding-left: 40px;
   padding-right: 60px;
   margin-left: auto;
@@ -303,7 +304,7 @@ body {
 /*index_gallery*/
 .index_gallery {
   width: 100%;
-  background-color: #8ecae63e;
+  background-color: rgba(248, 247, 240, 1);
   display: flex;
   justify-content: center;
   align-items: center;
@@ -655,7 +656,7 @@ footer {
 .gallery_main {
   padding: 0;
   margin: 0;
-  background-color: #8ecae63e;
+  background-color: rgba(248, 247, 240, 1);
   border-radius: 5px;
   padding: 5px 20px 0 20px;
 }
@@ -836,7 +837,7 @@ footer {
 .events_main {
   padding: 0;
   margin: 0;
-  background-color: #8ecae63e;
+  background-color: rgba(248, 247, 240, 1);
   border-radius: 5px;
   padding: 5px 20px 0 20px;
 }
@@ -862,8 +863,8 @@ footer {
 .about_main_1 {
   padding: 0;
   margin: 0;
-  background-color: #8ecae63e;
-  border-radius: 5px;
+  background-color: rgba(248, 247, 240, 1);
+
   padding: 5px 20px 0 20px;
 }
 .about_title {
@@ -906,7 +907,6 @@ footer {
 .about_today_contents {
   font-size: 18px;
   margin-top: 0;
-  margin-bottom: 30px;
   color: black;
 }
 .about_video {
@@ -947,11 +947,9 @@ footer {
   margin: 0;
   height: auto;
   background-color: #e0dcdc3e;
-  border-radius: 5px;
   padding: 5px 20px 0 20px;
   justify-content: center;
   align-items: center;
-  margin-top: 30px;
 }
 .about_main_3_title {
   text-align: center;
@@ -1022,7 +1020,7 @@ footer {
   margin: 0;
   font-size: 40px;
   margin-top: 0;
-  margin-bottom: 10px;
+  margin-bottom: 0px;
   font-weight: bolder;
   letter-spacing: 4px;
 }
@@ -1031,7 +1029,7 @@ footer {
   justify-content: space-between;
   align-items: center;
   flex-wrap: wrap;
-  padding-top: 40px;
+  padding-top: 20px;
   padding-bottom: 40px;
   color: white;
 }
@@ -1083,7 +1081,7 @@ footer {
 .contact_main_2 {
   height: auto;
   padding-top: 10px;
-  background-color: #ffb703;
+  background-color: rgba(248, 247, 240, 1);
 }
 .contact_main_2_detail {
   height: auto;
@@ -1110,7 +1108,7 @@ footer {
 }
 .contact_main_2_title {
   font-family: "Covered By Your Grace", cursive;
-  color: yellow;
+  color: rgba(238, 192, 68, 1);
   font-size: 22px;
 }
 .contact_main_2_title_2 {
@@ -1127,6 +1125,7 @@ footer {
   height: 50px;
   width: 21.5%;
   border-radius: 10px;
+  border: none;
   padding-left: 7px;
 }
 
@@ -1136,6 +1135,7 @@ footer {
   border-radius: 10px;
   padding-right: 13px;
   padding-left: 7px;
+  border: none;
 }
 .contact_main_2_message {
   margin-top: 10px;
@@ -1143,14 +1143,16 @@ footer {
   width: 99%;
   border-radius: 10px;
   margin-bottom: 20px;
+  border: none;
 }
 .contact_main_2_send {
   height: 50px;
   width: 14%;
   border-radius: 10px;
   margin-bottom: 20px;
-  background-color: mediumvioletred;
+  background-color: rgba(75, 175, 71, 1);
   color: white;
+  border: none;
 }
 
 /* Write post */
