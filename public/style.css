@@ -945,11 +945,11 @@ footer {
 .about_main_3 {
   padding: 0;
   margin: 0;
-  height: auto;
-  background-color: #e0dcdc3e;
+  background-color: rgba(248, 247, 240, 1);
   padding: 5px 20px 0 20px;
   justify-content: center;
   align-items: center;
+  margin-bottom: 0px;
 }
 .about_main_3_title {
   text-align: center;
@@ -995,6 +995,7 @@ footer {
   background-size: cover;
   margin: auto;
   align-self: center;
+  margin-bottom: 55px;
 }
 
 .about_main_3_photo_content {
@@ -1012,6 +1013,7 @@ footer {
   background-color: rgba(243, 223, 174, 1);
   margin: auto;
   padding: 10px;
+  margin-bottom: 12px;
 }
 
 /* CONTACT */
