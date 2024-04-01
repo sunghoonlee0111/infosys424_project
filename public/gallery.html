@@ -40,19 +40,75 @@
   <body>
     <!-- header -->
     <header>
-      <div class="header max_width_1920">
-        <!-- navbar -->
-        <div class="navbar">
+      <nav class="navbar" role="navigation" aria-label="main navigation">
+        <div class="navbar-brand">
           <a href="index.html" class="nav_logo"></a>
-          <a href="index.html" class="nav_home">HOME</a>
-          <a href="about.html" class="nav_about">ABOUT</a>
-          <a href="gallery.html" class="nav_gallery">GALLERY</a>
-          <a href="post.html" class="nav_post">POST</a>
-          <a href="contact.html" class="nav_contact">CONTACT</a>
-          <a href="event.html" class="nav_event">EVENT</a>
-          <a href="#" class="nav_signin">SIGN-IN</a>
-          <a href="#" class="nav_signup">SIGN UP</a>
+          <a
+            role="button"
+            class="navbar-burger"
+            id="burger_nav"
+            aria-label="menu"
+            aria-expanded="false"
+            data-target="navbarBasicExample"
+          >
+            <span aria-hidden="true"></span>
+            <span aria-hidden="true"></span>
+            <span aria-hidden="true"></span>
+          </a>
         </div>
+        <div class="navbar-menu" id="menu_nav">
+          <div class="navbar-start">
+            <a
+              href="index.html"
+              class="nav_home navbar-item has-text-black to_about"
+              >HOME</a
+            >
+            <a
+              href="about.html"
+              class="nav_about navbar-item has-text-black to_about"
+              >ABOUT</a
+            >
+            <a
+              href="gallery.html"
+              class="nav_gallery navbar-item has-text-black to_about"
+              >GALLERY</a
+            >
+            <a
+              href="post.html"
+              class="nav_post navbar-item has-text-black to_about"
+              >POST</a
+            >
+            <a
+              href="contact.html"
+              class="nav_contact navbar-item has-text-black to_about"
+              >CONTACT</a
+            >
+            <a
+              href="event.html"
+              class="nav_event navbar-item has-text-black to_about"
+              >EVENT</a
+            >
+          </div>
+          <div class="navbar-end">
+            <div class="nav_signin navbar-item">
+              <button
+                class="button has-text-black is-rounded"
+                id="user_signin"
+              >
+                Sign In
+              </button>
+            </div>
+            <div class="navbar-item">
+              <button
+                class="nav_signup button has-text-black is-rounded main-color"
+                id="user_signup"
+              >
+                Sign Up
+              </button>
+            </div>
+          </div>
+        </div>
+      </nav>
         <!-- banner -->
         <img
           class="others_banner"
