@@ -42,7 +42,7 @@ body {
   margin-right: auto;
   display: flex;
   height: 70px;
-  justify-content: space-between;
+  justify-content: flex-start; /* 변경 */
   align-items: center;
   font-weight: 600;
 }
