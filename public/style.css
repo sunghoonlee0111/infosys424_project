@@ -61,8 +61,7 @@ body {
 }
 
 .navbar-burger {
-  align-self: flex-end;
-  margin-bottom: 20px;
+  align-self: center;
 }
 
 /*navigation bar*/
