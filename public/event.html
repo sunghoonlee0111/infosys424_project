@@ -40,81 +40,55 @@
   <body>
     <!-- header -->
     <header>
-      <nav class="navbar" role="navigation" aria-label="main navigation">
-        <div class="navbar-brand">
-          <a href="index.html" class="nav_logo"></a>
-          <a
-            role="button"
-            class="navbar-burger"
-            id="burger_nav"
-            aria-label="menu"
-            aria-expanded="false"
-            data-target="navbarBasicExample"
-          >
-            <span aria-hidden="true"></span>
-            <span aria-hidden="true"></span>
-            <span aria-hidden="true"></span>
-          </a>
-        </div>
-        <div class="navbar-menu" id="menu_nav">
-          <div class="navbar-start">
+      <div class="header max_width_1920">
+        <!-- navbar -->
+        <nav class="navbar" role="navigation" aria-label="main navigation">
+          <div class="navbar-brand">
+            <a href="index.html" class="nav_logo"></a>
             <a
-              href="index.html"
-              class="nav_home navbar-item has-text-black to_about"
-              >HOME</a
+              role="button"
+              class="navbar-burger"
+              id="burger_nav"
+              aria-label="menu"
+              aria-expanded="false"
+              data-target="navbarBasicExample"
             >
-            <a
-              href="about.html"
-              class="nav_about navbar-item has-text-black to_about"
-              >ABOUT</a
-            >
-            <a
-              href="gallery.html"
-              class="nav_gallery navbar-item has-text-black to_about"
-              >GALLERY</a
-            >
-            <a
-              href="post.html"
-              class="nav_post navbar-item has-text-black to_about"
-              >POST</a
-            >
-            <a
-              href="contact.html"
-              class="nav_contact navbar-item has-text-black to_about"
-              >CONTACT</a
-            >
-            <a
-              href="event.html"
-              class="nav_event navbar-item has-text-black to_about"
-              >EVENT</a
-            >
+              <span aria-hidden="true"></span>
+              <span aria-hidden="true"></span>
+              <span aria-hidden="true"></span>
+            </a>
           </div>
-          <div class="navbar-end">
-            <div class="nav_signin navbar-item">
-              <button
-                class="button has-text-black is-rounded"
-                id="user_signin"
-              >
-                Sign In
-              </button>
+          <div class="navbar-menu" id="menu_nav">
+            <div class="navbar-start">
+              <a href="index.html" class="navbar-item">HOME</a>
+              <a href="about.html" class="navbar-item">ABOUT</a>
+              <a href="gallery.html" class="navbar-item">GALLERY</a>
+              <a href="post.html" class="navbar-item">POST</a>
+              <a href="event.html" class="navbar-item">EVENT</a>
             </div>
-            <div class="navbar-item">
-              <button
-                class="nav_signup button has-text-black is-rounded main-color"
-                id="user_signup"
-              >
-                Sign Up
-              </button>
+            <div class="navbar-end">
+              <div class="nav_signin navbar-item">
+                <button
+                  class="button has-text-black is-rounded"
+                  id="user_signin"
+                >
+                  Sign In
+                </button>
+              </div>
+              <div class="navbar-item">
+                <button
+                  class="nav_signup button has-text-black is-rounded main-color"
+                  id="user_signup"
+                >
+                  Sign Up
+                </button>
+              </div>
             </div>
           </div>
-        </div>
-      </nav>
+        </nav>
+
         <!-- banner -->
-        <img
-          class="others_banner"
-          src="image/small_banner.png"
-          alt="Banner Image"
-        />
+        <img class="index_banner" src="image/Banner.png" alt="Banner Image" />
       </div>
     </header>
     <main class="max_width_1200">
@@ -142,20 +116,32 @@
     <footer class="max_width_1920">
       <div class="footer_content max_width_1200">
         <!-- footer logo -->
-        <div class="footer_logo">
-          <div>
-            <img
-              class="footer_logo_photo"
-              src="image/logos/Footer_logo.png"
-              style="height: 70px"
-              alt=""
-            />
-          </div>
+        <div class="footer_logo_and_icons">
+          <img
+            class="footer_logo_photo"
+            src="image/logos/Footer_logo.png"
+            alt="footer logo"
+          />
+          <p class="footer_icons">
+            <a href="https://www.facebook.com/HabitatUW">FB</a>
+            <a href="https://www.instagram.com/h4huw/">IG</a>
+            <a href="">TW</a>
+            <a href="https://linktr.ee/h4huw">LT</a>
+          </p>
         </div>
         <!-- footer contents -->
         <div class="footer_contents">
-          <p class="footer_about">
-            Humanity Campus Chapter at the University of Wisconsin – Madison is
+          <p>
+            Humanity Campus Chapter at the University of Wisconsin – Madison
+          </p>
+          <p>666 Langdon St, Madison WI 53703</p>
+
+          <p>
+            <a href="mailto:absed@gmail.com">absed@gmail.com</a>
+            <span class="footer_policy">000-000-0000</span>
+          </p>
+
+          <p>
             <span><a href="#" class="footer_a_tag">Term of Use</a></span>
             <span class="footer_policy"
               ><a href="#" class="footer_a_tag">Privacy Policy</a></span
