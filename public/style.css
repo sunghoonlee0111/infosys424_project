@@ -33,29 +33,7 @@ body {
 }
 
 /* navigation buger */
-@media screen and (max-width: 1023px) {
-  .navbar-menu.is-active {
-    position: absolute;
-    width: 300px;
-    top: 100%;
-    left: 60%;
-    background: white;
-    z-index: 999;
-    padding-bottom: 0px;
-    padding-top: 0px;
-  }
-  .navbar-menu.is-active .navbar-start .navbar-item,
-  .navbar-menu.is-active .navbar-end .navbar-item,
-  .navbar-menu.is-active .navbar-end .button {
-    min-height: 3rem;
-    box-sizing: border-box;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex-grow: 1;
-    border-bottom: 1px solid rgba(0, 0, 0, 0.2);
-  }
-}
+
 .navbar-brand {
   flex-grow: 1;
 }
@@ -70,30 +48,24 @@ body {
   background-color: rgba(248, 247, 240, 1);
   margin-left: auto;
   margin-right: auto;
-  display: flex;
-  height: 70px;
+  /* display: flex;
+  height: 70px; */
   justify-content: space-between;
   align-items: center;
   font-weight: 600;
 }
-.navbar .nav_home,
-.navbar .nav_about,
-.navbar .nav_gallery,
-.navbar .nav_post,
-.navbar .nav_contact,
-.navbar .nav_event,
-.navbar .nav_signin,
-.navbar .nav_signup {
+
+nav {
   color: black;
 }
 .nav_logo {
   width: 200px;
-  min-width: 200px;
-  height: 100px;
-  background-image: url(image/logos/logo_words_beside_picture.png);
+  height: 50px;
+  background-image: url(image/logos/logo_words_beside_picture2.png);
   background-size: contain;
-  background-position: center;
+  background-position: left;
   background-repeat: no-repeat;
+  margin: 5px 0 5px 10px;
 }
 
 /* Banner */
