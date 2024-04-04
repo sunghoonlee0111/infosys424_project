@@ -58,3 +58,23 @@ function signup_close() {
 
 user_signup.addEventListener("click", signup_open);
 signup_background.addEventListener("click", signup_close);
+
+//to sign up (from sign in modal)
+let to_signup = document.querySelector("#to_signup");
+
+function to_signup_open() {
+  signup_open();
+  signin_close();
+}
+
+to_signup.addEventListener("click", to_signup_open);
+
+//to sign in (from sign up modal)
+let to_signin = document.querySelector("#to_signin");
+
+function to_signin_open() {
+  signin_open();
+  signup_close();
+}
+
+to_signin.addEventListener("click", to_signin_open);
