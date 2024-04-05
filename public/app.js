@@ -1,3 +1,22 @@
+// functions
+
+function r_e(id) {
+  return document.querySelector(`#${id}`);
+}
+
+function configure_message_bar(msg) {
+  r_e("message_bar").innerHTML = msg;
+
+  // show the message bar
+  r_e("message_bar").classList.remove("is-hidden");
+
+  // make the message bar hidden again and clear it
+
+  setTimeout(() => {
+    r_e("message_bar").classList.add("is-hidden");
+    r_e("message_bar").innerHTML = "";
+  }, 2000);
+}
 // navigation burger
 let burger_nav = document.querySelector("#burger_nav");
 let menu_nav = document.querySelector("#menu_nav");
@@ -78,3 +97,62 @@ function to_signin_open() {
 }
 
 to_signin.addEventListener("click", to_signin_open);
+
+// single page navigation
+let HomeBtn = document.querySelector("#HomeBtn");
+let AboutBtn = document.querySelector("#AboutBtn");
+let GalleryBtn = document.querySelector("#GalleryBtn");
+let PostBtn = document.querySelector("#PostBtn");
+let EventBtn = document.querySelector("#EventBtn");
+
+let homeSection = document.querySelector("#home_section");
+let aboutSection = document.querySelector("#about_section");
+let gallerySection = document.querySelector("#gallery_section");
+let postSection = document.querySelector("#post_section");
+let eventSection = document.querySelector("#event_section");
+
+// array of all sections
+let allSections = [
+  homeSection,
+  aboutSection,
+  gallerySection,
+  postSection,
+  eventSection,
+];
+
+// function to hide all sections
+function hideAllSections() {
+  allSections.forEach((section) => {
+    section.classList.add("is-hidden");
+  });
+}
+
+// HomeBtn nav bar link
+HomeBtn.addEventListener("click", () => {
+  hideAllSections();
+  homeSection.classList.remove("is-hidden");
+});
+
+// AboutBTN nav bar link
+AboutBtn.addEventListener("click", () => {
+  hideAllSections();
+  aboutSection.classList.remove("is-hidden");
+});
+
+// GalleryBTn nav bar link
+GalleryBtn.addEventListener("click", () => {
+  hideAllSections();
+  gallerySection.classList.remove("is-hidden");
+});
+
+// PostBtn nav bar link
+PostBtn.addEventListener("click", () => {
+  hideAllSections();
+  postSection.classList.remove("is-hidden");
+});
+
+// EventBtn nav bar link
+EventBtn.addEventListener("click", () => {
+  hideAllSections();
+  eventSection.classList.remove("is-hidden");
+});
