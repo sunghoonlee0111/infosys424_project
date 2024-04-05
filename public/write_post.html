@@ -41,6 +41,22 @@
 
     // Initialize Firebase
     const app = initializeApp(firebaseConfig);
+
+    // Previous Firebase initialization code...
+
+    import { getFirestore } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-firestore.js";
+    import {
+      getStorage,
+      ref as storageRef,
+      uploadBytes,
+      getDownloadURL,
+    } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-storage.js";
+
+    // Initialize Firestore and Storage
+    const db = getFirestore(app);
+    const storage = getStorage(app);
+
+    // Continue with your application logic..
   </script>
 
   <body>
