@@ -1,3 +1,22 @@
+//firebase config
+// Import the functions you need from the SDKs you need
+import { initializeApp } from "firebase/app";
+// TODO: Add SDKs for Firebase products that you want to use
+// https://firebase.google.com/docs/web/setup#available-libraries
+
+// Your web app's Firebase configuration
+const firebaseConfig = {
+  apiKey: "AIzaSyAq-CkeNE_K765pauvvO-72oAUIGCE_Jpc",
+  authDomain: "hfh-uwmadison.firebaseapp.com",
+  projectId: "hfh-uwmadison",
+  storageBucket: "hfh-uwmadison.appspot.com",
+  messagingSenderId: "158190324248",
+  appId: "1:158190324248:web:89397ab7a4171eb54e516d",
+};
+
+// Initialize Firebase
+const app = initializeApp(firebaseConfig);
+
 // navigation burger
 let burger_nav = document.querySelector("#burger_nav");
 let menu_nav = document.querySelector("#menu_nav");

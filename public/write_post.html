@@ -38,25 +38,6 @@
       messagingSenderId: "99694309511",
       appId: "1:99694309511:web:44ea8bf5c7db69f4254822",
     };
-
-    // Initialize Firebase
-    const app = initializeApp(firebaseConfig);
-
-    // Previous Firebase initialization code...
-
-    import { getFirestore } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-firestore.js";
-    import {
-      getStorage,
-      ref as storageRef,
-      uploadBytes,
-      getDownloadURL,
-    } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-storage.js";
-
-    // Initialize Firestore and Storage
-    const db = getFirestore(app);
-    const storage = getStorage(app);
-
-    // Continue with your application logic..
   </script>
 
   <body>
@@ -110,7 +91,11 @@
         </nav>
 
         <!-- banner -->
-        <img class="index_banner" src="image/Banner.png" alt="Banner Image" />
+        <img
+          class="index_banner"
+          src="image/small_banner.png"
+          alt="Banner Image"
+        />
       </div>
     </header>
 
@@ -231,118 +216,14 @@
 
     <!-- Initialize Quill editor -->
     <script>
-      // const quill = new Quill("#editor", {
-      //   modules: {
-      //     toolbar: "#toolbar",
-      //   },
-      //   theme: "snow",
-      //   placeholder: "Write something awesome...",
-      // });
-    </script>
-
-    <script>
-      document.addEventListener("DOMContentLoaded", function () {
-        const quill = new Quill("#editor", {
-          modules: {
-            toolbar: "#toolbar",
-          },
-          theme: "snow",
-          placeholder: "Compose an epic...",
-        });
-
-        // Add custom handler for image uploads
-        function selectLocalImage() {
-          const input = document.createElement("input");
-          input.setAttribute("type", "file");
-          input.setAttribute("accept", "image/*");
-          input.click();
-
-          // Listen for file input change
-          input.onchange = () => {
-            const file = input.files[0];
-            if (file) {
-              // Convert image file to Base64 string and insert into editor
-              const reader = new FileReader();
-              reader.onload = function (e) {
-                const range = quill.getSelection();
-                quill.insertEmbed(range.index, "image", e.target.result);
-              };
-              reader.readAsDataURL(file);
-            }
-          };
-        }
-
-        quill.getModule("toolbar").addHandler("image", selectLocalImage);
-
-        // Event listener for the POST button
-        document
-          .querySelector(".write_post_button")
-          .addEventListener("click", function () {
-            // Retrieve the content from the editor
-            const content = quill.root.innerHTML;
-
-            // TODO: Extract Base64 images from content, upload to server, and replace with server URLs
-            // For now, just log the content
-            console.log(content);
-
-            // After handling image uploads and content, you can POST to the server here
-          });
+      const quill = new Quill("#editor", {
+        modules: {
+          toolbar: "#toolbar",
+        },
+        theme: "snow",
+        placeholder: "Write something awesome...",
       });
     </script>
-
-    <!-- <script>
-      document.addEventListener("DOMContentLoaded", function () {
-        const quill = new Quill("#editor", {
-          modules: {
-            toolbar: "#toolbar",
-          },
-          theme: "snow",
-          placeholder: "Write something awesome...",
-        });
-
-        // Function to handle image uploads
-        function imageHandler() {
-          const input = document.createElement("input");
-          input.setAttribute("type", "file");
-          input.setAttribute("accept", "image/*");
-          input.click();
-
-          // Listen for file input change and handle the image
-          input.onchange = () => {
-            const file = input.files[0];
-            if (file) {
-              // Create a temporary URL to display the image
-              const reader = new FileReader();
-              reader.onload = (e) => {
-                const range = quill.getSelection(true);
-                quill.insertEmbed(range.index, "image", e.target.result);
-                // You may want to save the file object here to upload it later
-              };
-              reader.readAsDataURL(file);
-            }
-          };
-        }
-
-        // Add custom handler for image uploads
-        quill.getModule("toolbar").addHandler("image", imageHandler);
-
-        // Post button event listener
-        document
-          .querySelector(".write_post_button")
-          .addEventListener("click", function () {
-            // Here you would gather the content of the editor
-            const content = quill.root.innerHTML;
-
-            // And here you would handle the image upload
-            // For each image in the content, upload it to your server
-            // and replace the src attribute with the URL returned from the server
-
-            // After images are uploaded and URLs updated, post the content to the server
-            console.log(content);
-            // Example POST request to your server with the content
-          });
-      });
-    </script> -->
   </body>
   <script src="app.js"></script>
 </html>
