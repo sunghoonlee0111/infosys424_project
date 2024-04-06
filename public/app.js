@@ -1,3 +1,39 @@
+// Initialize Firebase
+firebase.initializeApp(firebaseConfig);
+let auth = firebase.auth();
+let db = firebase.firestore();
+let ref = firebase.storage().ref();
+
+// SIGNIN CHECK
+auth.onAuthStateChanged((user) => {
+  if (user) {
+    // User is signed in.
+    r_e("currentuser").innerHTML = auth.currentUser.email;
+    document.getElementById("user_signin").classList.add("is-hidden");
+    document.getElementById("user_signup").classList.add("is-hidden");
+    document.getElementById("user_signout").classList.remove("is-hidden");
+  }
+});
+
+// functions
+
+function r_e(id) {
+  return document.querySelector(`#${id}`);
+}
+
+function configure_message_bar(msg) {
+  r_e("message_bar").innerHTML = msg;
+
+  // show the message bar
+  r_e("message_bar").classList.remove("is-hidden");
+
+  // make the message bar hidden again and clear it
+
+  setTimeout(() => {
+    r_e("message_bar").classList.add("is-hidden");
+    r_e("message_bar").innerHTML = "";
+  }, 2000);
+}
 // navigation burger
 let burger_nav = document.querySelector("#burger_nav");
 let menu_nav = document.querySelector("#menu_nav");
