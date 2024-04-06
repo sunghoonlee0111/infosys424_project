@@ -17,6 +17,30 @@
     />
   </head>
 
+  <!-- Firebase App (the core Firebase SDK) is always required and must be listed first -->
+  <script src="https://www.gstatic.com/firebasejs/8.3.1/firebase-app.js"></script>
+
+  <!-- If you enabled Analytics in your project, add the Firebase SDK for Analytics -->
+  <script src="https://www.gstatic.com/firebasejs/8.3.1/firebase-analytics.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.3.1/firebase-storage.js"></script>
+
+  <!-- Add Firebase products that you want to use -->
+  <script src="https://www.gstatic.com/firebasejs/8.3.1/firebase-auth.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.3.1/firebase-firestore.js"></script>
+
+  <script type="module">
+    // Your web app's Firebase configuration
+    const firebaseConfig = {
+      apiKey: "AIzaSyAq-CkeNE_K765pauvvO-72oAUIGCE_Jpc",
+      authDomain: "hfh-uwmadison.firebaseapp.com",
+      projectId: "hfh-uwmadison",
+      storageBucket: "hfh-uwmadison.appspot.com",
+      messagingSenderId: "158190324248",
+      appId: "1:158190324248:web:89397ab7a4171eb54e516d",
+    };
+    firebase.initializeApp(firebaseConfig);
+  </script>
+
   <body>
     <!-- sign in modal -->
     <div id="signin_modal" class="modal">
