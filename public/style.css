@@ -1049,3 +1049,8 @@ footer {
   font-weight: bolder;
   padding: 10px;
 }
+
+.write_post_button:hover {
+  background-color: rgba(71, 118, 164, 0.776);
+  cursor: pointer;
+}
