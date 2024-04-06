@@ -20,7 +20,7 @@ auth.onAuthStateChanged((user) => {
     r_e("currentuser").innerHTML = auth.currentUser.email;
     document.getElementById("user_signin").classList.add("is-hidden");
     document.getElementById("user_signup").classList.add("is-hidden");
-    document.getElementById("signoutbtn").classList.remove("is-hidden");
+    document.getElementById("user_signout").classList.remove("is-hidden");
   }
 });
 
@@ -141,7 +141,8 @@ document.addEventListener("DOMContentLoaded", function () {
         .then((userCredential) => {
           r_e("signup_form").reset();
           r_e("signup_modal").classList.remove("is-active");
-
+          document.getElementById("currentuser").textContent =
+            auth.currentUser.email;
           document.getElementById("user_signin").classList.add("is-hidden");
           document.getElementById("user_signup").classList.add("is-hidden");
           document.getElementById("user_signout").classList.remove("is-hidden");
@@ -180,7 +181,8 @@ document.addEventListener("DOMContentLoaded", function () {
 
         // Hide the sign-in modal if you have one
         r_e("signin_modal").classList.remove("is-active");
-
+        document.getElementById("currentuser").textContent =
+          auth.currentUser.email;
         document.getElementById("user_signin").classList.add("is-hidden");
         document.getElementById("user_signup").classList.add("is-hidden");
         document.getElementById("user_signout").classList.remove("is-hidden");
@@ -205,6 +207,7 @@ document.getElementById("user_signout").addEventListener("click", () => {
   auth
     .signOut()
     .then(() => {
+      r_e("currentuser").innerHTML = "";
       document.getElementById("user_signin").classList.remove("is-hidden");
       document.getElementById("user_signup").classList.remove("is-hidden");
       document.getElementById("user_signout").classList.add("is-hidden");
