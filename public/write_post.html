@@ -158,6 +158,7 @@
 
         <!-- toolbar editor -->
         <div id="editor"></div>
+
         <!-- post button -->
         <div class="write_post_button_box">
           <button class="write_post_button">POST</button>
@@ -288,23 +289,30 @@
     // post the content to the firestore
     document
       .querySelector(".write_post_button")
-      .addEventListener("click", function () {
+      .addEventListener("click", () => {
         let title = document.querySelector(".write_post_title_input").value;
         let content = document.querySelector(".ql-editor").innerHTML;
 
-        db.collection("posts")
+        firebase
+          .firestore()
+          .collection("posts")
           .add({
             title: title,
             content: content,
+            timestamp: firebase.firestore.FieldValue.serverTimestamp(),
+            username: firebase.auth().currentUser,
           })
-          .then(function (docRef) {
-            console.log("Document written with ID: ", docRef.id);
+          .then(() => {
             alert("Post successfully!");
             window.location.href = "post.html";
           })
-          .catch(function (error) {
+          .catch((error) => {
             console.error("Error adding document: ", error);
           });
+
+        // clear the input
+        document.querySelector(".write_post_title_input").value = "";
+        document.querySelector(".ql-editor").innerHTML = "";
       });
   </script>
 
