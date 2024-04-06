@@ -80,3 +80,130 @@ function to_signin_open() {
 to_signin.addEventListener("click", to_signin_open);
 
 //
+//sign up user
+
+document.addEventListener("DOMContentLoaded", function () {
+  document
+    .getElementById("signup_form")
+    .addEventListener("submit", function (e) {
+      e.preventDefault();
+
+      const userName = document.getElementById("sign_up_username").value;
+      const email = document.getElementById("sign_up_email").value;
+      const password = document.getElementById("sign_up_password").value;
+
+      auth
+        .createUserWithEmailAndPassword(email, password)
+        .then((userCredential) => {
+          r_e("signup_form").reset();
+          r_e("signup_modal").classList.remove("is-active");
+          document.getElementById("currentuser").textContent =
+            auth.currentUser.email;
+          document.getElementById("user_signin").classList.add("is-hidden");
+          document.getElementById("user_signup").classList.add("is-hidden");
+          document.getElementById("user_signout").classList.remove("is-hidden");
+          db.collection("users").doc(userCredential.user.uid).set({
+            userName: userName,
+            email: email,
+            password: password,
+            Authenticated: 0,
+          });
+
+          alert("Signup successful! Welcome, " + userName);
+          document.getElementById("signup_form").reset();
+          document.getElementById("signup_modal").classList.remove("is-active");
+        })
+        .catch((err) => {
+          alert(err.message);
+        });
+    });
+});
+// Sign In
+document.addEventListener("DOMContentLoaded", function () {
+  const signInForm = document.getElementById("signin_form");
+
+  signInForm.addEventListener("submit", function (e) {
+    e.preventDefault();
+
+    const email = document.getElementById("sign_in_email").value;
+    const password = document.getElementById("sign_in_password").value;
+
+    auth
+      .signInWithEmailAndPassword(email, password)
+      .then((userCredential) => {
+        // Sign-in successful.
+        // Reset the sign-in form
+        signInForm.reset();
+
+        // Hide the sign-in modal if you have one
+        r_e("signin_modal").classList.remove("is-active");
+        document.getElementById("currentuser").textContent =
+          auth.currentUser.email;
+        document.getElementById("user_signin").classList.add("is-hidden");
+        document.getElementById("user_signup").classList.add("is-hidden");
+        document.getElementById("user_signout").classList.remove("is-hidden");
+
+        const currentUserElement = document.getElementById("currentuser");
+        if (currentUserElement) {
+          currentUserElement.innerText = userCredential.user.email;
+        }
+
+        alert("Welcome!");
+      })
+      .catch((err) => {
+        // Handle sign-in errors
+        console.error("Sign-in failed", err);
+        alert("Please check your email and password and try again.");
+      });
+  });
+});
+
+//sign_out user
+document.getElementById("user_signout").addEventListener("click", () => {
+  auth
+    .signOut()
+    .then(() => {
+      r_e("currentuser").innerHTML = "";
+      document.getElementById("user_signin").classList.remove("is-hidden");
+      document.getElementById("user_signup").classList.remove("is-hidden");
+      document.getElementById("user_signout").classList.add("is-hidden");
+      alert("Successfully Signed Out!");
+    })
+    .catch((err) => alert(err.message));
+});
+
+//single page naviation
+let HomeBtn = document.querySelector("#HomeBtn");
+let AboutBtn = document.querySelector("#AboutBtn");
+let GalleryBtn = document.querySelector("#GalleryBtn");
+let PostBtn = document.querySelector("#PostBtn");
+let EventBtn = document.querySelector("#EventBtn");
+
+let hidden_form = document.querySelector("#hidden_form");
+let content = document.querySelector("#content");
+
+// HomeBtn nav bar link
+HomeBtn.addEventListener("click", () => {
+  hidden_form.classList.remove("is-hidden");
+  content.classList.add("is-hidden");
+});
+// AboutBTN nav bar link
+HomeBtn.addEventListener("click", () => {
+  hidden_form.classList.remove("is-hidden");
+  content.classList.add("is-hidden");
+});
+// GalleryBTn nav bar link
+HomeBtn.addEventListener("click", () => {
+  hidden_form.classList.remove("is-hidden");
+  content.classList.add("is-hidden");
+});
+// PodyBtn nav bar link
+HomeBtn.addEventListener("click", () => {
+  hidden_form.classList.remove("is-hidden");
+  content.classList.add("is-hidden");
+});
+// EventBtn nav bar link
+HomeBtn.addEventListener("click", () => {
+  hidden_form.classList.remove("is-hidden");
+  content.classList.add("is-hidden");
+});
