@@ -1,3 +1,13 @@
+// Your web app's Firebase configuration
+const firebaseConfig = {
+  apiKey: "AIzaSyAq-CkeNE_K765pauvvO-72oAUIGCE_Jpc",
+  authDomain: "hfh-uwmadison.firebaseapp.com",
+  projectId: "hfh-uwmadison",
+  storageBucket: "hfh-uwmadison.appspot.com",
+  messagingSenderId: "158190324248",
+  appId: "1:158190324248:web:89397ab7a4171eb54e516d",
+};
+
 // Initialize Firebase
 firebase.initializeApp(firebaseConfig);
 let auth = firebase.auth();
@@ -214,32 +224,55 @@ let AboutBtn = document.querySelector("#AboutBtn");
 let GalleryBtn = document.querySelector("#GalleryBtn");
 let PostBtn = document.querySelector("#PostBtn");
 let EventBtn = document.querySelector("#EventBtn");
+let AboutBtn_2 = document.querySelector("#AboutBtn_2");
 
-let hidden_form = document.querySelector("#hidden_form");
-let content = document.querySelector("#content");
+let Home_hidden_form = document.querySelector("#Home_hidden_form");
+let About_hidden_form = document.querySelector("#About_hidden_form");
+let Gallery_hidden_form = document.querySelector("#Gallery_hidden_form");
+let Post_hidden_form = document.querySelector("#Post_hidden_form");
+let Event_hidden_form = document.querySelector("#Event_hidden_form");
+
+// 모든 폼을 숨기는 함수
+function hideAllForms() {
+  Home_hidden_form.classList.add("is-hidden");
+  About_hidden_form.classList.add("is-hidden");
+  Gallery_hidden_form.classList.add("is-hidden");
+  Post_hidden_form.classList.add("is-hidden");
+  Event_hidden_form.classList.add("is-hidden");
+}
 
 // HomeBtn nav bar link
 HomeBtn.addEventListener("click", () => {
-  hidden_form.classList.remove("is-hidden");
-  content.classList.add("is-hidden");
+  hideAllForms();
+  Home_hidden_form.classList.remove("is-hidden");
 });
-// AboutBTN nav bar link
-HomeBtn.addEventListener("click", () => {
-  hidden_form.classList.remove("is-hidden");
-  content.classList.add("is-hidden");
+
+// AboutBtn nav bar link
+AboutBtn.addEventListener("click", () => {
+  hideAllForms();
+  About_hidden_form.classList.remove("is-hidden");
 });
-// GalleryBTn nav bar link
-HomeBtn.addEventListener("click", () => {
-  hidden_form.classList.remove("is-hidden");
-  content.classList.add("is-hidden");
+
+// AboutBtn_2 nav bar link
+AboutBtn_2.addEventListener("click", () => {
+  hideAllForms();
+  About_hidden_form.classList.remove("is-hidden");
 });
-// PodyBtn nav bar link
-HomeBtn.addEventListener("click", () => {
-  hidden_form.classList.remove("is-hidden");
-  content.classList.add("is-hidden");
+
+// GalleryBtn nav bar link
+GalleryBtn.addEventListener("click", () => {
+  hideAllForms();
+  Gallery_hidden_form.classList.remove("is-hidden");
 });
+
+// PostBtn nav bar link
+PostBtn.addEventListener("click", () => {
+  hideAllForms();
+  Post_hidden_form.classList.remove("is-hidden");
+});
+
 // EventBtn nav bar link
-HomeBtn.addEventListener("click", () => {
-  hidden_form.classList.remove("is-hidden");
-  content.classList.add("is-hidden");
+EventBtn.addEventListener("click", () => {
+  hideAllForms();
+  Event_hidden_form.classList.remove("is-hidden");
 });
