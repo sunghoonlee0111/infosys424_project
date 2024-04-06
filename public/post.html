@@ -108,66 +108,6 @@
             </span>
           </div>
         </div>
-
-        <div class="post_content_box">
-          <!-- thumbnail -->
-          <img
-            class="post_thumbnail"
-            src="image/samplepic4.jpg"
-            alt="Post Thumbnail"
-          />
-          <!-- texts -->
-          <div class="post_texts">
-            <!-- username and date -->
-            <div class="post_nameanddate">
-              <div class="post_username">Sunghoon Lee</div>
-              <div class="post_time">Jan 11, 1999</div>
-            </div>
-            <!-- title and texts -->
-            <span class="post_text_title">
-              <a href="inside_post.html">Title</a></span
-            >
-            <p class="post_text">
-              Lorem ipsum dolor sit amet consectetur, adipisicing elit. Vitae
-              architecto suscipit necessitatibus, dolores enim aperiam
-              repudiandae porro corporis. Distinctio nemo sit nesciunt cum a,
-              omnis est. Corrupti error dolorem quas. Aliquid aliquam ipsa
-              laudantium accusantium nobis blanditiis excepturi accusamus autem.
-            </p>
-            <span class="post_readmore">
-              <a href="inside_post.html">Read More</a>
-            </span>
-          </div>
-        </div>
-
-        <div class="post_content_box">
-          <!-- thumbnail -->
-          <img
-            class="post_thumbnail"
-            src="image/samplepic3.jpg"
-            alt="Post Thumbnail"
-          />
-          <!-- texts -->
-          <div class="post_texts">
-            <!-- username and date -->
-            <div class="post_nameanddate">
-              <div class="post_username">Sunghoon Lee</div>
-              <div class="post_time">Jan 11, 1999</div>
-            </div>
-            <!-- title and texts -->
-            <span class="post_text_title"> <a href="#">Title</a></span>
-            <p class="post_text">
-              Lorem ipsum dolor sit amet consectetur, adipisicing elit. Vitae
-              architecto suscipit necessitatibus, dolores enim aperiam
-              repudiandae porro corporis. Distinctio nemo sit nesciunt cum a,
-              omnis est. Corrupti error dolorem quas. Aliquid aliquam ipsa
-              laudantium accusantium nobis blanditiis excepturi accusamus autem.
-            </p>
-            <span class="post_readmore">
-              <a href="#">Read More</a>
-            </span>
-          </div>
-        </div>
       </div>
     </main>
 
@@ -210,5 +150,125 @@
       </div>
     </footer>
   </body>
+
+  <!-- Firebase App (the core Firebase SDK) is always required and must be listed first -->
+  <script src="https://www.gstatic.com/firebasejs/8.3.1/firebase-app.js"></script>
+
+  <!-- If you enabled Analytics in your project, add the Firebase SDK for Analytics -->
+  <script src="https://www.gstatic.com/firebasejs/8.3.1/firebase-analytics.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.3.1/firebase-storage.js"></script>
+
+  <!-- Add Firebase products that you want to use -->
+  <script src="https://www.gstatic.com/firebasejs/8.3.1/firebase-auth.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.3.1/firebase-firestore.js"></script>
+
+  <script type="module">
+    // Your web app's Firebase configuration
+    const firebaseConfig = {
+      apiKey: "AIzaSyAq-CkeNE_K765pauvvO-72oAUIGCE_Jpc",
+      authDomain: "hfh-uwmadison.firebaseapp.com",
+      projectId: "hfh-uwmadison",
+      storageBucket: "hfh-uwmadison.appspot.com",
+      messagingSenderId: "158190324248",
+      appId: "1:158190324248:web:89397ab7a4171eb54e516d",
+    };
+    firebase.initializeApp(firebaseConfig);
+  </script>
+
+  <script>
+    document.addEventListener("DOMContentLoaded", function () {
+      const postsContainer = document.querySelector(".post_main");
+      const defaultThumbnail = "image/Banner.png"; // Default thumbnail if no image is found
+
+      // Function to limit the number of words in the excerpt
+      function createExcerpt(content, wordLimit) {
+        let words = content.split(" ");
+        if (words.length > wordLimit) {
+          return words.slice(0, wordLimit).join(" ") + "...";
+        }
+        return content;
+      }
+
+      // Function to extract the first image from the Delta object
+      function getFirstImageFromDelta(delta) {
+        const ops = JSON.parse(delta).ops;
+        const imgOp = ops.find(
+          (op) => op.insert && typeof op.insert === "object" && op.insert.image
+        );
+        return imgOp ? imgOp.insert.image : defaultThumbnail;
+      }
+
+      // Fetch posts from Firestore
+      firebase
+        .firestore()
+        .collection("posts")
+        .orderBy("timestamp", "desc")
+        .get()
+        .then((querySnapshot) => {
+          querySnapshot.forEach((doc) => {
+            const postData = doc.data();
+
+            // Create the post content box
+            const postContentBox = document.createElement("div");
+            postContentBox.className = "post_content_box";
+
+            // Get the first image from the content
+            const postThumbnailSrc = getFirstImageFromDelta(postData.content);
+
+            // Add the thumbnail
+            const postThumbnail = document.createElement("img");
+            postThumbnail.className = "post_thumbnail";
+            postThumbnail.src = postThumbnailSrc;
+            postContentBox.appendChild(postThumbnail);
+
+            // Create the text container
+            const postTexts = document.createElement("div");
+            postTexts.className = "post_texts";
+
+            // Parse the date and handle invalid dates
+            const timestamp = Date.parse(postData.timestamp);
+            const date = !isNaN(timestamp) ? new Date(timestamp) : new Date();
+            const formattedDate = date.toLocaleDateString("en-US");
+
+            // Add username and formatted date
+            const postNameAndDate = document.createElement("div");
+            postNameAndDate.className = "post_nameanddate";
+            postNameAndDate.innerHTML = `<div class="post_username">${
+              postData.username || "Anonymous"
+            }</div>
+                                         <div class="post_time">${formattedDate}</div>`;
+            postTexts.appendChild(postNameAndDate);
+
+            // Add title
+            const postTitle = document.createElement("span");
+            postTitle.className = "post_text_title";
+            postTitle.innerHTML = `<a href="inside_post.html?id=${doc.id}">${postData.title}</a>`;
+            postTexts.appendChild(postTitle);
+
+            // Add excerpt
+            const postExcerpt = document.createElement("p");
+            postExcerpt.className = "post_text";
+            postExcerpt.textContent = createExcerpt(postData.contentText, 20); // Assuming you want the first 20 words
+            postTexts.appendChild(postExcerpt);
+
+            // Add read more link
+            const readMore = document.createElement("span");
+            readMore.className = "post_readmore";
+            readMore.innerHTML = `<a href="inside_post.html?id=${doc.id}">Read More</a>`;
+            postTexts.appendChild(readMore);
+
+            // Append the texts container to the post content box
+            postContentBox.appendChild(postTexts);
+
+            // Append the post content box to the main container
+            postsContainer.appendChild(postContentBox);
+          });
+        })
+        .catch((error) => {
+          console.log("Error getting documents: ", error);
+        });
+    });
+  </script>
+
   <script src="app.js"></script>
 </html>
