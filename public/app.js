@@ -220,6 +220,7 @@ document.getElementById("user_signout").addEventListener("click", () => {
 
 //single page naviation
 let HomeBtn = document.querySelector("#HomeBtn");
+let HomeBtn_2 = document.querySelector("#HomeBtn_2");
 let AboutBtn = document.querySelector("#AboutBtn");
 let GalleryBtn = document.querySelector("#GalleryBtn");
 let PostBtn = document.querySelector("#PostBtn");
@@ -232,7 +233,7 @@ let Gallery_hidden_form = document.querySelector("#Gallery_hidden_form");
 let Post_hidden_form = document.querySelector("#Post_hidden_form");
 let Event_hidden_form = document.querySelector("#Event_hidden_form");
 
-// 모든 폼을 숨기는 함수
+// hide all forms
 function hideAllForms() {
   Home_hidden_form.classList.add("is-hidden");
   About_hidden_form.classList.add("is-hidden");
@@ -246,7 +247,11 @@ HomeBtn.addEventListener("click", () => {
   hideAllForms();
   Home_hidden_form.classList.remove("is-hidden");
 });
-
+// HomeBtn_2 nav bar link
+HomeBtn_2.addEventListener("click", () => {
+  hideAllForms();
+  Home_hidden_form.classList.remove("is-hidden");
+});
 // AboutBtn nav bar link
 AboutBtn.addEventListener("click", () => {
   hideAllForms();
