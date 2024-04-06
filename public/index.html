@@ -17,40 +17,20 @@
     />
   </head>
 
-  <script type="module">
-    // Import the functions you need from the SDKs you need
-    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-app.js";
-    // TODO: Add SDKs for Firebase products that you want to use
-    // https://firebase.google.com/docs/web/setup#available-libraries
-
-    // Your web app's Firebase configuration
-    const firebaseConfig = {
-      apiKey: "AIzaSyDiIV3d6YfEggsk3KKLgdWkDI8F4rV8nMk",
-      authDomain: "habitat-uw-madison-c.firebaseapp.com",
-      projectId: "habitat-uw-madison-c",
-      storageBucket: "habitat-uw-madison-c.appspot.com",
-      messagingSenderId: "99694309511",
-      appId: "1:99694309511:web:44ea8bf5c7db69f4254822",
-    };
-
-    // Initialize Firebase
-    const app = initializeApp(firebaseConfig);
-  </script>
-
   <body>
     <!-- sign in modal -->
     <div id="signin_modal" class="modal">
       <div id="signin_background" class="modal-background"></div>
       <div class="signin modal-content p-6 has-background-white box">
         <h1 class="login_title">Sign In</h1>
-        <form>
+        <form id="signin_form">
           <!-- Email -->
           <div class="field">
             <label class="label" for="email"></label>
             <div class="email control">
               <input
                 type="email"
-                id="email"
+                id="sign_in_email"
                 class="input_email"
                 placeholder="Email"
                 required
@@ -63,7 +43,7 @@
             <div class="password control">
               <input
                 type="password"
-                id="password"
+                id="sign_in_password"
                 class="input_password"
                 placeholder="Password"
                 required
@@ -73,7 +53,7 @@
           <!-- submit -->
           <div class="field">
             <div class="submit control">
-              <button type="submit" class="login_button">Sign In</button>
+              <button class="login_button">Sign In</button>
             </div>
           </div>
           <p class="have_account">
@@ -82,7 +62,7 @@
         </form>
       </div>
     </div>
-    <!-- sign in modal -->
+    <!-- sign up modal -->
     <div id="signup_modal" class="modal">
       <div id="signup_background" class="modal-background"></div>
       <div class="signup modal-content p-6 has-background-white box">
@@ -94,7 +74,7 @@
             <div class="email control">
               <input
                 type="name"
-                id="username"
+                id="sign_up_username"
                 class="input_email"
                 placeholder="Full Name"
                 required
@@ -107,7 +87,7 @@
             <div class="email control">
               <input
                 type="email"
-                id="email"
+                id="sign_up_email"
                 class="input_email"
                 placeholder="Email"
                 required
@@ -120,6 +100,7 @@
             <div class="password control">
               <input
                 type="password"
+                id="sign_up_password"
                 class="input_password"
                 placeholder="Password"
                 required
@@ -130,7 +111,7 @@
           <!-- submit -->
           <div class="field">
             <div class="submit control">
-              <button type="submit" class="login_button">Sign Up</button>
+              <button class="login_button">Sign Up</button>
             </div>
           </div>
           <p class="have_account">
@@ -167,6 +148,7 @@
               <a id="EventBtn" class="navbar-item">EVENT</a>
             </div>
             <div class="navbar-end">
+              <div class="navbar-item"></div>
               <div class="nav_signin navbar-item">
                 <button
                   class="button has-text-black is-rounded"
@@ -177,10 +159,19 @@
               </div>
               <div class="navbar-item">
                 <button
-                  class="nav_signup button has-text-black is-rounded main-color"
+                  class="nav_signup button has-text-black is-rounded"
                   id="user_signup"
                 >
                   Sign Up
+                </button>
+              </div>
+              <!-- Sign out -->
+              <div class="navbar-item">
+                <button
+                  id="user_signout"
+                  class="is-hidden button has-text-black is-rounded"
+                >
+                  Sign Out
                 </button>
               </div>
             </div>
@@ -192,280 +183,99 @@
       </div>
     </header>
     <main>
-      <!-- main_Homepage -->
-      <div id="home_section" class="content-section is-hidden">
-        <div class="main2 max_width_1200">
-          <div class="container_main2">
-            <!-- main 2 photo -->
-            <div class="main2_photo">
-              <div class="main2_photo_real"></div>
-            </div>
-            <!-- main 2 content -->
-            <div class="main2_content">
-              <p class="main2_title_first">Our Intoriduction</p>
-              <p class="main2_title_second">Who We are</p>
-              <p class="main2_title_third">We are blabla</p>
-              <p class="main_2_title_content">
-                Habitat for Humanity Campus Chapter at the University of
-                Wisconsin – Madison is dedicated to giving local families safe,
-                decent, and affordable housing that strengthens lives and the
-                community as a whole. Join current university students in our
-                ongoing events and help fight housing insecurity in Dane County!
-              </p>
-              <div class="main2_detail_1">
-                <span class="main_2_icon"></span
-                ><span class="main_2_icon_content"
-                  >LoremLoremLoremLoremLorem</span
-                >
-              </div>
-
-              <div class="main2_detail_2">
-                <span class="main_2_icon"></span
-                ><span class="main_2_icon_content"
-                  >LoremLoremLoremLoremLorem</span
-                >
-              </div>
-
-              <button class="main2_button">
-                <a class="button_text" href="about.html"> Overview</a>
-              </button>
-            </div>
+      <!-- main2 -->
+      <div class="main2 max_width_1200">
+        <div class="container_main2">
+          <!-- main 2 photo -->
+          <div class="main2_photo">
+            <div class="main2_photo_real"></div>
           </div>
-        </div>
+          <!-- main 2 content -->
+          <div class="main2_content">
+            <p class="main2_title_first">Our Intoriduction</p>
+            <p class="main2_title_second">Who We are</p>
+            <p class="main2_title_third">We are blabla</p>
+            <p class="main_2_title_content">
+              Habitat for Humanity Campus Chapter at the University of Wisconsin
+              – Madison is dedicated to giving local families safe, decent, and
+              affordable housing that strengthens lives and the community as a
+              whole. Join current university students in our ongoing events and
+              help fight housing insecurity in Dane County!
+            </p>
+            <div class="main2_detail_1">
+              <span class="main_2_icon"></span
+              ><span class="main_2_icon_content"
+                >LoremLoremLoremLoremLorem</span
+              >
+            </div>
 
-        <!-- gallery  -->
-        <div class="index_gallery max_width_1920"></div>
-        <div class="main3 max_width_1200"></div>
-        <div class="index_gallery max_width_1920">
-          <!-- gallery titles -->
-          <div class="gallery_text">
-            <p class="gallery_text_up">Recently Completed</p>
-            <p class="gallery_text_down">GALLERY</p>
-          </div>
-          <!-- gallery pictures -->
-          <div class="gallery_pictures">
-            <img class="gallery_picture1" />
-            <img class="gallery_picture2" />
-            <img class="gallery_picture3" />
-            <img class="gallery_picture4" />
-          </div>
-        </div>
+            <div class="main2_detail_2">
+              <span class="main_2_icon"></span
+              ><span class="main_2_icon_content"
+                >LoremLoremLoremLoremLorem</span
+              >
+            </div>
 
-        <!-- main4  -->
-        <div class="main4 max_width_1200">
-          <!-- meeting title -->
-          <div class="meeting_title">
-            <p class="meeting_title_upper">Habitat for Humanity</p>
-            <p class="meeting_title_lower">MEETINGS</p>
-          </div>
-          <!-- meeting details -->
-          <div class="meeting_detail">
-            <!-- meeting detail 1 -->
-            <div class="meeting_detail_1">
-              <span class="icon1"></span>
-              <p class="meeting_detail_text">
-                We meet bi-weekly on Mondays at 7:00pm at Memorial Union
-                starting September 26th, 2022-2023, with games and treats;
-                contact us for accessibility needs.
-              </p>
-            </div>
-            <!-- meeting detail 2 -->
-            <div class="meeting_detail_1">
-              <p class="icon2"></p>
-              <p class="meeting_detail_text">
-                We're planning fundraisers for this year's family home, with
-                volunteer info. Join Habitat for Humanity – UW Chapter to meet
-                our goals and support a family's home journey.
-              </p>
-            </div>
-            <!-- meeting detail 3 -->
-            <div class="meeting_detail_1">
-              <p class="icon3"></p>
-              <p class="meeting_detail_text">
-                If you are interested in helping out in the future, feel free to
-                send us any questions regarding the event by messaging us
-                directly on our Facebook page.
-              </p>
-            </div>
+            <button class="main2_button">
+              <a class="button_text" href="about.html"> Overview</a>
+            </button>
           </div>
         </div>
       </div>
-      <!-- About Page -->
-      <div class="main_about is-hidden" id="hidden_form">
-        <div class="max_width_1200">
-          <div class="about_main_1">
-            <!-- About title -->
-            <div class="about_title">
-              <p>About</p>
-            </div>
-            <!-- About content -->
-            <div class="about_content">
-              <div class="about_overview">
-                <div class="about_overview_title">Overview</div>
-                <p class="about_overview_contents">
-                  <a href="https://www.habitat.org/" style="color: red"
-                    >Habitat for Humanity International</a
-                  >
-                  seeks to eliminate poverty housing from the world and to make
-                  decent shelter a matter of conscience and action. Habitat
-                  invites people from all walks of life to work together in
-                  partnership to help build houses with families in need.
-                </p>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="about_video max_width_1920">
-          <iframe
-            width="100%"
-            height="100%"
-            src="https://www.youtube.com/embed/bLKXKB6esb4?si=zca8SRlpL_VHKWjr"
-            title="YouTube video player"
-            frameborder="0"
-            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-            referrerpolicy="strict-origin-when-cross-origin"
-            allowfullscreen
-          ></iframe>
-        </div>
-        <div class="max_width_1200">
-          <div class="about_main_2">
-            <div class="about_content">
-              <div class="about_our_mission">
-                <div class="about_our_mission_title">Our Mission</div>
-                <p class="about_our_mission_contents">
-                  The Habitat for Humanity Campus Chapter at University of
-                  Wisconsin-Madison works with its local affiliate,
-                  <a href="https://habitatdane.org/" style="color: red"
-                    >Habitat for Humanity of Dane County</a
-                  >
-                  to achieve the Habitat mission through the four functioning
-                  pillars: Building, Educating, Fundraising, and Advocacy. We do
-                  this through:
-                </p>
-                <p class="about_our_mission_contents_detail_main">Builds</p>
-                <p class="about_our_mission_contents_detail">
-                  We volunteer at our build site every other Saturday throughout
-                  the academic year. We also plan collegiate break trips to
-                  affiliates around the United States and participate in
-                  international Global Village trips.
-                </p>
-                <p class="about_our_mission_contents_detail_main">
-                  Fundraising
-                </p>
-                <p class="about_our_mission_contents_detail">
-                  We host several fundraisers throughout the year in order to
-                  raise money to fund a local Habitat home. We aim to raise
-                  $35,000 a year, which covers about half the construction costs
-                  of a single home.
-                </p>
-                <p class="about_our_mission_contents_detail_main">Education</p>
-                <p class="about_our_mission_contents_detail">
-                  Housing insecurity is a relevant problem in any community. We
-                  educate our members and others about factors that contribute
-                  to poverty and housing vulnerability both in Madison and
-                  throughout the world.
-                </p>
-                <p class="about_our_mission_contents_detail_main">Advocacy</p>
-                <p class="about_our_mission_contents_detail">
-                  We participate in Habitat International’s Act!Speak!Build!
-                  Week in the Spring where we motivate students to think about
-                  housing insecurity in their community through interactive
-                  activities, signs, and tabling.
-                </p>
-              </div>
-              <div class="about_who_we_are_title">Who We Are</div>
-              <p class="about_who_we_are_contents">
-                The Campus Chapter at the University of Wisconsin-Madison is a
-                diverse set of undergraduate and graduate students who share
-                resources, time and talents to make a difference in the Dane
-                County community. We are dedicated to improving the world around
-                us by helping families within our community. We are building the
-                next generation of Habitat volunteers, donors, and leaders
-                through monthly socials, fundraising and volunteer opportunities
-                to support Habitat for Humanity of Dane County.
-              </p>
-              <div class="about_our_history_title">Our History</div>
 
-              <p class="about_our_history_contents_1">
-                The first
-                <a
-                  href="https://www.habitat.org/volunteer/near-you/youth-programs/campus-chapters"
-                  style="color: red"
-                  >Campus Chapter</a
-                >
-                group started at Baylor University in 1987 under its affiliate
-                in Waco, TX. The Campus Chapter at University of
-                Wisconsin-Madison is one of more than 500 campus chapters around
-                the country. Our chapter was founded in the Fall of 1993, just 5
-                years after our affiliate, Habitat for Humanity of Dane County.
-              </p>
-              <p class="about_our_history_contents_2">
-                In the 1995-1996 school year, 6 of our members were invited to
-                hear Millard Fuller (Habitat’s co-founder) speak in Milwaukee,
-                where the chapter’s intentions were set: fundraise and build its
-                own house. In 2000, the chapter’s first sponsored house was
-                built, and the chapter has been able to build each year since.
-                The chapter is largely able to build because of its largest
-                fundraiser, the annual SouperBowl, which was thought up by then
-                high school art teacher Don Hunt in 1995, just two short years
-                after the founding of the group. Other major past fundraisers
-                include the annual Tour de Habitat and Huffin for Habitat.
-              </p>
-              <div class="about_today_title">Today</div>
-              <p class="about_today_contents">
-                Today, Habitat for Humanity-UW Madison generates enough funding
-                to sponsor a Habitat for Humanity home each year. Students from
-                University of Wisconsin-Madison as well as Habitat members
-                volunteer for 14 build days a year, along with newly added
-                ReStore days. Today, the chapter holds Spring and Fall yard
-                cleaning initiatives, manages stadium chair installation in a
-                section at Camp Randall Stadium, works concessions at Badger
-                sporting events, and prepares several small scale fundraisers.
-                On top of fundraising, Habitat participates in Act! Speak!
-                Build! Week through various forms of marketing, simulations, and
-                meetings with local representatives. With over 150 active
-                members and growing, our volunteers contribute over 1500 hours
-                each year!
-              </p>
-            </div>
+      <!-- gallery  -->
+      <div class="index_gallery max_width_1920"></div>
+      <div class="main3 max_width_1200"></div>
+      <div class="index_gallery max_width_1920">
+        <!-- gallery titles -->
+        <div class="gallery_text">
+          <p class="gallery_text_up">Recently Completed</p>
+          <p class="gallery_text_down">GALLERY</p>
+        </div>
+        <!-- gallery pictures -->
+        <div class="gallery_pictures">
+          <img class="gallery_picture1" />
+          <img class="gallery_picture2" />
+          <img class="gallery_picture3" />
+          <img class="gallery_picture4" />
+        </div>
+      </div>
+
+      <!-- main4  -->
+      <div class="main4 max_width_1200">
+        <!-- meeting title -->
+        <div class="meeting_title">
+          <p class="meeting_title_upper">Habitat for Humanity</p>
+          <p class="meeting_title_lower">MEETINGS</p>
+        </div>
+        <!-- meeting details -->
+        <div class="meeting_detail">
+          <!-- meeting detail 1 -->
+          <div class="meeting_detail_1">
+            <span class="icon1"></span>
+            <p class="meeting_detail_text">
+              We meet bi-weekly on Mondays at 7:00pm at Memorial Union starting
+              September 26th, 2022-2023, with games and treats; contact us for
+              accessibility needs.
+            </p>
           </div>
-          <div class="about_main_3">
-            <div class="about_main_3_container">
-              <div class="about_main_3_title">
-                <p class="about_main_3_title_1">Our Intoriduction</p>
-                <p class="about_main_3_title_2">What They Say</p>
-              </div>
-              <div class="about_main_3_content">
-                <div class="about_main_3_right_container">
-                  <div class="about_main_3_photo">
-                    <div class="about_main_3_photo_real_left"></div>
-                  </div>
-                  <div class="about_main_3_photo_content">
-                    <div class="about_main_3_photo_content_detail">
-                      <p>
-                        Humanity Campus Chapter at the University of Wisconsin –
-                        Madison is dedicate d to giving local families safe,
-                        decent
-                      </p>
-                    </div>
-                  </div>
-                </div>
-                <div class="about_main_3_left_container">
-                  <div class="about_main_3_photo_2">
-                    <div class="about_main_3_photo_real_right"></div>
-                  </div>
-                  <div class="about_main_3_photo_content">
-                    <div class="about_main_3_photo_content_detail">
-                      <p>
-                        Humanity Campus Chapter at the University of Wisconsin –
-                        Madison is dedicate d to giving local families safe,
-                        decent
-                      </p>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
+          <!-- meeting detail 2 -->
+          <div class="meeting_detail_1">
+            <p class="icon2"></p>
+            <p class="meeting_detail_text">
+              We're planning fundraisers for this year's family home, with
+              volunteer info. Join Habitat for Humanity – UW Chapter to meet our
+              goals and support a family's home journey.
+            </p>
+          </div>
+          <!-- meeting detail 3 -->
+          <div class="meeting_detail_1">
+            <p class="icon3"></p>
+            <p class="meeting_detail_text">
+              If you are interested in helping out in the future, feel free to
+              send us any questions regarding the event by messaging us directly
+              on our Facebook page.
+            </p>
           </div>
         </div>
       </div>
@@ -509,6 +319,19 @@
         </div>
       </div>
     </footer>
+    <!-- Insert these scripts at the bottom of the HTML, but before you use any Firebase services -->
+
+    <!-- Firebase App (the core Firebase SDK) is always required and must be listed first -->
+    <script src="https://www.gstatic.com/firebasejs/8.3.1/firebase-app.js"></script>
+
+    <!-- If you enabled Analytics in your project, add the Firebase SDK for Analytics -->
+    <script src="https://www.gstatic.com/firebasejs/8.3.1/firebase-analytics.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.3.1/firebase-storage.js"></script>
+
+    <!-- Add Firebase products that you want to use -->
+    <script src="https://www.gstatic.com/firebasejs/8.3.1/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.3.1/firebase-firestore.js"></script>
+
+    <script src="app.js"></script>
   </body>
-  <script src="app.js"></script>
 </html>

@@ -1,3 +1,29 @@
+//firebase
+const firebaseConfig = {
+  apiKey: "AIzaSyAq-CkeNE_K765pauvvO-72oAUIGCE_Jpc",
+  authDomain: "hfh-uwmadison.firebaseapp.com",
+  projectId: "hfh-uwmadison",
+  storageBucket: "hfh-uwmadison.appspot.com",
+  messagingSenderId: "158190324248",
+  appId: "1:158190324248:web:89397ab7a4171eb54e516d",
+};
+// Initialize Firebase
+firebase.initializeApp(firebaseConfig);
+let auth = firebase.auth();
+let db = firebase.firestore();
+let ref = firebase.storage().ref();
+
+// SIGNIN CHECK
+auth.onAuthStateChanged((user) => {
+  if (user) {
+    // User is signed in.
+    r_e("currentuser").innerHTML = auth.currentUser.email;
+    document.getElementById("user_signin").classList.add("is-hidden");
+    document.getElementById("user_signup").classList.add("is-hidden");
+    document.getElementById("signoutbtn").classList.remove("is-hidden");
+  }
+});
+
 // functions
 
 function r_e(id) {
@@ -47,7 +73,7 @@ burger_nav.addEventListener("click", function (event) {
   menu_nav.classList.toggle("is-active");
 });
 
-//singin
+//singin_modal
 let signin = document.querySelector("#signin_modal");
 let user_signin = document.querySelector("#user_signin");
 let signin_background = document.querySelector("#signin_background");
@@ -63,7 +89,7 @@ function signin_close() {
 user_signin.addEventListener("click", signin_open);
 signin_background.addEventListener("click", signin_close);
 
-//signup
+//signup_modal
 let signup = document.querySelector("#signup_modal");
 let user_signup = document.querySelector("#user_signup");
 let signup_background = document.querySelector("#signup_background");
@@ -78,7 +104,7 @@ function signup_close() {
 user_signup.addEventListener("click", signup_open);
 signup_background.addEventListener("click", signup_close);
 
-//to sign up (from sign in modal)
+//to sign up modal (from sign in modal)
 let to_signup = document.querySelector("#to_signup");
 
 function to_signup_open() {
@@ -98,61 +124,127 @@ function to_signin_open() {
 
 to_signin.addEventListener("click", to_signin_open);
 
-// single page navigation
+//sign up user
+
+document.addEventListener("DOMContentLoaded", function () {
+  document
+    .getElementById("signup_form")
+    .addEventListener("submit", function (e) {
+      e.preventDefault();
+
+      const userName = document.getElementById("sign_up_username").value;
+      const email = document.getElementById("sign_up_email").value;
+      const password = document.getElementById("sign_up_password").value;
+
+      auth
+        .createUserWithEmailAndPassword(email, password)
+        .then((userCredential) => {
+          r_e("signup_form").reset();
+          r_e("signup_modal").classList.remove("is-active");
+
+          document.getElementById("user_signin").classList.add("is-hidden");
+          document.getElementById("user_signup").classList.add("is-hidden");
+          document.getElementById("user_signout").classList.remove("is-hidden");
+          db.collection("users").doc(userCredential.user.uid).set({
+            userName: userName,
+            email: email,
+            password: password,
+            Authenticated: 0,
+          });
+
+          alert("Signup successful! Welcome, " + userName);
+          document.getElementById("signup_form").reset();
+          document.getElementById("signup_modal").classList.remove("is-active");
+        })
+        .catch((err) => {
+          alert(err.message);
+        });
+    });
+});
+// Sign In
+document.addEventListener("DOMContentLoaded", function () {
+  const signInForm = document.getElementById("signin_form");
+
+  signInForm.addEventListener("submit", function (e) {
+    e.preventDefault();
+
+    const email = document.getElementById("sign_in_email").value;
+    const password = document.getElementById("sign_in_password").value;
+
+    auth
+      .signInWithEmailAndPassword(email, password)
+      .then((userCredential) => {
+        // Sign-in successful.
+        // Reset the sign-in form
+        signInForm.reset();
+
+        // Hide the sign-in modal if you have one
+        r_e("signin_modal").classList.remove("is-active");
+
+        document.getElementById("user_signin").classList.add("is-hidden");
+        document.getElementById("user_signup").classList.add("is-hidden");
+        document.getElementById("user_signout").classList.remove("is-hidden");
+
+        const currentUserElement = document.getElementById("currentuser");
+        if (currentUserElement) {
+          currentUserElement.innerText = userCredential.user.email;
+        }
+
+        alert("Welcome!");
+      })
+      .catch((err) => {
+        // Handle sign-in errors
+        console.error("Sign-in failed", err);
+        alert("Please check your email and password and try again.");
+      });
+  });
+});
+
+//sign_out user
+document.getElementById("user_signout").addEventListener("click", () => {
+  auth
+    .signOut()
+    .then(() => {
+      document.getElementById("user_signin").classList.remove("is-hidden");
+      document.getElementById("user_signup").classList.remove("is-hidden");
+      document.getElementById("user_signout").classList.add("is-hidden");
+      alert("Successfully Signed Out!");
+    })
+    .catch((err) => alert(err.message));
+});
+
+//single page naviation
 let HomeBtn = document.querySelector("#HomeBtn");
 let AboutBtn = document.querySelector("#AboutBtn");
 let GalleryBtn = document.querySelector("#GalleryBtn");
 let PostBtn = document.querySelector("#PostBtn");
 let EventBtn = document.querySelector("#EventBtn");
 
-let homeSection = document.querySelector("#home_section");
-let aboutSection = document.querySelector("#about_section");
-let gallerySection = document.querySelector("#gallery_section");
-let postSection = document.querySelector("#post_section");
-let eventSection = document.querySelector("#event_section");
-
-// array of all sections
-let allSections = [
-  homeSection,
-  aboutSection,
-  gallerySection,
-  postSection,
-  eventSection,
-];
-
-// function to hide all sections
-function hideAllSections() {
-  allSections.forEach((section) => {
-    section.classList.add("is-hidden");
-  });
-}
+let hidden_form = document.querySelector("#hidden_form");
+let content = document.querySelector("#content");
 
 // HomeBtn nav bar link
 HomeBtn.addEventListener("click", () => {
-  hideAllSections();
-  homeSection.classList.remove("is-hidden");
+  hidden_form.classList.remove("is-hidden");
+  content.classList.add("is-hidden");
 });
-
 // AboutBTN nav bar link
-AboutBtn.addEventListener("click", () => {
-  hideAllSections();
-  aboutSection.classList.remove("is-hidden");
+HomeBtn.addEventListener("click", () => {
+  hidden_form.classList.remove("is-hidden");
+  content.classList.add("is-hidden");
 });
-
 // GalleryBTn nav bar link
-GalleryBtn.addEventListener("click", () => {
-  hideAllSections();
-  gallerySection.classList.remove("is-hidden");
+HomeBtn.addEventListener("click", () => {
+  hidden_form.classList.remove("is-hidden");
+  content.classList.add("is-hidden");
 });
-
-// PostBtn nav bar link
-PostBtn.addEventListener("click", () => {
-  hideAllSections();
-  postSection.classList.remove("is-hidden");
+// PodyBtn nav bar link
+HomeBtn.addEventListener("click", () => {
+  hidden_form.classList.remove("is-hidden");
+  content.classList.add("is-hidden");
 });
-
 // EventBtn nav bar link
-EventBtn.addEventListener("click", () => {
-  hideAllSections();
-  eventSection.classList.remove("is-hidden");
+HomeBtn.addEventListener("click", () => {
+  hidden_form.classList.remove("is-hidden");
+  content.classList.add("is-hidden");
 });
