@@ -79,4 +79,46 @@
       });
     </script>
   </body>
+
+  <script>
+    document
+      .querySelector(".write_post_button")
+      .addEventListener("click", () => {
+        let title = document.querySelector(".write_post_title_input").value;
+
+        let content = document.querySelector(".ql-editor").innerHTML;
+
+        //get Detla object of the content
+        let delta = quill.getContents();
+        let text = quill.getText();
+
+        console.log(delta);
+        console.log(text);
+
+        console.log(title);
+        console.log(content);
+
+        firebase
+          .firestore()
+          .collection("posts")
+          .add({
+            title: title,
+            content: content,
+            timestamp: firebase.firestore.FieldValue.serverTimestamp(),
+            username: firebase.auth().currentUser,
+          })
+          .then(() => {
+            alert("Post successfully!");
+            //need to change this if we are going to use single page
+            window.location.href = "post.html";
+          })
+          .catch((error) => {
+            console.error("Error adding document: ", error);
+          });
+
+        // clear the input
+        document.querySelector(".write_post_title_input").value = "";
+        document.querySelector(".ql-editor").innerHTML = "";
+      });
+  </script>
 </html>
