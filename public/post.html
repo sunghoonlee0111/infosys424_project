@@ -77,35 +77,39 @@
         <div class="post_title">
           <p>POST</p>
         </div>
-        <!-- post content -->
-        <div class="post_content_box">
-          <!-- thumbnail -->
-          <img
-            class="post_thumbnail"
-            src="image/samplepic2.jpg"
-            alt="Post Thumbnail"
-          />
-          <!-- texts -->
-          <div class="post_texts">
-            <!-- username and date -->
-            <div class="post_nameanddate">
-              <div class="post_username">Sunghoon Lee</div>
-              <div class="post_time">Jan 11, 1999</div>
+        <!-- post container -->
+        <div id="post_container">
+          <!-- post content -->
+          <div class="post_content_box">
+            <!-- thumbnail -->
+            <img
+              class="post_thumbnail"
+              src="image/samplepic2.jpg"
+              alt="Post Thumbnail"
+            />
+            <!-- texts -->
+            <div class="post_texts">
+              <!-- username and date -->
+              <div class="post_nameanddate">
+                <div class="post_username">Sunghoon Lee</div>
+                <div class="post_time">Jan 11, 1999</div>
+              </div>
+              <!-- title and texts -->
+              <span class="post_text_title">
+                <a href="inside_post.html">TITLE</a></span
+              >
+              <p class="post_text">
+                Lorem ipsum dolor sit amet consectetur, adipisicing elit. Vitae
+                architecto suscipit necessitatibus, dolores enim aperiam
+                repudiandae porro corporis. Distinctio nemo sit nesciunt cum a,
+                omnis est. Corrupti error dolorem quas. Aliquid aliquam ipsa
+                laudantium accusantium nobis blanditiis excepturi accusamus
+                autem.
+              </p>
+              <span class="post_readmore">
+                <a href="inside_post.html">Read More</a>
+              </span>
             </div>
-            <!-- title and texts -->
-            <span class="post_text_title">
-              <a href="inside_post.html">TITLE</a></span
-            >
-            <p class="post_text">
-              Lorem ipsum dolor sit amet consectetur, adipisicing elit. Vitae
-              architecto suscipit necessitatibus, dolores enim aperiam
-              repudiandae porro corporis. Distinctio nemo sit nesciunt cum a,
-              omnis est. Corrupti error dolorem quas. Aliquid aliquam ipsa
-              laudantium accusantium nobis blanditiis excepturi accusamus autem.
-            </p>
-            <span class="post_readmore">
-              <a href="inside_post.html">Read More</a>
-            </span>
           </div>
         </div>
       </div>
@@ -177,8 +181,8 @@
 
   <script>
     document.addEventListener("DOMContentLoaded", function () {
-      const postsContainer = document.querySelector(".post_main");
-      const defaultThumbnail = "image/Banner.png"; // Default thumbnail if no image is found
+      let postsContainer = document.querySelector("#post_container");
+      let defaultThumbnail = "image/Banner.png"; // Default thumbnail if no image found
 
       // Function to limit the number of words in the excerpt
       function createExcerpt(content, wordLimit) {
@@ -192,10 +196,13 @@
       // Function to extract the first image from the Delta object
       function getFirstImageFromDelta(delta) {
         const ops = JSON.parse(delta).ops;
-        const imgOp = ops.find(
-          (op) => op.insert && typeof op.insert === "object" && op.insert.image
-        );
-        return imgOp ? imgOp.insert.image : defaultThumbnail;
+        //console.log(ops);
+        const imgOp = ops.find((op) => op.insert.image);
+        if (imgOp != null) {
+          return imgOp.insert.image;
+        } else {
+          return defaultThumbnail;
+        }
       }
 
       // Fetch posts from Firestore
@@ -206,62 +213,68 @@
         .get()
         .then((querySnapshot) => {
           querySnapshot.forEach((doc) => {
-            const postData = doc.data();
+            let doc_id = doc.id;
 
-            // Create the post content box
-            const postContentBox = document.createElement("div");
-            postContentBox.className = "post_content_box";
+            // console.log(doc.id, " => ", doc.data());
+            let postData = doc.data();
 
-            // Get the first image from the content
-            const postThumbnailSrc = getFirstImageFromDelta(postData.content);
+            //Get the first image from the content
+            let postThumbnailSrc = getFirstImageFromDelta(postData.content);
 
-            // Add the thumbnail
-            const postThumbnail = document.createElement("img");
-            postThumbnail.className = "post_thumbnail";
-            postThumbnail.src = postThumbnailSrc;
-            postContentBox.appendChild(postThumbnail);
+            //Get post username and post time information
+            let postUsername = postData.username;
+            var postTime = new Date(postData.timestamp.seconds * 1000);
 
-            // Create the text container
-            const postTexts = document.createElement("div");
-            postTexts.className = "post_texts";
+            postTime = postTime.toLocaleDateString("en-US");
 
-            // Parse the date and handle invalid dates
-            const timestamp = Date.parse(postData.timestamp);
-            const date = !isNaN(timestamp) ? new Date(timestamp) : new Date();
-            const formattedDate = date.toLocaleDateString("en-US");
+            //Get the post title and content information
+            let postTitle = postData.title;
+            let postContent = postData.contentText;
 
-            // Add username and formatted date
-            const postNameAndDate = document.createElement("div");
-            postNameAndDate.className = "post_nameanddate";
-            postNameAndDate.innerHTML = `<div class="post_username">${
-              postData.username || "Anonymous"
-            }</div>
-                                         <div class="post_time">${formattedDate}</div>`;
-            postTexts.appendChild(postNameAndDate);
+            //Create the post element
+            let html = `<div class="post_content_box">`;
 
-            // Add title
-            const postTitle = document.createElement("span");
-            postTitle.className = "post_text_title";
-            postTitle.innerHTML = `<a href="inside_post.html?id=${doc.id}">${postData.title}</a>`;
-            postTexts.appendChild(postTitle);
+            html += `<!-- thumbnail -->
+          <img
+            class="post_thumbnail"
+            src="${postThumbnailSrc}"
+            alt="Post Thumbnail"
+          />
+          <!-- texts -->
+          <div class="post_texts">
+            <!-- username and date -->
+            <div class="post_nameanddate">
+              <div class="post_username">${postUsername}</div>
+              <div class="post_time">${postTime}</div>
+            </div>
+            <!-- title and texts -->
+            <span class="post_text_title">
+              <a  value = ${doc_id} class = "to_post_detail">${postTitle}</a></span
+            >
+            <p class="post_text">
+              ${createExcerpt(postContent, 30)}
+            </p>
+            <span class="post_readmore">
+              <a value = ${doc_id} class = "to_post_detail">Read More</a>
+            </span>
+          </div>`;
+            html += `</div>`;
 
-            // Add excerpt
-            const postExcerpt = document.createElement("p");
-            postExcerpt.className = "post_text";
-            postExcerpt.textContent = createExcerpt(postData.contentText, 20); // Assuming you want the first 20 words
-            postTexts.appendChild(postExcerpt);
+            postsContainer.innerHTML += html;
+          });
 
-            // Add read more link
-            const readMore = document.createElement("span");
-            readMore.className = "post_readmore";
-            readMore.innerHTML = `<a href="inside_post.html?id=${doc.id}">Read More</a>`;
-            postTexts.appendChild(readMore);
+          //function to navigate to inside_post with assigned doc id when the post is clicked
+          function navigateToInsidePost(doc_id) {
+            console.log(doc_id);
+          }
 
-            // Append the texts container to the post content box
-            postContentBox.appendChild(postTexts);
+          //add click event listener to right buttons with class name "to_post_detail"
 
-            // Append the post content box to the main container
-            postsContainer.appendChild(postContentBox);
+          document.querySelectorAll(".to_post_detail").forEach((button) => {
+            button.addEventListener("click", (e) => {
+              //avtivate function navigateToInsidePost with assigned doc id
+              navigateToInsidePost(e.target.getAttribute("value"));
+            });
           });
         })
         .catch((error) => {
