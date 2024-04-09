@@ -86,7 +86,7 @@
           <p class="inside_post_comments_title">Comments</p>
 
           <!-- write your comments -->
-          <div class="inside_post_write_comment">
+          <div class="inside_post_write_comment" id="user_comment">
             <textarea
               class="inside_post_write_comment_input"
               id="userinput_comment"
@@ -95,49 +95,13 @@
               placeholder="Write your comment here..."
             ></textarea>
 
-            <button class="inside_post_write_comment_button">Add</button>
+            <button class="inside_post_write_comment_button" id="add_comment">
+              Add
+            </button>
           </div>
 
           <!-- comment -->
-          <div class="inside_post_comment">
-            <div class="inside_post_comment_username">
-              <p>User Name</p>
-            </div>
-            <p class="inside_post_comment_content">
-              Lorem ipsum dolor sit amet consectetur adipisicing elit. Eos quos
-              voluptatum libero repellat! Atque, similique dicta.
-            </p>
-          </div>
-
-          <div class="inside_post_comment">
-            <div class="inside_post_comment_username">
-              <p>User Name</p>
-            </div>
-            <p class="inside_post_comment_content">
-              Lorem ipsum dolor sit amet consectetur adipisicing elit. Eos quos
-              voluptatum libero repellat! Atque, similique dicta.
-            </p>
-          </div>
-
-          <div class="inside_post_comment">
-            <div class="inside_post_comment_username">
-              <p>User Name</p>
-            </div>
-            <p class="inside_post_comment_content">
-              Lorem ipsum dolor sit amet consectetur adipisicing elit. Eos quos
-              voluptatum libero repellat! Atque, similique dicta.
-            </p>
-          </div>
-
-          <div class="inside_post_comment">
-            <div class="inside_post_comment_username">
-              <p>User Name</p>
-            </div>
-            <p class="inside_post_comment_content">
-              Lorem ipsum dolor sit amet consectetur adipisicing elit. Eos quos
-              voluptatum libero repellat! Atque, similique dicta.
-            </p>
-          </div>
+          <div id="comments_container"></div>
         </div>
       </div>
     </main>
@@ -208,10 +172,78 @@
     };
     firebase.initializeApp(firebaseConfig);
 
-    //<!-- use this doc id for test: IGUq1UyyxOBv8YuTeToE-->
+    // function to add the comment
+    document
+      .getElementById("add_comment")
+      .addEventListener("click", () => saveComment(temp_id));
 
-    let temp_id = "IGUq1UyyxOBv8YuTeToE";
-    console.log(temp_id);
+    // function to save  the comment
+    function saveComment(postid) {
+      //record doc id
+      let post_id = postid;
+      //get the comment from the user
+      let comments = document.getElementById("userinput_comment").value;
+      //record current time
+      let timestamp = new Date();
+      //record the user name
+      //시발 이거 되는건가 로그인이 안되있어서 모르겠다
+      let user_id = firebase.auth().currentUser;
+
+      //save the comment to the firestore
+      firebase
+        .firestore()
+        .collection("comments")
+        .add({
+          post_id: post_id,
+          comments: comments,
+          timestamp: firebase.firestore.FieldValue.serverTimestamp(),
+          user_id: user_id,
+        })
+        .then(() => {
+          alert("Comment added!");
+          document.getElementById("userinput_comment").value = "";
+          displayComments(post_id);
+        })
+        .catch((error) => {
+          alert("Error adding comment: ", error);
+        });
+    }
+
+    //function to display comments
+    function displayComments(post_id) {
+      //get the comment from the firestore
+      firebase
+        .firestore()
+        .collection("comments")
+        .orderBy("timestamp", "desc")
+        .where("post_id", "==", post_id)
+        .get()
+        .then((e) => {
+          document.getElementById("comments_container").innerHTML = ``;
+
+          e.forEach((doc) => {
+            let comment = doc.data().comments;
+            let user = doc.data().user_id;
+            let timestamp = doc.data().timestamp;
+            timestamp = timestamp.toDate().toLocaleString("en-US");
+
+            let html = `
+              <div class="inside_post_comment">
+                <div class="inside_post_comment_username">
+                  <p>${user}</p>
+                </div>
+                <p class="inside_post_comment_content">${comment}</p>
+              </div>
+            `;
+
+            document.getElementById("comments_container").innerHTML += html;
+          });
+        });
+    }
+
+    //use this doc id for test: HrL41oPIoH6G8qrWWcWS
+
+    let temp_id = "HrL41oPIoH6G8qrWWcWS";
 
     //this is promise
     const post_data = firebase
@@ -248,6 +280,7 @@
                   <div id="hidden-editor" ></div>
 
               </div>
+              <div id="hidden-box" style="display: none;">${temp_id}</div>
             `;
         document.getElementById("inside_post_container").innerHTML = html;
 
