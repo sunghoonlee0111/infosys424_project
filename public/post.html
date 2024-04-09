@@ -222,10 +222,10 @@
             let postThumbnailSrc = getFirstImageFromDelta(postData.content);
 
             //Get post username and post time information
-            let postUsername = postData.username;
+            let postUsername = postData.username || "Anonymous";
             var postTime = new Date(postData.timestamp.seconds * 1000);
 
-            postTime = postTime.toLocaleDateString("en-US");
+            postTime = postTime.toLocaleString("en-US");
 
             //Get the post title and content information
             let postTitle = postData.title;

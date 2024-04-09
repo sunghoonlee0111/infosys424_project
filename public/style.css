@@ -1055,3 +1055,13 @@ footer {
   background-color: rgba(71, 118, 164, 0.776);
   cursor: pointer;
 }
+
+/* quill js */
+.ql-container.ql-snow {
+  border: none !important;
+  border-radius: 5px;
+  padding: 10px;
+  margin-bottom: 10px;
+  background-color: rgba(248, 247, 240, 1);
+  font-size: 18px;
+}

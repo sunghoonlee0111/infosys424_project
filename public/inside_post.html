@@ -15,6 +15,11 @@
       href="https://fonts.googleapis.com/css2?family=Covered+By+Your+Grace&family=Manrope:wght@200..800&display=swap"
       rel="stylesheet"
     />
+
+    <link
+      href="https://cdn.jsdelivr.net/npm/quill@2.0.0-rc.4/dist/quill.snow.css"
+      rel="stylesheet"
+    />
   </head>
 
   <body>
@@ -73,26 +78,7 @@
     <main class="max_width_1200">
       <!-- inside post -->
       <div class="inside_post_main">
-        <!-- inside post title -->
-        <div class="inside_post_title">
-          <p>Post TItle #1</p>
-        </div>
-
-        <!-- inside post content -->
-        <div class="inside_post_content">
-          <!-- post author and date section -->
-          <div class="inside_post_author_date">
-            <p class="inside_post_author">Author: User Name</p>
-            <p class="inside_post_date">Date: 2021-10-10</p>
-          </div>
-          <!-- post contents section -->
-          <img class="inside_post_image" src="image/samplepic2.jpg" alt="" />
-
-          <p>
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam
-            suscipit, nunc nec lacinia ultricies, nunc nunc ultricies nunc, nec
-          </p>
-        </div>
+        <div id="inside_post_container"></div>
 
         <!-- inside post comment -->
         <div class="inside_post_comments_section">
@@ -196,8 +182,90 @@
     </footer>
   </body>
 
-  <script>
-    //get the user input from firestore
+  <!-- Firebase App (the core Firebase SDK) is always required and must be listed first -->
+  <script src="https://www.gstatic.com/firebasejs/8.3.1/firebase-app.js"></script>
+
+  <!-- If you enabled Analytics in your project, add the Firebase SDK for Analytics -->
+  <script src="https://www.gstatic.com/firebasejs/8.3.1/firebase-analytics.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.3.1/firebase-storage.js"></script>
+
+  <!-- Add Firebase products that you want to use -->
+  <script src="https://www.gstatic.com/firebasejs/8.3.1/firebase-auth.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.3.1/firebase-firestore.js"></script>
+
+  <!-- Include the Quill library -->
+  <script src="https://cdn.jsdelivr.net/npm/quill@2.0.0-rc.4/dist/quill.js"></script>
+
+  <script type="module">
+    // Your web app's Firebase configuration
+    const firebaseConfig = {
+      apiKey: "AIzaSyAq-CkeNE_K765pauvvO-72oAUIGCE_Jpc",
+      authDomain: "hfh-uwmadison.firebaseapp.com",
+      projectId: "hfh-uwmadison",
+      storageBucket: "hfh-uwmadison.appspot.com",
+      messagingSenderId: "158190324248",
+      appId: "1:158190324248:web:89397ab7a4171eb54e516d",
+    };
+    firebase.initializeApp(firebaseConfig);
+
+    //<!-- use this doc id for test: IGUq1UyyxOBv8YuTeToE-->
+
+    let temp_id = "IGUq1UyyxOBv8YuTeToE";
+    console.log(temp_id);
+
+    //this is promise
+    const post_data = firebase
+      .firestore()
+      .collection("posts")
+      .doc(temp_id)
+      .get()
+      .then((e) => {
+        //console.log(e.data());
+        let post_title = e.data().title;
+        let post_author = e.data().author || "Anonymous";
+        var post_date = e.data().timestamp;
+        post_date = post_date.toDate().toLocaleString("en-US");
+        //this is delta format
+        let post_content = e.data().content;
+
+        let html = ``;
+
+        html += `
+              <!-- inside post title -->
+              <div class="inside_post_title">
+                <p>${post_title}</p>
+              </div>
+
+              <!-- inside post content -->
+              <div class="inside_post_content">
+                <!-- post author and date section -->
+                <div class="inside_post_author_date">
+                  <p class="inside_post_author">Author: ${post_author}</p>
+                  <p class="inside_post_date">Date: ${post_date}</p>
+                </div>
+                <!-- post contents section -->
+
+                  <div id="hidden-editor" ></div>
+
+              </div>
+            `;
+        document.getElementById("inside_post_container").innerHTML = html;
+
+        //
+        var hiddenQuill = new Quill("#hidden-editor", {
+          modules: {
+            toolbar: false,
+          },
+          readOnly: true,
+          theme: "snow",
+        });
+
+        // Set the Delta content to the hidden editor
+        let deltaContent = JSON.parse(post_content);
+
+        // Then set the contents using the parsed Delta object
+        hiddenQuill.setContents(deltaContent);
+      });
   </script>
 
   <script src="app.js"></script>
