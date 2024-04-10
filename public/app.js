@@ -792,6 +792,8 @@ auth.onAuthStateChanged(function (user) {
       });
   } else {
     // Administrator is signed out.
+    let add_gallery_Btn = document.querySelector("#add_picture_button_box");
+    let add_post_Btn = document.querySelector("#add_post_button_box");
     add_gallery_Btn.classList.add("is-hidden");
     add_post_Btn.classList.add("is-hidden");
   }
