@@ -615,7 +615,10 @@ async function saveComment(postid) {
   }
 
   //record doc id
-  let post_id = postid;
+  let post_id = document
+    .getElementById("add_comment")
+    .getAttribute("data-postid");
+
   //get the comment from the user
   let comments = document.getElementById("userinput_comment").value;
   if (comments === "") {
@@ -753,9 +756,12 @@ function display_content(docid) {
       hiddenQuill.setContents(deltaContent);
 
       //
-      document.getElementById("add_comment").addEventListener("click", (e) => {
-        saveComment(docid);
-      });
+      // Assuming 'post' is the current post object with an ID property
+      document.getElementById("add_comment").setAttribute("data-postid", docid);
+
+      document
+        .getElementById("add_comment")
+        .addEventListener("click", saveComment);
 
       //display comments
       displayComments(docid);
