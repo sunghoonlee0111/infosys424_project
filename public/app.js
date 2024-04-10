@@ -401,6 +401,15 @@ document.addEventListener("DOMContentLoaded", function () {
     //without any html tags and formatting and new lines and limit to 100 characters
     let contentText = quill.getText().replace(/\n/g, " ").substring(0, 5000);
 
+    if (title === "") {
+      alert("Please enter a title!");
+      return;
+    }
+    if (contentText === "") {
+      alert("Please enter content!");
+      return;
+    }
+
     firebase
       .firestore()
       .collection("posts")
@@ -530,15 +539,15 @@ document.addEventListener("DOMContentLoaded", function () {
 
       //function to navigate to inside_post with assigned doc id when the post is clicked
       function navigateToInsidePost(doc_id) {
-        console.log(doc_id);
+        console.log("Navigating to inside post with doc id: ", doc_id);
+        display_content(doc_id);
       }
 
       //add click event listener to right buttons with class name "to_post_detail"
 
-      // temp temp temp temp
       document.querySelectorAll(".to_post_detail").forEach((button) => {
         button.addEventListener("click", (e) => {
-          //avtivate function navigateToInsidePost with assigned doc id
+          //activate function navigateToInsidePost with assigned doc id
           navigateToInsidePost(e.target.getAttribute("value"));
         });
       });
@@ -559,6 +568,11 @@ function saveComment(postid) {
   let post_id = postid;
   //get the comment from the user
   let comments = document.getElementById("userinput_comment").value;
+  if (comments === "") {
+    alert("Please enter a comment!");
+    return;
+  }
+
   //record current time
   let timestamp = new Date();
   //record the user name
@@ -617,28 +631,25 @@ function displayComments(post_id) {
     });
 }
 
-//use this doc id for test: HrL41oPIoH6G8qrWWcWS
+function display_content(docid) {
+  //this is promise
+  const post_data = firebase
+    .firestore()
+    .collection("posts")
+    .doc(docid)
+    .get()
+    .then((e) => {
+      //console.log(e.data());
+      let post_title = e.data().title;
+      let post_author = e.data().author || "Anonymous";
+      var post_date = e.data().timestamp;
+      post_date = post_date.toDate().toLocaleString("en-US");
+      //this is delta format
+      let post_content = e.data().content;
 
-let temp_id = "IGUq1UyyxOBv8YuTeToE";
+      let html = ``;
 
-//this is promise
-const post_data = firebase
-  .firestore()
-  .collection("posts")
-  .doc(temp_id)
-  .get()
-  .then((e) => {
-    //console.log(e.data());
-    let post_title = e.data().title;
-    let post_author = e.data().author || "Anonymous";
-    var post_date = e.data().timestamp;
-    post_date = post_date.toDate().toLocaleString("en-US");
-    //this is delta format
-    let post_content = e.data().content;
-
-    let html = ``;
-
-    html += `
+      html += `
          <!-- inside post title -->
          <div class="inside_post_title">
            <p>${post_title}</p>
@@ -656,25 +667,26 @@ const post_data = firebase
              <div id="hidden-editor" ></div>
 
          </div>
-         <div id="hidden-box" style="display: none;">${temp_id}</div>
+         <div id="hidden-box" style="display: none;">${docid}</div>
        `;
-    document.getElementById("inside_post_container").innerHTML = html;
+      document.getElementById("inside_post_container").innerHTML = html;
 
-    //
-    var hiddenQuill = new Quill("#hidden-editor", {
-      modules: {
-        toolbar: false,
-      },
-      readOnly: true,
-      theme: "snow",
+      //
+      var hiddenQuill = new Quill("#hidden-editor", {
+        modules: {
+          toolbar: false,
+        },
+        readOnly: true,
+        theme: "snow",
+      });
+
+      // Set the Delta content to the hidden editor
+      let deltaContent = JSON.parse(post_content);
+
+      // Then set the contents using the parsed Delta object
+      hiddenQuill.setContents(deltaContent);
+
+      //display comments
+      displayComments(docid);
     });
-
-    // Set the Delta content to the hidden editor
-    let deltaContent = JSON.parse(post_content);
-
-    // Then set the contents using the parsed Delta object
-    hiddenQuill.setContents(deltaContent);
-
-    //display comments
-    displayComments(temp_id);
-  });
+}
