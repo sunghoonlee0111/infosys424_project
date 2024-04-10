@@ -329,9 +329,11 @@ async function addPicture() {
       return;
     }
 
-    let timestamp = new Date();
+    //set unique name for the image
+    let timestamp = Date.now();
+    let timestampString = timestamp.toString();
     let storageRef = firebase.storage().ref();
-    let fileRef = storageRef.child(`gallery_images/${timestamp}`);
+    let fileRef = storageRef.child(`gallery_images/${timestampString}`);
     await fileRef.put(file);
     let url = await fileRef.getDownloadURL();
     console.log(timestamp, url);
@@ -368,8 +370,15 @@ function displayPictures() {
     .onSnapshot((e) => {
       e.forEach((doc) => {
         let data = doc.data();
-        html += `<img class="gallery_pics" src="${data.url}" value="${data.timestamp}" alt="gallery photo" />`;
+        let timestamp = data.timestamp.toString();
+        html += `<img class="gallery_pics" src="${data.url}" value="${timestamp}" alt="gallery photo" />
+        <button class="delete_button" value="${timestamp}">Delete</button>
+        
+        
+        
+        `;
       });
+
       document.getElementById("gallery_pics_container").innerHTML = html;
     });
 }
@@ -821,3 +830,41 @@ auth.onAuthStateChanged(function (user) {
     add_post_Btn.classList.add("is-hidden");
   }
 });
+
+//Delete picture in gallery
+function deletePicture(timestamp) {
+  let storageRef = firebase.storage().ref();
+  let fileRef = storageRef.child(`gallery_images/${timestamp}`);
+  fileRef
+    .delete()
+    .then(() => {
+      //delete gallery db
+      firebase
+        .firestore()
+        .collection("gallery")
+        .where("timestamp", "==", parseInt(timestamp))
+        .get()
+        .then((querySnapshot) => {
+          querySnapshot.forEach((doc) => {
+            doc.ref.delete();
+          });
+        })
+        .then(() => {
+          alert("File deleted successfully!");
+          displayPictures();
+        });
+    })
+    .catch((error) => {
+      console.error("Error deleting file: ", error);
+    });
+}
+
+// Delete button
+document
+  .getElementById("gallery_pics_container")
+  .addEventListener("click", (e) => {
+    if (e.target.classList.contains("delete_button")) {
+      let timestamp = e.target.getAttribute("value");
+      deletePicture(timestamp);
+    }
+  });
