@@ -716,3 +716,35 @@ function display_content(docid) {
       displayComments(docid);
     });
 }
+// show the add gallery and post button only when the user is authenticated
+let add_gallery_Btn = document.querySelector("#add_picture_button_box");
+let add_post_Btn = document.querySelector("#add_post_button_box");
+auth.onAuthStateChanged(function (user) {
+  if (user) {
+    // Get the user document from Firestore
+    firebase
+      .firestore()
+      .collection("users")
+      .doc(user.uid)
+      .get()
+      .then((doc) => {
+        if (doc.exists) {
+          // Check if Authenticated field is 1
+          if (doc.data().Authenticated === 1) {
+            // Remove the is-hidden
+            add_gallery_Btn.classList.remove("is-hidden");
+            add_post_Btn.classList.remove("is-hidden");
+            alert("This ID is only for an administrator");
+          } else {
+            // Add the 'is-hidden' class
+            add_gallery_Btn.classList.add("is-hidden");
+            add_post_Btn.classList.add("is-hidden");
+          }
+        }
+      });
+  } else {
+    // Administrator is signed out.
+    add_gallery_Btn.classList.add("is-hidden");
+    add_post_Btn.classList.add("is-hidden");
+  }
+});
