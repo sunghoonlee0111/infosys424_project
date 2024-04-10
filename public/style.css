@@ -54,11 +54,7 @@ body {
   align-items: center;
   font-weight: 600;
 }
-.navbar-menu {
-  flex-grow: 1;
-  flex-shrink: 0;
-  margin-left: 25px;
-}
+
 nav {
   color: black;
 }
