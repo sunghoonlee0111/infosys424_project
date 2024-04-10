@@ -223,7 +223,7 @@
 
           e.forEach((doc) => {
             let comment = doc.data().comments;
-            let user = doc.data().user_id;
+            let user = doc.data().user_id || "Anonymous";
             let timestamp = doc.data().timestamp;
             timestamp = timestamp.toDate().toLocaleString("en-US");
 
@@ -243,7 +243,7 @@
 
     //use this doc id for test: HrL41oPIoH6G8qrWWcWS
 
-    let temp_id = "HrL41oPIoH6G8qrWWcWS";
+    let temp_id = "IGUq1UyyxOBv8YuTeToE";
 
     //this is promise
     const post_data = firebase
@@ -298,6 +298,9 @@
 
         // Then set the contents using the parsed Delta object
         hiddenQuill.setContents(deltaContent);
+
+        //display comments
+        displayComments(temp_id);
       });
   </script>
 

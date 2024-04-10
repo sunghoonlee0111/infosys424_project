@@ -76,28 +76,21 @@
         <div class="gallery_title">
           <p>GALLERY</p>
         </div>
+        <!-- add pictire button -->
+
+        <div id="add_picture_button_box">
+          <button class="button" id="add_picture_button">Add Picture</button>
+          <input
+            style="display: none"
+            class="input"
+            type="file"
+            id="add_picture_input"
+            placeholder="Add Picture"
+          />
+        </div>
+
         <!-- gallery content -->
-        <div class="gallery_content">
-          <img
-            class="gallery_pics"
-            src="image/samplepic1.jpg"
-            alt="gallery photo"
-          />
-          <img
-            class="gallery_pics"
-            src="image/samplepic2.jpg"
-            alt="gallery photo"
-          />
-          <img
-            class="gallery_pics"
-            src="image/samplepic3.jpg"
-            alt="gallery photo"
-          />
-          <img
-            class="gallery_pics"
-            src="image/samplepic4.jpg"
-            alt="gallery photo"
-          />
+        <div class="gallery_content" id="gallery_pics_container">
           <img
             class="gallery_pics"
             src="image/Banner.png"
@@ -105,87 +98,12 @@
           />
           <img
             class="gallery_pics"
-            src="image/samplepic6.jpg"
-            alt="gallery photo"
-          />
-          <img
-            class="gallery_pics"
-            src="image/samplepic7.jpg"
-            alt="gallery photo"
-          />
-          <img
-            class="gallery_pics"
-            src="image/samplepic1.jpg"
-            alt="gallery photo"
-          />
-          <img
-            class="gallery_pics"
             src="image/samplepic2.jpg"
             alt="gallery photo"
           />
           <img
             class="gallery_pics"
             src="image/samplepic3.jpg"
-            alt="gallery photo"
-          />
-          <img
-            class="gallery_pics"
-            src="image/samplepic4.jpg"
-            alt="gallery photo"
-          />
-          <img
-            class="gallery_pics"
-            src="image/samplepic5.jpg"
-            alt="gallery photo"
-          />
-          <img
-            class="gallery_pics"
-            src="image/who_we_are.png"
-            alt="gallery photo"
-          />
-          <img
-            class="gallery_pics"
-            src="image/samplepic6.jpg"
-            alt="gallery photo"
-          />
-          <img
-            class="gallery_pics"
-            src="image/samplepic7.jpg"
-            alt="gallery photo"
-          />
-          <img
-            class="gallery_pics"
-            src="image/samplepic1.jpg"
-            alt="gallery photo"
-          />
-          <img
-            class="gallery_pics"
-            src="image/samplepic2.jpg"
-            alt="gallery photo"
-          />
-          <img
-            class="gallery_pics"
-            src="image/samplepic3.jpg"
-            alt="gallery photo"
-          />
-          <img
-            class="gallery_pics"
-            src="image/samplepic4.jpg"
-            alt="gallery photo"
-          />
-          <img
-            class="gallery_pics"
-            src="image/samplepic5.jpg"
-            alt="gallery photo"
-          />
-          <img
-            class="gallery_pics"
-            src="image/samplepic6.jpg"
-            alt="gallery photo"
-          />
-          <img
-            class="gallery_pics"
-            src="image/samplepic7.jpg"
             alt="gallery photo"
           />
         </div>
@@ -229,5 +147,97 @@
       </div>
     </footer>
   </body>
+
+  <!-- Firebase App (the core Firebase SDK) is always required and must be listed first -->
+  <script src="https://www.gstatic.com/firebasejs/8.3.1/firebase-app.js"></script>
+
+  <!-- If you enabled Analytics in your project, add the Firebase SDK for Analytics -->
+  <script src="https://www.gstatic.com/firebasejs/8.3.1/firebase-analytics.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.3.1/firebase-storage.js"></script>
+
+  <!-- Add Firebase products that you want to use -->
+  <script src="https://www.gstatic.com/firebasejs/8.3.1/firebase-auth.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.3.1/firebase-firestore.js"></script>
+
+  <!-- Include the Quill library -->
+  <script src="https://cdn.jsdelivr.net/npm/quill@2.0.0-rc.4/dist/quill.js"></script>
+
+  <script type="module">
+    // Your web app's Firebase configuration
+    const firebaseConfig = {
+      apiKey: "AIzaSyAq-CkeNE_K765pauvvO-72oAUIGCE_Jpc",
+      authDomain: "hfh-uwmadison.firebaseapp.com",
+      projectId: "hfh-uwmadison",
+      storageBucket: "hfh-uwmadison.appspot.com",
+      messagingSenderId: "158190324248",
+      appId: "1:158190324248:web:89397ab7a4171eb54e516d",
+    };
+    firebase.initializeApp(firebaseConfig);
+  </script>
+
+  <script>
+    async function addPicture() {
+      let input = document.getElementById("add_picture_input");
+      input.click();
+      input.addEventListener("change", async (e) => {
+        let file = e.target.files[0];
+        if (file.type.split("/")[0] !== "image") {
+          alert("Please upload a picture");
+          //empty the input
+          input.value = "";
+          return;
+        }
+
+        let timestamp = new Date();
+        let storageRef = firebase.storage().ref();
+        let fileRef = storageRef.child(`gallery_images/${timestamp}`);
+        await fileRef.put(file);
+        let url = await fileRef.getDownloadURL();
+        console.log(timestamp, url);
+        //empty the input
+        input.value = "";
+
+        //save url and timestamp to firestore db
+        let db = firebase.firestore();
+        db.collection("gallery").add({
+          url: url,
+          timestamp: timestamp,
+        });
+
+        //display the pictures
+        displayPictures();
+      });
+    }
+
+    //function to display the pictures
+    function displayPictures() {
+      let html = ``;
+      let storageRef = firebase.storage().ref();
+      let galleryRef = storageRef.child("gallery_images");
+
+      //get url from gallery db and add to html
+      let db = firebase.firestore();
+      db.collection("gallery")
+        .orderBy("timestamp", "desc")
+        .onSnapshot((e) => {
+          e.forEach((doc) => {
+            let data = doc.data();
+            html += `<img class="gallery_pics" src="${data.url}" value="${data.timestamp}" alt="gallery photo" />`;
+          });
+          document.getElementById("gallery_pics_container").innerHTML = html;
+        });
+    }
+
+    // Add Picture Button
+    document
+      .getElementById("add_picture_button")
+      .addEventListener("click", () => {
+        //choose file to upload
+        addPicture();
+      });
+
+    //check if the file type is picture
+  </script>
+
   <script src="app.js"></script>
 </html>

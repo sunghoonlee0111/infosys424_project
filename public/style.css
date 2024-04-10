@@ -335,6 +335,23 @@ nav {
   border: none;
 }
 
+#add_picture_button {
+  width: 200px;
+  background-color: #fb8500;
+  border: none;
+  border-radius: 5px;
+  color: white;
+  font-weight: bolder;
+  padding: 10px;
+}
+
+#add_picture_button_box {
+  display: flex;
+  justify-content: center;
+  border-radius: 5px;
+  margin-bottom: 10px;
+}
+
 /*main4*/
 .main4 {
   width: 100%;
