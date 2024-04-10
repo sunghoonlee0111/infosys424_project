@@ -763,10 +763,12 @@ function display_content(docid) {
     });
 }
 // show the add gallery and post button only when the user is authenticated
-let add_gallery_Btn = document.querySelector("#add_picture_button_box");
-let add_post_Btn = document.querySelector("#add_post_button_box");
+
 auth.onAuthStateChanged(function (user) {
   if (user) {
+    // show the add gallery and post button only when the user is authenticated
+    let add_gallery_Btn = document.querySelector("#add_picture_button_box");
+    let add_post_Btn = document.querySelector("#add_post_button_box");
     // Get the user document from Firestore
     firebase
       .firestore()
