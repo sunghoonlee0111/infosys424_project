@@ -472,13 +472,12 @@ function uploadImage(file) {
   });
 }
 
-// Post function
+// post function
 function displayPost() {
   document.addEventListener("DOMContentLoaded", function () {
     let postsContainer = document.querySelector("#post_container");
     let defaultThumbnail = "image/Banner.png"; // Default thumbnail if no image found
 
-    // Function to limit the number of words in the excerpt
     function createExcerpt(content, wordLimit) {
       let words = content.split(" ");
       if (words.length > wordLimit) {
@@ -487,19 +486,12 @@ function displayPost() {
       return content;
     }
 
-    // Function to extract the first image from the Delta object
     function getFirstImageFromDelta(delta) {
       const ops = JSON.parse(delta).ops;
-      //console.log(ops);
-      const imgOp = ops.find((op) => op.insert.image);
-      if (imgOp != null) {
-        return imgOp.insert.image;
-      } else {
-        return defaultThumbnail;
-      }
+      const imgOp = ops.find((op) => op.insert && op.insert.image);
+      return imgOp ? imgOp.insert.image : defaultThumbnail;
     }
 
-    // Fetch posts from Firestore
     firebase
       .firestore()
       .collection("posts")
@@ -509,76 +501,95 @@ function displayPost() {
 
         querySnapshot.forEach((doc) => {
           let doc_id = doc.id;
-
-          // console.log(doc.id, " => ", doc.data());
           let postData = doc.data();
-
-          //Get the first image from the content
           let postThumbnailSrc = getFirstImageFromDelta(postData.content);
-
-          //Get post username and post time information
           let postUsername = postData.username || "Anonymous";
-          var postTime = new Date(postData.timestamp.seconds * 1000);
-
-          postTime = postTime.toLocaleString("en-US");
-
-          //Get the post title and content information
+          var postTime = new Date(
+            postData.timestamp.seconds * 1000
+          ).toLocaleString("en-US");
           let postTitle = postData.title;
           let postContent = postData.contentText;
 
-          //Create the post element
           let html = `<div class="post_content_box">`;
-
           html += `<!-- thumbnail -->
-        <img
-          class="post_thumbnail"
-          src="${postThumbnailSrc}"
-          alt="Post Thumbnail"
-        />
-        <!-- texts -->
-        <div class="post_texts">
-          <!-- username and date -->
-          <div class="post_nameanddate">
-            <div class="post_username">${postUsername}</div>
-            <div class="post_time">${postTime}</div>
-          </div>
-          <!-- title and texts -->
-          <span class="post_text_title">
-            <a  value = ${doc_id} class = "to_post_detail">${postTitle}</a></span
-          >
-          <p class="post_text">
-            ${createExcerpt(postContent, 30)}
-          </p>
-          <span class="post_readmore">
-            <a value = ${doc_id} class = "to_post_detail">Read More</a>
-          </span>
-        </div>`;
+          <img class="post_thumbnail" src="${postThumbnailSrc}" alt="Post Thumbnail"/>
+          <!-- texts -->
+          <div class="post_texts">
+            <!-- username and date -->
+            <div class="post_nameanddate">
+              <div class="post_username">${postUsername}</div>
+              <div class="post_time">${postTime}</div>
+            </div>
+            <!-- title and texts -->
+            <span class="post_text_title">
+              <a value="${doc_id}" class="to_post_detail">${postTitle}</a>
+            </span>
+            <p class="post_text">
+              ${createExcerpt(postContent, 30)}
+            </p>
+            <span class="post_readmore">
+              <a value="${doc_id}" class="to_post_detail">Read More</a>
+            </span>
+            <!-- delete button (initially hidden) -->
+            <button value="${doc_id}" class="delete_post_button is-hidden" id="delete_post_button_${doc_id}">Delete</button>
+          </div>`;
           html += `</div>`;
           postHTML += html;
         });
 
-        document.querySelector("#post_container").innerHTML = postHTML;
-
-        //function to navigate to inside_post with assigned doc id when the post is clicked
-        function navigateToInsidePost(doc_id) {
-          display_content(doc_id);
-          hideAllForms();
-          document.getElementById("post_detail").classList.remove("is-hidden");
-        }
-
-        //add click event listener to right buttons with class name "to_post_detail"
-
-        document.querySelectorAll(".to_post_detail").forEach((button) => {
-          button.addEventListener("click", (e) => {
-            //activate function navigateToInsidePost with assigned doc id
-            navigateToInsidePost(e.target.getAttribute("value"));
-          });
-        });
+        postsContainer.innerHTML = postHTML;
+        // Setup delete event listeners after the posts have been rendered
+        setupDeleteEventListeners();
       });
+
+    // Check user auth status and adjust UI accordingly
+    auth.onAuthStateChanged(function (user) {
+      if (user) {
+        firebase
+          .firestore()
+          .collection("users")
+          .doc(user.uid)
+          .get()
+          .then((doc) => {
+            if (doc.exists && doc.data().Authenticated === 1) {
+              // User is logged in and is an admin, show delete buttons
+              document
+                .querySelectorAll(".delete_post_button")
+                .forEach((button) => {
+                  button.classList.remove("is-hidden");
+                });
+            }
+          });
+      } else {
+        // User is logged out, hide all delete buttons
+        document.querySelectorAll(".delete_post_button").forEach((button) => {
+          button.classList.add("is-hidden");
+        });
+      }
+    });
   });
 }
 
-//
+// Function to setup delete event listeners for dynamically created delete buttons
+function setupDeleteEventListeners() {
+  document.querySelectorAll(".delete_post_button").forEach((button) => {
+    button.addEventListener("click", function () {
+      const postId = this.getAttribute("value");
+      firebase
+        .firestore()
+        .collection("posts")
+        .doc(postId)
+        .delete()
+        .then(() => {
+          console.log("Post successfully deleted!");
+          // Optionally remove the post element from DOM
+        })
+        .catch((error) => {
+          console.error("Error removing document: ", error);
+        });
+    });
+  });
+}
 
 displayPost();
 
