@@ -293,27 +293,6 @@ add_post_button.addEventListener("click", () => {
   write_post_hidden_form.classList.remove("is-hidden");
 });
 
-//function to check if user is logged in
-function checkUser() {
-  if (firebase.auth().currentUser != null) {
-    return true;
-  } else {
-    return false;
-  }
-}
-
-//function to get user informaitno
-function getUserInfo(uid) {
-  firebase
-    .firestore()
-    .collection("users")
-    .doc(uid)
-    .get()
-    .then((doc) => {
-      return doc.data();
-    });
-}
-
 // Gallery
 
 async function addPicture() {
@@ -606,17 +585,9 @@ displayPost();
 // inside_post function
 
 // function to save  the comment
-
-async function saveComment(postid) {
-  //check if user is logged in
-  if (checkUser() == false) {
-    alert("Please login to comment!");
-    return;
-  }
-
+function saveComment(postid) {
   //record doc id
   let post_id = postid;
-  console.log("post_id", post_id);
   //get the comment from the user
   let comments = document.getElementById("userinput_comment").value;
   if (comments === "") {
@@ -628,23 +599,7 @@ async function saveComment(postid) {
   let timestamp = new Date();
   //record the user name
   //시발 이거 되는건가 로그인이 안되있어서 모르겠다
-  let user_uid = firebase.auth().currentUser.uid;
-
-  //get user info from the firestore using user_uid
-  let user_info = await firebase
-    .firestore()
-    .collection("users")
-    .doc(user_uid)
-    .get()
-    .then((doc) => {
-      if (doc.exists) {
-        return doc.data();
-      } else {
-        return null;
-      }
-    });
-
-  let user_id = user_info.userName || "Anonymous";
+  let user_id = firebase.auth().currentUser;
 
   //save the comment to the firestore
   firebase
@@ -763,12 +718,10 @@ function display_content(docid) {
     });
 }
 // show the add gallery and post button only when the user is authenticated
-
+let add_gallery_Btn = document.querySelector("#add_picture_button_box");
+let add_post_Btn = document.querySelector("#add_post_button_box");
 auth.onAuthStateChanged(function (user) {
   if (user) {
-    // show the add gallery and post button only when the user is authenticated
-    let add_gallery_Btn = document.querySelector("#add_picture_button_box");
-    let add_post_Btn = document.querySelector("#add_post_button_box");
     // Get the user document from Firestore
     firebase
       .firestore()
@@ -792,8 +745,6 @@ auth.onAuthStateChanged(function (user) {
       });
   } else {
     // Administrator is signed out.
-    let add_gallery_Btn = document.querySelector("#add_picture_button_box");
-    let add_post_Btn = document.querySelector("#add_post_button_box");
     add_gallery_Btn.classList.add("is-hidden");
     add_post_Btn.classList.add("is-hidden");
   }
