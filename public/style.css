@@ -75,6 +75,7 @@ nav {
   background-size: cover;
   background-position: center;
   width: 100%;
+  align-items: center;
 }
 
 /*banner for the other pages*/
