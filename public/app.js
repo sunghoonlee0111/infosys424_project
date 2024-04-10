@@ -234,6 +234,8 @@ let Gallery_hidden_form = document.querySelector("#Gallery_hidden_form");
 let Post_hidden_form = document.querySelector("#Post_hidden_form");
 let Event_hidden_form = document.querySelector("#Event_hidden_form");
 let write_post_hidden_form = document.querySelector("#write_post_hidden_form");
+let inside_post_hidden_form = document.querySelector("#post_detail");
+
 // hide all forms
 function hideAllForms() {
   Home_hidden_form.classList.add("is-hidden");
@@ -242,6 +244,7 @@ function hideAllForms() {
   Post_hidden_form.classList.add("is-hidden");
   Event_hidden_form.classList.add("is-hidden");
   write_post_hidden_form.classList.add("is-hidden");
+  inside_post_hidden_form.classList.add("is-hidden");
 }
 
 // HomeBtn nav bar link
@@ -431,7 +434,8 @@ document.addEventListener("DOMContentLoaded", function () {
       .then(() => {
         alert("Post successfully!");
         //need to change this if we are going to use single page
-        window.location.href = "post.html";
+        //display post
+        displayPost();
       })
       .catch((error) => {
         console.error("Error adding document: ", error);
@@ -462,108 +466,116 @@ function uploadImage(file) {
 }
 
 // Post function
-document.addEventListener("DOMContentLoaded", function () {
-  let postsContainer = document.querySelector("#post_container");
-  let defaultThumbnail = "image/Banner.png"; // Default thumbnail if no image found
+function displayPost() {
+  document.addEventListener("DOMContentLoaded", function () {
+    let postsContainer = document.querySelector("#post_container");
+    let defaultThumbnail = "image/Banner.png"; // Default thumbnail if no image found
 
-  // Function to limit the number of words in the excerpt
-  function createExcerpt(content, wordLimit) {
-    let words = content.split(" ");
-    if (words.length > wordLimit) {
-      return words.slice(0, wordLimit).join(" ") + "...";
-    }
-    return content;
-  }
-
-  // Function to extract the first image from the Delta object
-  function getFirstImageFromDelta(delta) {
-    const ops = JSON.parse(delta).ops;
-    //console.log(ops);
-    const imgOp = ops.find((op) => op.insert.image);
-    if (imgOp != null) {
-      return imgOp.insert.image;
-    } else {
-      return defaultThumbnail;
-    }
-  }
-
-  // Fetch posts from Firestore
-  firebase
-    .firestore()
-    .collection("posts")
-    .orderBy("timestamp", "desc")
-    .get()
-    .then((querySnapshot) => {
-      querySnapshot.forEach((doc) => {
-        let doc_id = doc.id;
-
-        // console.log(doc.id, " => ", doc.data());
-        let postData = doc.data();
-
-        //Get the first image from the content
-        let postThumbnailSrc = getFirstImageFromDelta(postData.content);
-
-        //Get post username and post time information
-        let postUsername = postData.username || "Anonymous";
-        var postTime = new Date(postData.timestamp.seconds * 1000);
-
-        postTime = postTime.toLocaleString("en-US");
-
-        //Get the post title and content information
-        let postTitle = postData.title;
-        let postContent = postData.contentText;
-
-        //Create the post element
-        let html = `<div class="post_content_box">`;
-
-        html += `<!-- thumbnail -->
-      <img
-        class="post_thumbnail"
-        src="${postThumbnailSrc}"
-        alt="Post Thumbnail"
-      />
-      <!-- texts -->
-      <div class="post_texts">
-        <!-- username and date -->
-        <div class="post_nameanddate">
-          <div class="post_username">${postUsername}</div>
-          <div class="post_time">${postTime}</div>
-        </div>
-        <!-- title and texts -->
-        <span class="post_text_title">
-          <a  value = ${doc_id} class = "to_post_detail">${postTitle}</a></span
-        >
-        <p class="post_text">
-          ${createExcerpt(postContent, 30)}
-        </p>
-        <span class="post_readmore">
-          <a value = ${doc_id} class = "to_post_detail">Read More</a>
-        </span>
-      </div>`;
-        html += `</div>`;
-
-        postsContainer.innerHTML += html;
-      });
-
-      //function to navigate to inside_post with assigned doc id when the post is clicked
-      function navigateToInsidePost(doc_id) {
-        console.log("Navigating to inside post with doc id: ", doc_id);
-        display_content(doc_id);
+    // Function to limit the number of words in the excerpt
+    function createExcerpt(content, wordLimit) {
+      let words = content.split(" ");
+      if (words.length > wordLimit) {
+        return words.slice(0, wordLimit).join(" ") + "...";
       }
+      return content;
+    }
 
-      //add click event listener to right buttons with class name "to_post_detail"
+    // Function to extract the first image from the Delta object
+    function getFirstImageFromDelta(delta) {
+      const ops = JSON.parse(delta).ops;
+      //console.log(ops);
+      const imgOp = ops.find((op) => op.insert.image);
+      if (imgOp != null) {
+        return imgOp.insert.image;
+      } else {
+        return defaultThumbnail;
+      }
+    }
 
-      document.querySelectorAll(".to_post_detail").forEach((button) => {
-        button.addEventListener("click", (e) => {
-          //activate function navigateToInsidePost with assigned doc id
-          navigateToInsidePost(e.target.getAttribute("value"));
+    // Fetch posts from Firestore
+    firebase
+      .firestore()
+      .collection("posts")
+      .orderBy("timestamp", "desc")
+      .get()
+      .then((querySnapshot) => {
+        querySnapshot.forEach((doc) => {
+          let doc_id = doc.id;
+
+          // console.log(doc.id, " => ", doc.data());
+          let postData = doc.data();
+
+          //Get the first image from the content
+          let postThumbnailSrc = getFirstImageFromDelta(postData.content);
+
+          //Get post username and post time information
+          let postUsername = postData.username || "Anonymous";
+          var postTime = new Date(postData.timestamp.seconds * 1000);
+
+          postTime = postTime.toLocaleString("en-US");
+
+          //Get the post title and content information
+          let postTitle = postData.title;
+          let postContent = postData.contentText;
+
+          //Create the post element
+          let html = `<div class="post_content_box">`;
+
+          html += `<!-- thumbnail -->
+        <img
+          class="post_thumbnail"
+          src="${postThumbnailSrc}"
+          alt="Post Thumbnail"
+        />
+        <!-- texts -->
+        <div class="post_texts">
+          <!-- username and date -->
+          <div class="post_nameanddate">
+            <div class="post_username">${postUsername}</div>
+            <div class="post_time">${postTime}</div>
+          </div>
+          <!-- title and texts -->
+          <span class="post_text_title">
+            <a  value = ${doc_id} class = "to_post_detail">${postTitle}</a></span
+          >
+          <p class="post_text">
+            ${createExcerpt(postContent, 30)}
+          </p>
+          <span class="post_readmore">
+            <a value = ${doc_id} class = "to_post_detail">Read More</a>
+          </span>
+        </div>`;
+          html += `</div>`;
+
+          postsContainer.innerHTML += html;
         });
+
+        //function to navigate to inside_post with assigned doc id when the post is clicked
+        function navigateToInsidePost(doc_id) {
+          display_content(doc_id);
+          hideAllForms();
+          document.getElementById("post_detail").classList.remove("is-hidden");
+        }
+
+        //add click event listener to right buttons with class name "to_post_detail"
+
+        document.querySelectorAll(".to_post_detail").forEach((button) => {
+          button.addEventListener("click", (e) => {
+            //activate function navigateToInsidePost with assigned doc id
+            navigateToInsidePost(e.target.getAttribute("value"));
+          });
+        });
+      })
+      .catch((error) => {
+        console.log("Error getting documents: ", error);
       });
-    })
-    .catch((error) => {
-      console.log("Error getting documents: ", error);
-    });
-});
+  });
+}
+
+//
+
+displayPost();
+
 // inside_post function
 // function to add the comment
 document
