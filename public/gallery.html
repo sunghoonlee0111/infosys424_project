@@ -90,23 +90,7 @@
         </div>
 
         <!-- gallery content -->
-        <div class="gallery_content" id="gallery_pics_container">
-          <img
-            class="gallery_pics"
-            src="image/Banner.png"
-            alt="gallery photo"
-          />
-          <img
-            class="gallery_pics"
-            src="image/samplepic2.jpg"
-            alt="gallery photo"
-          />
-          <img
-            class="gallery_pics"
-            src="image/samplepic3.jpg"
-            alt="gallery photo"
-          />
-        </div>
+        <div class="gallery_content" id="gallery_pics_container"></div>
       </div>
     </main>
 
@@ -173,18 +157,17 @@
       appId: "1:158190324248:web:89397ab7a4171eb54e516d",
     };
     firebase.initializeApp(firebaseConfig);
-  </script>
 
-  <script>
     async function addPicture() {
       let input = document.getElementById("add_picture_input");
       input.click();
-      input.addEventListener("change", async (e) => {
+
+      // Define the event listener function
+      const handleFileChange = async (e) => {
         let file = e.target.files[0];
         if (file.type.split("/")[0] !== "image") {
           alert("Please upload a picture");
-          //empty the input
-          input.value = "";
+          input.value = ""; // Empty the input
           return;
         }
 
@@ -194,19 +177,24 @@
         await fileRef.put(file);
         let url = await fileRef.getDownloadURL();
         console.log(timestamp, url);
-        //empty the input
-        input.value = "";
+        input.value = ""; // Empty the input
 
-        //save url and timestamp to firestore db
+        // Save URL and timestamp to Firestore DB
         let db = firebase.firestore();
         db.collection("gallery").add({
           url: url,
           timestamp: timestamp,
         });
 
-        //display the pictures
+        // Display the pictures
         displayPictures();
-      });
+
+        // Remove the event listener to prevent it from firing multiple times
+        input.removeEventListener("change", handleFileChange);
+      };
+
+      // Add the event listener
+      input.addEventListener("change", handleFileChange);
     }
 
     //function to display the pictures
@@ -236,7 +224,8 @@
         addPicture();
       });
 
-    //check if the file type is picture
+    //display pictures
+    displayPictures();
   </script>
 
   <script src="app.js"></script>
