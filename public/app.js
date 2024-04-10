@@ -426,7 +426,7 @@ document.addEventListener("DOMContentLoaded", function () {
     .addEventListener("click", postContent);
 
   // function for post the content to the firestore
-  function postContent() {
+  async function postContent() {
     let title = document.querySelector(".write_post_title_input").value;
     let content = quill.getContents();
     //get texts only for content brief display
@@ -442,6 +442,24 @@ document.addEventListener("DOMContentLoaded", function () {
       return;
     }
 
+    let user_uid = firebase.auth().currentUser.uid;
+
+    //get user info from the firestore using user_uid
+    let user_info = await firebase
+      .firestore()
+      .collection("users")
+      .doc(user_uid)
+      .get()
+      .then((doc) => {
+        if (doc.exists) {
+          return doc.data();
+        } else {
+          return null;
+        }
+      });
+
+    let user_id = user_info.userName || "Anonymous";
+
     firebase
       .firestore()
       .collection("posts")
@@ -450,7 +468,7 @@ document.addEventListener("DOMContentLoaded", function () {
         content: JSON.stringify(content),
         contentText: contentText,
         timestamp: firebase.firestore.FieldValue.serverTimestamp(),
-        username: firebase.auth().currentUser,
+        username: user_id,
       })
       .then(() => {
         alert("Post successfully!");
