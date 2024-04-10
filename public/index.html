@@ -518,16 +518,79 @@
             <!-- gallery content -->
             <div id="add_post_button_box">
               <button class="button" id="add_post_button">Add Post</button>
-              <input
-                style="display: none"
-                class="input"
-                type="file"
-                id="add_picture_input"
-                placeholder="Add Picture"
-              />
             </div>
             <!-- post content -->
             <div id="post_container"></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Write_post -->
+      <div class="Write_post is-hidden" id="write_post_hidden_form">
+        <div class="max_width_1200">
+          <!-- write post -->
+          <div class="write_post_main">
+            <div class="write_post_title">
+              <p>WRITE POST</p>
+            </div>
+            <!-- Write post title -->
+            <div class="write_post_title_box">
+              <input
+                class="write_post_title_input"
+                type="text"
+                placeholder="Title"
+              />
+            </div>
+            <!-- toolbar -->
+            <!-- Create toolbar container -->
+            <div id="toolbar">
+              <!-- Add font size dropdown -->
+              <select class="ql-size">
+                <option value="small"></option>
+                <option selected></option>
+                <option value="large"></option>
+                <option value="huge"></option>
+              </select>
+              <!-- color related buttons -->
+              <span class="ql-formats">
+                <select class="ql-color"></select>
+                <select class="ql-background"></select>
+              </span>
+              <!-- Add a format button -->
+              <span class="ql-formats">
+                <button class="ql-bold"></button>
+                <button class="ql-italic"></button>
+                <button class="ql-underline"></button>
+              </span>
+
+              <span class="ql-formats">
+                <button class="ql-list" value="ordered"></button>
+                <button class="ql-list" value="bullet"></button>
+                <button class="ql-indent" value="-1"></button>
+                <button class="ql-indent" value="+1"></button>
+                <select class="ql-align"></select>
+              </span>
+
+              <span class="ql-formats">
+                <button class="ql-image"></button>
+              </span>
+
+              <!-- hidden file input for image upload -->
+              <input
+                type="file"
+                id="fileInput"
+                style="display: none"
+                accept="image/*"
+              />
+            </div>
+
+            <!-- toolbar editor -->
+            <div id="editor"></div>
+
+            <!-- post button -->
+            <div class="write_post_button_box">
+              <button class="write_post_button">POST</button>
+            </div>
           </div>
         </div>
       </div>
@@ -556,7 +619,7 @@
       </div>
 
       <!-- Inside Post -->
-      <div class="max_width_1200">
+      <div class="max_width_1200 is-hidden">
         <!-- inside post -->
         <div class="inside_post_main">
           <div id="inside_post_container"></div>
@@ -579,75 +642,6 @@
             </div>
             <!-- comment -->
             <div id="comments_container"></div>
-          </div>
-        </div>
-      </div>
-
-      <!-- Write_post -->
-      <div class="max_width_1200">
-        <!-- write post -->
-        <div class="write_post_main">
-          <div class="write_post_title">
-            <p>WRITE POST</p>
-          </div>
-          <!-- Write post title -->
-          <div class="write_post_title_box">
-            <input
-              class="write_post_title_input"
-              type="text"
-              placeholder="Title"
-            />
-          </div>
-          <!-- toolbar -->
-          <!-- Create toolbar container -->
-          <div id="toolbar">
-            <!-- Add font size dropdown -->
-            <select class="ql-size">
-              <option value="small"></option>
-              <option selected></option>
-              <option value="large"></option>
-              <option value="huge"></option>
-            </select>
-            <!-- color related buttons -->
-            <span class="ql-formats">
-              <select class="ql-color"></select>
-              <select class="ql-background"></select>
-            </span>
-
-            <!-- Add a format button -->
-            <span class="ql-formats">
-              <button class="ql-bold"></button>
-              <button class="ql-italic"></button>
-              <button class="ql-underline"></button>
-            </span>
-
-            <span class="ql-formats">
-              <button class="ql-list" value="ordered"></button>
-              <button class="ql-list" value="bullet"></button>
-              <button class="ql-indent" value="-1"></button>
-              <button class="ql-indent" value="+1"></button>
-              <select class="ql-align"></select>
-            </span>
-
-            <span class="ql-formats">
-              <button class="ql-image"></button>
-            </span>
-
-            <!-- hidden file input for image upload -->
-            <input
-              type="file"
-              id="fileInput"
-              style="display: none"
-              accept="image/*"
-            />
-          </div>
-
-          <!-- toolbar editor -->
-          <div id="editor"></div>
-
-          <!-- post button -->
-          <div class="write_post_button_box">
-            <button class="write_post_button">POST</button>
           </div>
         </div>
       </div>
