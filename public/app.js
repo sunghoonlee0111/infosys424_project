@@ -535,6 +535,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
       //add click event listener to right buttons with class name "to_post_detail"
 
+      // temp temp temp temp
       document.querySelectorAll(".to_post_detail").forEach((button) => {
         button.addEventListener("click", (e) => {
           //avtivate function navigateToInsidePost with assigned doc id
