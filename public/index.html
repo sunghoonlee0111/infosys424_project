@@ -648,29 +648,39 @@
       </div>
 
       <!-- Inside Post -->
-      <div class="max_width_1200 is-hidden" id="post_detail">
-        <!-- inside post -->
-        <div class="inside_post_main">
-          <div id="inside_post_container"></div>
-          <!-- inside post comment -->
-          <div class="inside_post_comments_section">
-            <!-- comment section title -->
-            <p class="inside_post_comments_title">Comments</p>
-            <!-- write your comments -->
-            <div class="inside_post_write_comment" id="user_comment">
-              <textarea
-                class="inside_post_write_comment_input"
-                id="userinput_comment"
-                cols="30"
-                rows="2"
-                placeholder="Write your comment here..."
-              ></textarea>
-              <button class="inside_post_write_comment_button" id="add_comment">
-                Add
-              </button>
+      <div class="is-hidden" id="post_detail">
+        <img
+          class="index_banner max_width_1920"
+          src="image/small_banner.png"
+          alt="Banner Image"
+        />
+        <div class="max_width_1200">
+          <!-- inside post -->
+          <div class="inside_post_main">
+            <div id="inside_post_container"></div>
+            <!-- inside post comment -->
+            <div class="inside_post_comments_section">
+              <!-- comment section title -->
+              <p class="inside_post_comments_title">Comments</p>
+              <!-- write your comments -->
+              <div class="inside_post_write_comment" id="user_comment">
+                <textarea
+                  class="inside_post_write_comment_input"
+                  id="userinput_comment"
+                  cols="30"
+                  rows="2"
+                  placeholder="Write your comment here..."
+                ></textarea>
+                <button
+                  class="inside_post_write_comment_button"
+                  id="add_comment"
+                >
+                  Add
+                </button>
+              </div>
+              <!-- comment -->
+              <div id="comments_container"></div>
             </div>
-            <!-- comment -->
-            <div id="comments_container"></div>
           </div>
         </div>
       </div>
