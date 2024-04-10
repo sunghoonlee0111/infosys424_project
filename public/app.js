@@ -281,3 +281,399 @@ EventBtn.addEventListener("click", () => {
   hideAllForms();
   Event_hidden_form.classList.remove("is-hidden");
 });
+
+// Gallery
+
+async function addPicture() {
+  let input = document.getElementById("add_picture_input");
+  input.click();
+
+  // Define the event listener function
+  const handleFileChange = async (e) => {
+    let file = e.target.files[0];
+    if (file.type.split("/")[0] !== "image") {
+      alert("Please upload a picture");
+      input.value = ""; // Empty the input
+      return;
+    }
+
+    let timestamp = new Date();
+    let storageRef = firebase.storage().ref();
+    let fileRef = storageRef.child(`gallery_images/${timestamp}`);
+    await fileRef.put(file);
+    let url = await fileRef.getDownloadURL();
+    console.log(timestamp, url);
+    input.value = ""; // Empty the input
+
+    // Save URL and timestamp to Firestore DB
+    let db = firebase.firestore();
+    db.collection("gallery").add({
+      url: url,
+      timestamp: timestamp,
+    });
+
+    // Display the pictures
+    displayPictures();
+
+    // Remove the event listener to prevent it from firing multiple times
+    input.removeEventListener("change", handleFileChange);
+  };
+
+  // Add the event listener
+  input.addEventListener("change", handleFileChange);
+}
+
+//function to display the pictures
+function displayPictures() {
+  let html = ``;
+  let storageRef = firebase.storage().ref();
+  let galleryRef = storageRef.child("gallery_images");
+
+  //get url from gallery db and add to html
+  let db = firebase.firestore();
+  db.collection("gallery")
+    .orderBy("timestamp", "desc")
+    .onSnapshot((e) => {
+      e.forEach((doc) => {
+        let data = doc.data();
+        html += `<img class="gallery_pics" src="${data.url}" value="${data.timestamp}" alt="gallery photo" />`;
+      });
+      document.getElementById("gallery_pics_container").innerHTML = html;
+    });
+}
+
+// Add Picture Button
+document.getElementById("add_picture_button").addEventListener("click", () => {
+  //choose file to upload
+  addPicture();
+});
+
+//display pictures
+displayPictures();
+
+// Write_post
+
+document.addEventListener("DOMContentLoaded", function () {
+  const quill = new Quill("#editor", {
+    modules: {
+      toolbar: {
+        container: "#toolbar",
+        handlers: {
+          image: function () {
+            // Trigger file input click event
+            var fileInput = document.getElementById("fileInput");
+            fileInput.click();
+
+            fileInput.onchange = function () {
+              var file = fileInput.files[0];
+              if (file) {
+                // Call function to upload image
+                uploadImage(file)
+                  .then(function (url) {
+                    // Insert image URL into the editor
+                    var range = quill.getSelection();
+                    quill.insertEmbed(range.index, "image", url);
+                  })
+                  .catch(function (error) {
+                    console.error("Error uploading image: ", error);
+                  });
+              }
+              fileInput.value = ""; // Reset file input
+            };
+          },
+        },
+      },
+    },
+    theme: "snow",
+    placeholder: "Write something awesome...",
+  });
+
+  // Get the content of the editor when the user clicks the post button
+  document
+    .querySelector(".write_post_button")
+    .addEventListener("click", postContent);
+
+  // function for post the content to the firestore
+  function postContent() {
+    let title = document.querySelector(".write_post_title_input").value;
+    let content = quill.getContents();
+    //get texts only for content brief display
+    //without any html tags and formatting and new lines and limit to 100 characters
+    let contentText = quill.getText().replace(/\n/g, " ").substring(0, 5000);
+
+    firebase
+      .firestore()
+      .collection("posts")
+      .add({
+        title: title,
+        content: JSON.stringify(content),
+        contentText: contentText,
+        timestamp: firebase.firestore.FieldValue.serverTimestamp(),
+        username: firebase.auth().currentUser,
+      })
+      .then(() => {
+        alert("Post successfully!");
+        //need to change this if we are going to use single page
+        window.location.href = "post.html";
+      })
+      .catch((error) => {
+        console.error("Error adding document: ", error);
+      });
+
+    //clear the editor and title input
+    quill.setContents([]);
+    document.querySelector(".write_post_title_input").value = "";
+  }
+});
+
+// Function to upload image to Firebase Storage
+function uploadImage(file) {
+  // Create a unique filename for the image
+  var uniqueName = "image_" + Date.now();
+
+  // Create a reference to the storage service
+  var storageRef = firebase.storage().ref();
+
+  // Create a reference to the file to upload
+  var imageRef = storageRef.child("images/" + uniqueName);
+
+  // Upload the file to Firebase Storage
+  return imageRef.put(file).then(function (snapshot) {
+    // Return the URL of the image
+    return snapshot.ref.getDownloadURL();
+  });
+}
+
+// Post function
+document.addEventListener("DOMContentLoaded", function () {
+  let postsContainer = document.querySelector("#post_container");
+  let defaultThumbnail = "image/Banner.png"; // Default thumbnail if no image found
+
+  // Function to limit the number of words in the excerpt
+  function createExcerpt(content, wordLimit) {
+    let words = content.split(" ");
+    if (words.length > wordLimit) {
+      return words.slice(0, wordLimit).join(" ") + "...";
+    }
+    return content;
+  }
+
+  // Function to extract the first image from the Delta object
+  function getFirstImageFromDelta(delta) {
+    const ops = JSON.parse(delta).ops;
+    //console.log(ops);
+    const imgOp = ops.find((op) => op.insert.image);
+    if (imgOp != null) {
+      return imgOp.insert.image;
+    } else {
+      return defaultThumbnail;
+    }
+  }
+
+  // Fetch posts from Firestore
+  firebase
+    .firestore()
+    .collection("posts")
+    .orderBy("timestamp", "desc")
+    .get()
+    .then((querySnapshot) => {
+      querySnapshot.forEach((doc) => {
+        let doc_id = doc.id;
+
+        // console.log(doc.id, " => ", doc.data());
+        let postData = doc.data();
+
+        //Get the first image from the content
+        let postThumbnailSrc = getFirstImageFromDelta(postData.content);
+
+        //Get post username and post time information
+        let postUsername = postData.username || "Anonymous";
+        var postTime = new Date(postData.timestamp.seconds * 1000);
+
+        postTime = postTime.toLocaleString("en-US");
+
+        //Get the post title and content information
+        let postTitle = postData.title;
+        let postContent = postData.contentText;
+
+        //Create the post element
+        let html = `<div class="post_content_box">`;
+
+        html += `<!-- thumbnail -->
+      <img
+        class="post_thumbnail"
+        src="${postThumbnailSrc}"
+        alt="Post Thumbnail"
+      />
+      <!-- texts -->
+      <div class="post_texts">
+        <!-- username and date -->
+        <div class="post_nameanddate">
+          <div class="post_username">${postUsername}</div>
+          <div class="post_time">${postTime}</div>
+        </div>
+        <!-- title and texts -->
+        <span class="post_text_title">
+          <a  value = ${doc_id} class = "to_post_detail">${postTitle}</a></span
+        >
+        <p class="post_text">
+          ${createExcerpt(postContent, 30)}
+        </p>
+        <span class="post_readmore">
+          <a value = ${doc_id} class = "to_post_detail">Read More</a>
+        </span>
+      </div>`;
+        html += `</div>`;
+
+        postsContainer.innerHTML += html;
+      });
+
+      //function to navigate to inside_post with assigned doc id when the post is clicked
+      function navigateToInsidePost(doc_id) {
+        console.log(doc_id);
+      }
+
+      //add click event listener to right buttons with class name "to_post_detail"
+
+      document.querySelectorAll(".to_post_detail").forEach((button) => {
+        button.addEventListener("click", (e) => {
+          //avtivate function navigateToInsidePost with assigned doc id
+          navigateToInsidePost(e.target.getAttribute("value"));
+        });
+      });
+    })
+    .catch((error) => {
+      console.log("Error getting documents: ", error);
+    });
+});
+// inside_post function
+// function to add the comment
+document
+  .getElementById("add_comment")
+  .addEventListener("click", () => saveComment(temp_id));
+
+// function to save  the comment
+function saveComment(postid) {
+  //record doc id
+  let post_id = postid;
+  //get the comment from the user
+  let comments = document.getElementById("userinput_comment").value;
+  //record current time
+  let timestamp = new Date();
+  //record the user name
+  //시발 이거 되는건가 로그인이 안되있어서 모르겠다
+  let user_id = firebase.auth().currentUser;
+
+  //save the comment to the firestore
+  firebase
+    .firestore()
+    .collection("comments")
+    .add({
+      post_id: post_id,
+      comments: comments,
+      timestamp: firebase.firestore.FieldValue.serverTimestamp(),
+      user_id: user_id,
+    })
+    .then(() => {
+      alert("Comment added!");
+      document.getElementById("userinput_comment").value = "";
+      displayComments(post_id);
+    })
+    .catch((error) => {
+      alert("Error adding comment: ", error);
+    });
+}
+
+//function to display comments
+function displayComments(post_id) {
+  //get the comment from the firestore
+  firebase
+    .firestore()
+    .collection("comments")
+    .orderBy("timestamp", "desc")
+    .where("post_id", "==", post_id)
+    .get()
+    .then((e) => {
+      document.getElementById("comments_container").innerHTML = ``;
+
+      e.forEach((doc) => {
+        let comment = doc.data().comments;
+        let user = doc.data().user_id || "Anonymous";
+        let timestamp = doc.data().timestamp;
+        timestamp = timestamp.toDate().toLocaleString("en-US");
+
+        let html = `
+         <div class="inside_post_comment">
+           <div class="inside_post_comment_username">
+             <p>${user}</p>
+           </div>
+           <p class="inside_post_comment_content">${comment}</p>
+         </div>
+       `;
+
+        document.getElementById("comments_container").innerHTML += html;
+      });
+    });
+}
+
+//use this doc id for test: HrL41oPIoH6G8qrWWcWS
+
+let temp_id = "IGUq1UyyxOBv8YuTeToE";
+
+//this is promise
+const post_data = firebase
+  .firestore()
+  .collection("posts")
+  .doc(temp_id)
+  .get()
+  .then((e) => {
+    //console.log(e.data());
+    let post_title = e.data().title;
+    let post_author = e.data().author || "Anonymous";
+    var post_date = e.data().timestamp;
+    post_date = post_date.toDate().toLocaleString("en-US");
+    //this is delta format
+    let post_content = e.data().content;
+
+    let html = ``;
+
+    html += `
+         <!-- inside post title -->
+         <div class="inside_post_title">
+           <p>${post_title}</p>
+         </div>
+
+         <!-- inside post content -->
+         <div class="inside_post_content">
+           <!-- post author and date section -->
+           <div class="inside_post_author_date">
+             <p class="inside_post_author">Author: ${post_author}</p>
+             <p class="inside_post_date">Date: ${post_date}</p>
+           </div>
+           <!-- post contents section -->
+
+             <div id="hidden-editor" ></div>
+
+         </div>
+         <div id="hidden-box" style="display: none;">${temp_id}</div>
+       `;
+    document.getElementById("inside_post_container").innerHTML = html;
+
+    //
+    var hiddenQuill = new Quill("#hidden-editor", {
+      modules: {
+        toolbar: false,
+      },
+      readOnly: true,
+      theme: "snow",
+    });
+
+    // Set the Delta content to the hidden editor
+    let deltaContent = JSON.parse(post_content);
+
+    // Then set the contents using the parsed Delta object
+    hiddenQuill.setContents(deltaContent);
+
+    //display comments
+    displayComments(temp_id);
+  });
