@@ -22,6 +22,7 @@ auth.onAuthStateChanged((user) => {
     document.getElementById("user_signin").classList.add("is-hidden");
     document.getElementById("user_signup").classList.add("is-hidden");
     document.getElementById("user_signout").classList.remove("is-hidden");
+    displayPictures();
   }
 });
 
@@ -214,6 +215,7 @@ document.getElementById("user_signout").addEventListener("click", () => {
       document.getElementById("user_signup").classList.remove("is-hidden");
       document.getElementById("user_signout").classList.add("is-hidden");
       alert("Successfully Signed Out!");
+      displayPictures();
     })
     .catch((err) => alert(err.message));
 });
@@ -380,6 +382,32 @@ function displayPictures() {
       });
 
       document.getElementById("gallery_pics_container").innerHTML = html;
+
+      //only shows delete_button when the user is authenticated
+      let deleteButtons = document.querySelectorAll(".delete_button");
+      console.log(deleteButtons);
+      let currentUser = firebase.auth().currentUser;
+      if (currentUser != null) {
+        let user_uid = currentUser.uid;
+        db.collection("users")
+          .doc(user_uid)
+          .get()
+          .then((doc) => {
+            if (doc.data().Authenticated === 1) {
+              deleteButtons.forEach((button) => {
+                button.classList.remove("is-hidden");
+              });
+            } else {
+              deleteButtons.forEach((button) => {
+                button.classList.add("is-hidden");
+              });
+            }
+          });
+      } else {
+        deleteButtons.forEach((button) => {
+          button.classList.add("is-hidden");
+        });
+      }
     });
 }
 
