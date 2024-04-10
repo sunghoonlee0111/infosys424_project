@@ -434,8 +434,15 @@ document.addEventListener("DOMContentLoaded", function () {
       .then(() => {
         alert("Post successfully!");
         //need to change this if we are going to use single page
-        //display post
+        //refresh the page to display the post
         displayPost();
+
+        //display post
+        hideAllForms();
+
+        document
+          .getElementById("Post_hidden_form")
+          .classList.remove("is-hidden");
       })
       .catch((error) => {
         console.error("Error adding document: ", error);
@@ -497,8 +504,9 @@ function displayPost() {
       .firestore()
       .collection("posts")
       .orderBy("timestamp", "desc")
-      .get()
-      .then((querySnapshot) => {
+      .onSnapshot((querySnapshot) => {
+        let postHTML = ``;
+
         querySnapshot.forEach((doc) => {
           let doc_id = doc.id;
 
@@ -546,9 +554,10 @@ function displayPost() {
           </span>
         </div>`;
           html += `</div>`;
-
-          postsContainer.innerHTML += html;
+          postHTML += html;
         });
+
+        document.querySelector("#post_container").innerHTML = postHTML;
 
         //function to navigate to inside_post with assigned doc id when the post is clicked
         function navigateToInsidePost(doc_id) {
@@ -565,9 +574,6 @@ function displayPost() {
             navigateToInsidePost(e.target.getAttribute("value"));
           });
         });
-      })
-      .catch((error) => {
-        console.log("Error getting documents: ", error);
       });
   });
 }
