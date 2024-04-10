@@ -583,10 +583,6 @@ function displayPost() {
 displayPost();
 
 // inside_post function
-// function to add the comment
-document
-  .getElementById("add_comment")
-  .addEventListener("click", () => saveComment(temp_id));
 
 // function to save  the comment
 function saveComment(postid) {
@@ -711,6 +707,11 @@ function display_content(docid) {
 
       // Then set the contents using the parsed Delta object
       hiddenQuill.setContents(deltaContent);
+
+      //
+      document.getElementById("add_comment").addEventListener("click", (e) => {
+        saveComment(docid);
+      });
 
       //display comments
       displayComments(docid);
