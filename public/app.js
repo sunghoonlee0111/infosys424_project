@@ -616,7 +616,6 @@ async function saveComment(postid) {
 
   //record doc id
   let post_id = postid;
-  console.log("post_id", post_id);
   //get the comment from the user
   let comments = document.getElementById("userinput_comment").value;
   if (comments === "") {
