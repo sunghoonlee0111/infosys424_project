@@ -352,12 +352,6 @@ nav {
   margin-bottom: 10px;
 }
 
-#add_post_button_box {
-  display: flex;
-  justify-content: center;
-  border-radius: 5px;
-  margin-bottom: 10px;
-}
 /*main4*/
 .main4 {
   width: 100%;
@@ -660,6 +654,21 @@ footer {
 }
 
 /* POSTS */
+#add_post_button {
+  width: 200px;
+  background-color: #fb8500;
+  border: none;
+  border-radius: 5px;
+  color: white;
+  font-weight: bolder;
+  padding: 10px;
+}
+#add_post_button_box {
+  display: flex;
+  justify-content: center;
+  border-radius: 5px;
+  margin-bottom: 10px;
+}
 .post_main {
   padding: 0;
   margin: 0;

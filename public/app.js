@@ -226,13 +226,14 @@ let GalleryBtn = document.querySelector("#GalleryBtn");
 let PostBtn = document.querySelector("#PostBtn");
 let EventBtn = document.querySelector("#EventBtn");
 let AboutBtn_2 = document.querySelector("#AboutBtn_2");
+let add_post_button = document.querySelector("#add_post_button");
 
 let Home_hidden_form = document.querySelector("#Home_hidden_form");
 let About_hidden_form = document.querySelector("#About_hidden_form");
 let Gallery_hidden_form = document.querySelector("#Gallery_hidden_form");
 let Post_hidden_form = document.querySelector("#Post_hidden_form");
 let Event_hidden_form = document.querySelector("#Event_hidden_form");
-
+let write_post_hidden_form = document.querySelector("#write_post_hidden_form");
 // hide all forms
 function hideAllForms() {
   Home_hidden_form.classList.add("is-hidden");
@@ -240,6 +241,7 @@ function hideAllForms() {
   Gallery_hidden_form.classList.add("is-hidden");
   Post_hidden_form.classList.add("is-hidden");
   Event_hidden_form.classList.add("is-hidden");
+  write_post_hidden_form.classList.add("is-hidden");
 }
 
 // HomeBtn nav bar link
@@ -258,7 +260,7 @@ AboutBtn.addEventListener("click", () => {
   About_hidden_form.classList.remove("is-hidden");
 });
 
-// AboutBtn_2 nav bar link
+// AboutBtn_2
 AboutBtn_2.addEventListener("click", () => {
   hideAllForms();
   About_hidden_form.classList.remove("is-hidden");
@@ -280,6 +282,12 @@ PostBtn.addEventListener("click", () => {
 EventBtn.addEventListener("click", () => {
   hideAllForms();
   Event_hidden_form.classList.remove("is-hidden");
+});
+
+// add_post_button
+add_post_button.addEventListener("click", () => {
+  hideAllForms();
+  write_post_hidden_form.classList.remove("is-hidden");
 });
 
 // Gallery
