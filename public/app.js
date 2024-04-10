@@ -132,12 +132,22 @@ to_signin.addEventListener("click", to_signin_open);
 document.addEventListener("DOMContentLoaded", function () {
   document
     .getElementById("signup_form")
-    .addEventListener("submit", function (e) {
+    .addEventListener("submit", async function (e) {
       e.preventDefault();
 
       const userName = document.getElementById("sign_up_username").value;
       const email = document.getElementById("sign_up_email").value;
       const password = document.getElementById("sign_up_password").value;
+
+      // Check if username already exists
+      const userSnapshot = await db
+        .collection("users")
+        .where("userName", "==", userName)
+        .get();
+      if (userSnapshot.empty == false) {
+        alert("Username already exists. Please choose a different username.");
+        return;
+      }
 
       auth
         .createUserWithEmailAndPassword(email, password)
