@@ -728,6 +728,7 @@ function deletePost(docId) {
         alert("Post deleted successfully.");
         location.reload();
         hideAllForms();
+        // diplays the post form
         document
           .getElementById("Post_hidden_form")
           .classList.remove("is-hidden");
