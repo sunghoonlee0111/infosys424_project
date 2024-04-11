@@ -666,14 +666,16 @@ function displayPost() {
 
 displayPost();
 
+//delete post button
+
 // Event function (to be added) - currently not implemented in the website
 document.addEventListener("DOMContentLoaded", function () {
-  displayPost(); // function to display posts
-  addDeleteButtonForAdmins(); // function to add delete buttons for admins
+  displayPost();
+  addDeleteButtonForAdmins();
 });
 
 function addDeleteButtonForAdmins() {
-  firebase.auth().onAuthStateChanged(function (user) {
+  auth.onAuthStateChanged(function (user) {
     if (user) {
       // chcek if the user is an admin
       firebase
@@ -690,10 +692,10 @@ function addDeleteButtonForAdmins() {
                 const docId = postBox
                   .querySelector(".to_post_detail")
                   .getAttribute("value");
-                if (!postBox.querySelector(`.delete-post-button-${docId}`)) {
+                if (!postBox.querySelector(`.delete_post_button_${docId}`)) {
                   const deleteButton = document.createElement("button");
                   deleteButton.innerText = "Delete";
-                  deleteButton.className = `delete-post-button-${docId}`;
+                  deleteButton.className = `delete_post_button_${docId}`;
                   deleteButton.onclick = function () {
                     deletePost(docId);
                   };
@@ -711,7 +713,7 @@ function addDeleteButtonForAdmins() {
 
 function removeDeleteButtons() {
   document
-    .querySelectorAll("[class^='delete-post-button-']")
+    .querySelectorAll("[class^='delete_post_button_']")
     .forEach((button) => {
       button.parentNode.removeChild(button);
     });
@@ -741,7 +743,6 @@ function deletePost(docId) {
 }
 
 // inside_post function
-
 // function to save  the comment
 
 async function saveComment(postid) {
