@@ -132,12 +132,22 @@ to_signin.addEventListener("click", to_signin_open);
 document.addEventListener("DOMContentLoaded", function () {
   document
     .getElementById("signup_form")
-    .addEventListener("submit", function (e) {
+    .addEventListener("submit", async function (e) {
       e.preventDefault();
 
       const userName = document.getElementById("sign_up_username").value;
       const email = document.getElementById("sign_up_email").value;
       const password = document.getElementById("sign_up_password").value;
+
+      // Check if username already exists
+      const userSnapshot = await db
+        .collection("users")
+        .where("userName", "==", userName)
+        .get();
+      if (userSnapshot.empty == false) {
+        alert("Username already exists. Please choose a different username.");
+        return;
+      }
 
       auth
         .createUserWithEmailAndPassword(email, password)
@@ -385,7 +395,6 @@ function displayPictures() {
 
       //only shows delete_button when the user is authenticated
       let deleteButtons = document.querySelectorAll(".delete_button");
-      console.log(deleteButtons);
       let currentUser = firebase.auth().currentUser;
       if (currentUser != null) {
         let user_uid = currentUser.uid;
@@ -547,65 +556,65 @@ function uploadImage(file) {
     return snapshot.ref.getDownloadURL();
   });
 }
-
+document.addEventListener("DOMContentLoaded", function () {
+  displayPost();
+});
 // Post function
 function displayPost() {
-  document.addEventListener("DOMContentLoaded", function () {
-    let postsContainer = document.querySelector("#post_container");
-    let defaultThumbnail = "image/Banner.png"; // Default thumbnail if no image found
+  let postsContainer = document.querySelector("#post_container");
+  let defaultThumbnail = "image/Banner.png"; // Default thumbnail if no image found
 
-    // Function to limit the number of words in the excerpt
-    function createExcerpt(content, wordLimit) {
-      let words = content.split(" ");
-      if (words.length > wordLimit) {
-        return words.slice(0, wordLimit).join(" ") + "...";
-      }
-      return content;
+  // Function to limit the number of words in the excerpt
+  function createExcerpt(content, wordLimit) {
+    let words = content.split(" ");
+    if (words.length > wordLimit) {
+      return words.slice(0, wordLimit).join(" ") + "...";
     }
+    return content;
+  }
 
-    // Function to extract the first image from the Delta object
-    function getFirstImageFromDelta(delta) {
-      const ops = JSON.parse(delta).ops;
-      //console.log(ops);
-      const imgOp = ops.find((op) => op.insert.image);
-      if (imgOp != null) {
-        return imgOp.insert.image;
-      } else {
-        return defaultThumbnail;
-      }
+  // Function to extract the first image from the Delta object
+  function getFirstImageFromDelta(delta) {
+    const ops = JSON.parse(delta).ops;
+    //console.log(ops);
+    const imgOp = ops.find((op) => op.insert.image);
+    if (imgOp != null) {
+      return imgOp.insert.image;
+    } else {
+      return defaultThumbnail;
     }
+  }
 
-    // Fetch posts from Firestore
-    firebase
-      .firestore()
-      .collection("posts")
-      .orderBy("timestamp", "desc")
-      .onSnapshot((querySnapshot) => {
-        let postHTML = ``;
+  // Fetch posts from Firestore
+  firebase
+    .firestore()
+    .collection("posts")
+    .orderBy("timestamp", "desc")
+    .onSnapshot((querySnapshot) => {
+      let postHTML = ``;
 
-        querySnapshot.forEach((doc) => {
-          let doc_id = doc.id;
+      querySnapshot.forEach((doc) => {
+        let doc_id = doc.id;
 
-          // console.log(doc.id, " => ", doc.data());
-          let postData = doc.data();
+        // console.log(doc.id, " => ", doc.data());
+        let postData = doc.data();
 
-          //Get the first image from the content
-          let postThumbnailSrc = getFirstImageFromDelta(postData.content);
+        //Get the first image from the content
+        let postThumbnailSrc = getFirstImageFromDelta(postData.content);
 
-          //Get post username and post time information
-          let postUsername = postData.username || "Anonymous";
-          var postTime = new Date(postData.timestamp.seconds * 1000);
+        //Get post username and post time information
+        let postUsername = postData.username || "Anonymous";
+        var postTime = new Date(postData.timestamp.seconds * 1000);
+        postTime = postTime.toLocaleString("en-US");
 
-          postTime = postTime.toLocaleString("en-US");
+        //Get the post title and content information
+        let postTitle = postData.title;
+        let postContent = postData.contentText;
 
-          //Get the post title and content information
-          let postTitle = postData.title;
-          let postContent = postData.contentText;
+        //Create the post element
+        let html = `<div class="post_content_box">`;
 
-          //Create the post element
-          let html = `<div class="post_content_box">`;
-
-          html += `<!-- thumbnail -->
+        html += `<!-- thumbnail -->
         <img
           class="post_thumbnail"
           src="${postThumbnailSrc}"
@@ -629,34 +638,106 @@ function displayPost() {
             <a value = ${doc_id} class = "to_post_detail">Read More</a>
           </span>
         </div>`;
-          html += `</div>`;
-          postHTML += html;
-        });
+        html += `</div>`;
+        postHTML += html;
+      });
 
-        document.querySelector("#post_container").innerHTML = postHTML;
+      postsContainer.innerHTML = postHTML;
+      addDeleteButtonForAdmins();
+      //function to navigate to inside_post with assigned doc id when the post is clicked
+      function navigateToInsidePost(doc_id) {
+        display_content(doc_id);
+        hideAllForms();
+        document.getElementById("post_detail").classList.remove("is-hidden");
+      }
 
-        //function to navigate to inside_post with assigned doc id when the post is clicked
-        function navigateToInsidePost(doc_id) {
-          display_content(doc_id);
-          hideAllForms();
-          document.getElementById("post_detail").classList.remove("is-hidden");
-        }
+      //add click event listener to right buttons with class name "to_post_detail"
 
-        //add click event listener to right buttons with class name "to_post_detail"
-
-        document.querySelectorAll(".to_post_detail").forEach((button) => {
-          button.addEventListener("click", (e) => {
-            //activate function navigateToInsidePost with assigned doc id
-            navigateToInsidePost(e.target.getAttribute("value"));
-          });
+      document.querySelectorAll(".to_post_detail").forEach((button) => {
+        button.addEventListener("click", (e) => {
+          //activate function navigateToInsidePost with assigned doc id
+          navigateToInsidePost(e.target.getAttribute("value"));
         });
       });
-  });
+    });
 }
 
 //
 
 displayPost();
+
+// Event function (to be added) - currently not implemented in the website
+document.addEventListener("DOMContentLoaded", function () {
+  displayPost(); // function to display posts
+  addDeleteButtonForAdmins(); // function to add delete buttons for admins
+});
+
+function addDeleteButtonForAdmins() {
+  firebase.auth().onAuthStateChanged(function (user) {
+    if (user) {
+      // chcek if the user is an admin
+      firebase
+        .firestore()
+        .collection("users")
+        .doc(user.uid)
+        .get()
+        .then((doc) => {
+          if (doc.exists && doc.data().Authenticated === 1) {
+            // when the user is an admin, add delete buttons to each post
+            document
+              .querySelectorAll(".post_content_box")
+              .forEach((postBox) => {
+                const docId = postBox
+                  .querySelector(".to_post_detail")
+                  .getAttribute("value");
+                if (!postBox.querySelector(`.delete-post-button-${docId}`)) {
+                  const deleteButton = document.createElement("button");
+                  deleteButton.innerText = "Delete";
+                  deleteButton.className = `delete-post-button-${docId}`;
+                  deleteButton.onclick = function () {
+                    deletePost(docId);
+                  };
+                  postBox.appendChild(deleteButton);
+                }
+              });
+          }
+        });
+    } else {
+      //  administor is signed out
+      removeDeleteButtons();
+    }
+  });
+}
+
+function removeDeleteButtons() {
+  document
+    .querySelectorAll("[class^='delete-post-button-']")
+    .forEach((button) => {
+      button.parentNode.removeChild(button);
+    });
+}
+
+function deletePost(docId) {
+  if (confirm("Are you sure you want to delete this post?")) {
+    firebase
+      .firestore()
+      .collection("posts")
+      .doc(docId)
+      .delete()
+      .then(() => {
+        alert("Post deleted successfully.");
+        location.reload();
+        hideAllForms();
+        document
+          .getElementById("Post_hidden_form")
+          .classList.remove("is-hidden");
+      })
+      .catch((error) => {
+        console.error("Error removing document: ", error);
+        alert("An error occurred while deleting the post.");
+      });
+  }
+}
 
 // inside_post function
 
