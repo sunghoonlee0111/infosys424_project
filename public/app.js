@@ -666,14 +666,12 @@ function displayPost() {
 
 displayPost();
 
-//delete post button
-
-// Event function (to be added) - currently not implemented in the website
+// Event function (to be implemented) - currently not used
 document.addEventListener("DOMContentLoaded", function () {
   displayPost();
   addDeleteButtonForAdmins();
 });
-
+// function to add delete button for admins
 function addDeleteButtonForAdmins() {
   auth.onAuthStateChanged(function (user) {
     if (user) {
@@ -711,14 +709,7 @@ function addDeleteButtonForAdmins() {
   });
 }
 
-function removeDeleteButtons() {
-  document
-    .querySelectorAll("[class^='delete_post_button_']")
-    .forEach((button) => {
-      button.parentNode.removeChild(button);
-    });
-}
-
+// function to delete the post
 function deletePost(docId) {
   if (confirm("Are you sure you want to delete this post?")) {
     firebase
@@ -728,9 +719,7 @@ function deletePost(docId) {
       .delete()
       .then(() => {
         alert("Post deleted successfully.");
-        location.reload();
         hideAllForms();
-        // diplays the post form
         document
           .getElementById("Post_hidden_form")
           .classList.remove("is-hidden");
