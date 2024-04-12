@@ -708,7 +708,13 @@ function addDeleteButtonForAdmins() {
     }
   });
 }
-
+function removeDeleteButtons() {
+  document
+    .querySelectorAll("[class^='delete_post_button_']")
+    .forEach((button) => {
+      button.parentNode.removeChild(button);
+    });
+}
 // function to delete the post
 function deletePost(docId) {
   if (confirm("Are you sure you want to delete this post?")) {
