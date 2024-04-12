@@ -395,7 +395,7 @@ function displayPictures() {
 
       //only shows delete_button when the user is authenticated
       let deleteButtons = document.querySelectorAll(".delete_button");
-      console.log(deleteButtons);
+      // console.log(deleteButtons);
       let currentUser = firebase.auth().currentUser;
       if (currentUser != null) {
         let user_uid = currentUser.uid;
