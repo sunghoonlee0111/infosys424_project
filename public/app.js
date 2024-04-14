@@ -640,41 +640,83 @@ function displayPost() {
             <a value = ${doc_id} class = "to_post_detail">Read More</a>
           </span>
         </div>
-        <button class="delete_post_button" value="${doc_id}">Delete</button>
+        <button class="delete_post_button is-hidden" value="${doc_id}">Delete</button>
         `;
           html += `</div>`;
           postHTML += html;
         });
 
         document.querySelector("#post_container").innerHTML = postHTML;
-
-        //function to navigate to inside_post with assigned doc id when the post is clicked
-        function navigateToInsidePost(doc_id) {
-          display_content(doc_id);
-          hideAllForms();
-          document.getElementById("post_detail").classList.remove("is-hidden");
-        }
-
-        //add click event listener to delete_post_button
-        document.querySelectorAll(".delete_post_button").forEach((button) => {
-          button.addEventListener("click", async (e) => {
-            // Make this an async function
-            let doc_id = e.target.getAttribute("value");
-            console.log("This is doc_id:", doc_id);
-
-            await deletePostPicture(doc_id);
-            await deleteComments(doc_id);
-            deletePost(doc_id); // Finally, delete the post
-          });
-        });
-        //add click event listener to right buttons with class name "to_post_detail"
-        document.querySelectorAll(".to_post_detail").forEach((button) => {
-          button.addEventListener("click", (e) => {
-            //activate function navigateToInsidePost with assigned doc id
-            navigateToInsidePost(e.target.getAttribute("value"));
-          });
+        addEventListenersToPosts();
+      });
+    function addEventListenersToPosts() {
+      document.querySelectorAll(".to_post_detail").forEach((button) => {
+        button.addEventListener("click", (e) =>
+          navigateToInsidePost(e.target.getAttribute("value"))
+        );
+      });
+      document.querySelectorAll(".delete_post_button").forEach((button) => {
+        button.addEventListener("click", async (e) => {
+          let doc_id = e.target.getAttribute("value");
+          await deletePostPicture(doc_id);
+          await deleteComments(doc_id);
+          deletePost(doc_id);
         });
       });
+    }
+    //function to navigate to inside_post with assigned doc id when the post is clicked
+    function navigateToInsidePost(doc_id) {
+      display_content(doc_id);
+      hideAllForms();
+      document.getElementById("post_detail").classList.remove("is-hidden");
+    }
+    firebase.auth().onAuthStateChanged((user) => {
+      if (user) {
+        firebase
+          .firestore()
+          .collection("users")
+          .doc(user.uid)
+          .get()
+          .then((doc) => {
+            if (doc.exists && doc.data().Authenticated === 1) {
+              document
+                .querySelectorAll(".delete_post_button")
+                .forEach((button) => {
+                  button.classList.remove("is-hidden");
+                });
+            } else {
+              document
+                .querySelectorAll(".delete_post_button")
+                .forEach((button) => {
+                  button.classList.add("is-hidden");
+                });
+            }
+          });
+      } else {
+        document.querySelectorAll(".delete_post_button").forEach((button) => {
+          button.classList.add("is-hidden");
+        });
+      }
+    });
+    //add click event listener to delete_post_button
+    document.querySelectorAll(".delete_post_button").forEach((button) => {
+      button.addEventListener("click", async (e) => {
+        // Make this an async function
+        let doc_id = e.target.getAttribute("value");
+        console.log("This is doc_id:", doc_id);
+
+        await deletePostPicture(doc_id);
+        await deleteComments(doc_id);
+        deletePost(doc_id); // Finally, delete the post
+      });
+    });
+    //add click event listener to right buttons with class name "to_post_detail"
+    document.querySelectorAll(".to_post_detail").forEach((button) => {
+      button.addEventListener("click", (e) => {
+        //activate function navigateToInsidePost with assigned doc id
+        navigateToInsidePost(e.target.getAttribute("value"));
+      });
+    });
   });
 }
 
