@@ -648,7 +648,38 @@ function displayPost() {
 
         document.querySelector("#post_container").innerHTML = postHTML;
         addEventListenersToPosts();
+        checkAdminStatus();
       });
+    function checkAdminStatus() {
+      firebase.auth().onAuthStateChanged((user) => {
+        if (user) {
+          firebase
+            .firestore()
+            .collection("users")
+            .doc(user.uid)
+            .get()
+            .then((doc) => {
+              if (doc.exists && doc.data().Authenticated === 1) {
+                document
+                  .querySelectorAll(".delete_post_button")
+                  .forEach((button) => {
+                    button.classList.remove("is-hidden");
+                  });
+              } else {
+                document
+                  .querySelectorAll(".delete_post_button")
+                  .forEach((button) => {
+                    button.classList.add("is-hidden");
+                  });
+              }
+            });
+        } else {
+          document.querySelectorAll(".delete_post_button").forEach((button) => {
+            button.classList.add("is-hidden");
+          });
+        }
+      });
+    }
     function addEventListenersToPosts() {
       document.querySelectorAll(".to_post_detail").forEach((button) => {
         button.addEventListener("click", (e) =>
@@ -670,34 +701,7 @@ function displayPost() {
       hideAllForms();
       document.getElementById("post_detail").classList.remove("is-hidden");
     }
-    firebase.auth().onAuthStateChanged((user) => {
-      if (user) {
-        firebase
-          .firestore()
-          .collection("users")
-          .doc(user.uid)
-          .get()
-          .then((doc) => {
-            if (doc.exists && doc.data().Authenticated === 1) {
-              document
-                .querySelectorAll(".delete_post_button")
-                .forEach((button) => {
-                  button.classList.remove("is-hidden");
-                });
-            } else {
-              document
-                .querySelectorAll(".delete_post_button")
-                .forEach((button) => {
-                  button.classList.add("is-hidden");
-                });
-            }
-          });
-      } else {
-        document.querySelectorAll(".delete_post_button").forEach((button) => {
-          button.classList.add("is-hidden");
-        });
-      }
-    });
+
     //add click event listener to delete_post_button
     document.querySelectorAll(".delete_post_button").forEach((button) => {
       button.addEventListener("click", async (e) => {
