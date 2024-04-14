@@ -172,7 +172,7 @@ nav {
   margin-bottom: 0px;
 }
 .main2_title_third {
-  color: #219ebc;
+  color: #fb8500;
   font-size: 27px;
   font-weight: bolder;
   margin-top: 7px;
@@ -180,7 +180,7 @@ nav {
 .main_2_title_content {
   font-size: 15px;
   line-height: 22px;
-  color: rgba(135, 134, 128, 1);
+  color: rgb(106, 106, 102);
 }
 .main2_detail_1 {
   display: flex;
@@ -214,6 +214,7 @@ nav {
 .main_2_icon_content {
   margin-left: 8px;
   font-size: 15px;
+  color: rgb(106, 106, 102);
 }
 
 .main2_photo {
@@ -297,7 +298,7 @@ nav {
   height: 450px;
   background-color: pink;
   border-radius: 20px;
-  background-image: url(image/samplepic2.jpg);
+  background-image: url(image/Gallery/6.webp);
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
@@ -309,7 +310,7 @@ nav {
   height: 450px;
   background-color: pink;
   border-radius: 20px;
-  background-image: url(image/samplepic5.jpg);
+  background-image: url(image/Gallery/14.webp);
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
@@ -320,7 +321,7 @@ nav {
   height: 450px;
   background-color: pink;
   border-radius: 20px;
-  background-image: url(image/samplepic3.jpg);
+  background-image: url(image/Gallery/29.webp);
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
@@ -331,7 +332,7 @@ nav {
   height: 450px;
   background-color: pink;
   border-radius: 20px;
-  background-image: url(image/samplepic4.jpg);
+  background-image: url(image/Gallery/32.webp);
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
@@ -445,6 +446,7 @@ nav {
 }
 
 /* footer */
+
 footer {
   background-color: #2c2b2c;
 }
@@ -654,6 +656,7 @@ footer {
 .gallery_pics {
   height: 250px;
   border-radius: 20px;
+  box-shadow: 0px 0px 20px 5px rgba(0, 0, 10, 0.2);
 }
 
 /* POSTS */
@@ -675,7 +678,7 @@ footer {
 .post_main {
   padding: 0;
   margin: 0;
-  background-color: #8ecae63e;
+  background-color: rgba(248, 247, 240, 1);
   border-radius: 5px;
   padding: 5px 20px 0 20px;
 }
@@ -694,7 +697,7 @@ footer {
   justify-content: center;
   align-items: center;
   padding: 10px 20px 20px 20px;
-  background-color: rgba(248, 247, 240, 1);
+  background-color: rgb(240, 237, 237);
   border-radius: 5px;
   margin-bottom: 10px;
 }
@@ -739,7 +742,7 @@ footer {
 .inside_post_main {
   padding: 0;
   margin: 0;
-  background-color: #8ecae63e;
+  background-color: rgba(238, 192, 68, 1);
   border-radius: 5px;
   padding: 5px 20px 0 20px;
 }
@@ -865,7 +868,6 @@ footer {
 .about_content {
   margin-left: 10%;
   margin-right: 10%;
-  font-weight: 600;
 }
 .about_overview {
   padding-bottom: 20px;
@@ -1025,7 +1027,7 @@ footer {
 /* Write post */
 .write_post_main {
   margin: 0;
-  background-color: #8ecae63e;
+  background-color: rgba(248, 247, 240, 1);
   border-radius: 5px;
   padding: 5px 20px 10px 20px;
 }
@@ -1053,7 +1055,7 @@ footer {
   border: 1px solid rgba(182, 182, 182, 1);
   border-radius: 5px;
   padding: 10px;
-  background-color: rgba(248, 247, 240, 1);
+  background-color: rgba(255, 255, 255, 1);
 }
 
 #toolbar,
@@ -1062,7 +1064,7 @@ footer {
   border-radius: 5px;
   padding: 10px;
   margin-bottom: 10px;
-  background-color: rgba(248, 247, 240, 1);
+  background-color: rgba(255, 255, 255, 1);
 }
 
 .ql-editor {
