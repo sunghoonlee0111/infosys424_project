@@ -23,6 +23,7 @@ auth.onAuthStateChanged((user) => {
     document.getElementById("user_signup").classList.add("is-hidden");
     document.getElementById("user_signout").classList.remove("is-hidden");
     displayPictures();
+    displayPost();
   }
 });
 
@@ -174,6 +175,7 @@ document.addEventListener("DOMContentLoaded", function () {
           alert(err.message);
         });
     });
+  displayPost();
 });
 // Sign In
 document.addEventListener("DOMContentLoaded", function () {
@@ -213,6 +215,7 @@ document.addEventListener("DOMContentLoaded", function () {
         alert("Please check your email and password and try again.");
       });
   });
+  displayPost();
 });
 
 //sign_out user
@@ -226,6 +229,7 @@ document.getElementById("user_signout").addEventListener("click", () => {
       document.getElementById("user_signout").classList.add("is-hidden");
       alert("Successfully Signed Out!");
       displayPictures();
+      displayPost();
     })
     .catch((err) => alert(err.message));
 });
@@ -395,7 +399,6 @@ function displayPictures() {
 
       //only shows delete_button when the user is authenticated
       let deleteButtons = document.querySelectorAll(".delete_button");
-      // console.log(deleteButtons);
       let currentUser = firebase.auth().currentUser;
       if (currentUser != null) {
         let user_uid = currentUser.uid;
@@ -433,6 +436,7 @@ displayPictures();
 // Write_post
 
 document.addEventListener("DOMContentLoaded", function () {
+  const uploadedImageNames = [];
   const quill = new Quill("#editor", {
     modules: {
       toolbar: {
@@ -443,19 +447,19 @@ document.addEventListener("DOMContentLoaded", function () {
             var fileInput = document.getElementById("fileInput");
             fileInput.click();
 
-            fileInput.onchange = function () {
+            fileInput.onchange = async function () {
               var file = fileInput.files[0];
               if (file) {
-                // Call function to upload image
-                uploadImage(file)
-                  .then(function (url) {
-                    // Insert image URL into the editor
-                    var range = quill.getSelection();
-                    quill.insertEmbed(range.index, "image", url);
-                  })
-                  .catch(function (error) {
-                    console.error("Error uploading image: ", error);
-                  });
+                try {
+                  const { url, name } = await uploadImage(file);
+                  // Store the uploaded image name for later use
+                  uploadedImageNames.push(name);
+
+                  var range = quill.getSelection();
+                  quill.insertEmbed(range.index, "image", url);
+                } catch (error) {
+                  console.error("Error uploading image: ", error);
+                }
               }
               fileInput.value = ""; // Reset file input
             };
@@ -516,10 +520,10 @@ document.addEventListener("DOMContentLoaded", function () {
         contentText: contentText,
         timestamp: firebase.firestore.FieldValue.serverTimestamp(),
         username: user_id,
+        imageNames: uploadedImageNames,
       })
       .then(() => {
         alert("Post successfully!");
-        //need to change this if we are going to use single page
         //refresh the page to display the post
         displayPost();
 
@@ -537,24 +541,21 @@ document.addEventListener("DOMContentLoaded", function () {
     //clear the editor and title input
     quill.setContents([]);
     document.querySelector(".write_post_title_input").value = "";
+    uploadedImageNames.length = 0;
   }
 });
 
-// Function to upload image to Firebase Storage
+// Function to upload image to Firebase Storage and return URL and name
 function uploadImage(file) {
-  // Create a unique filename for the image
-  var uniqueName = "image_" + Date.now();
-
-  // Create a reference to the storage service
+  var uniqueName = "image_" + Date.now(); // Create a unique filename for the image
   var storageRef = firebase.storage().ref();
-
-  // Create a reference to the file to upload
   var imageRef = storageRef.child("images/" + uniqueName);
 
-  // Upload the file to Firebase Storage
-  return imageRef.put(file).then(function (snapshot) {
-    // Return the URL of the image
-    return snapshot.ref.getDownloadURL();
+  return imageRef.put(file).then((snapshot) => {
+    return snapshot.ref.getDownloadURL().then((url) => ({
+      url, // URL of the uploaded image
+      name: uniqueName, // Name of the uploaded image
+    }));
   });
 }
 
@@ -604,7 +605,7 @@ function displayPost() {
 
           //Get post username and post time information
           let postUsername = postData.username || "Anonymous";
-          var postTime = new Date(postData.timestamp.seconds * 1000);
+          var postTime = new Date(postData.timestamp.seconds);
 
           postTime = postTime.toLocaleString("en-US");
 
@@ -638,7 +639,9 @@ function displayPost() {
           <span class="post_readmore">
             <a value = ${doc_id} class = "to_post_detail">Read More</a>
           </span>
-        </div>`;
+        </div>
+        <button class="delete_post_button" value="${doc_id}">Delete</button>
+        `;
           html += `</div>`;
           postHTML += html;
         });
@@ -652,8 +655,19 @@ function displayPost() {
           document.getElementById("post_detail").classList.remove("is-hidden");
         }
 
-        //add click event listener to right buttons with class name "to_post_detail"
+        //add click event listener to delete_post_button
+        document.querySelectorAll(".delete_post_button").forEach((button) => {
+          button.addEventListener("click", async (e) => {
+            // Make this an async function
+            let doc_id = e.target.getAttribute("value");
+            console.log("This is doc_id:", doc_id);
 
+            await deletePostPicture(doc_id);
+            await deleteComments(doc_id);
+            deletePost(doc_id); // Finally, delete the post
+          });
+        });
+        //add click event listener to right buttons with class name "to_post_detail"
         document.querySelectorAll(".to_post_detail").forEach((button) => {
           button.addEventListener("click", (e) => {
             //activate function navigateToInsidePost with assigned doc id
@@ -664,7 +678,53 @@ function displayPost() {
   });
 }
 
-//
+//function to delete the post
+function deletePost(doc_id) {
+  firebase
+    .firestore()
+    .collection("posts")
+    .doc(doc_id)
+    .delete()
+    .then(() => {
+      alert("Post deleted successfully!");
+      displayPost();
+    })
+    .catch((error) => {
+      console.error("Error removing document: ", error);
+    });
+}
+
+//function to delete the comments with the post id
+function deleteComments(post_id) {
+  firebase
+    .firestore()
+    .collection("comments")
+    .where("post_id", "==", post_id)
+    .get()
+    .then((querySnapshot) => {
+      querySnapshot.forEach((doc) => {
+        doc.ref.delete();
+        console.log("Comment deleted successfully!");
+      });
+    });
+}
+
+//function to delete the picture in the post
+async function deletePostPicture(doc_id) {
+  const doc = await firebase.firestore().collection("posts").doc(doc_id).get();
+  if (doc.exists) {
+    let imageData = doc.data();
+    let imageNames = imageData.imageNames;
+
+    imageNames.forEach(async (imageName) => {
+      let storageRef = firebase.storage().ref();
+      let fileRef = storageRef.child(`images/${imageName}`);
+      await fileRef.delete();
+    });
+  } else {
+    console.log("Document does not exist.");
+  }
+}
 
 displayPost();
 
@@ -775,7 +835,7 @@ function display_content(docid) {
     .then((e) => {
       //console.log(e.data());
       let post_title = e.data().title;
-      let post_author = e.data().author || "Anonymous";
+      let post_author = e.data().username || "Anonymous";
       var post_date = e.data().timestamp;
       post_date = post_date.toDate().toLocaleString("en-US");
       //this is delta format
@@ -839,6 +899,7 @@ auth.onAuthStateChanged(function (user) {
     // show the add gallery and post button only when the user is authenticated
     let add_gallery_Btn = document.querySelector("#add_picture_button_box");
     let add_post_Btn = document.querySelector("#add_post_button_box");
+
     // Get the user document from Firestore
     firebase
       .firestore()
@@ -852,7 +913,6 @@ auth.onAuthStateChanged(function (user) {
             // Remove the is-hidden
             add_gallery_Btn.classList.remove("is-hidden");
             add_post_Btn.classList.remove("is-hidden");
-            alert("This ID is only for an administrator");
           } else {
             // Add the 'is-hidden' class
             add_gallery_Btn.classList.add("is-hidden");
@@ -906,3 +966,5 @@ document
       deletePicture(timestamp);
     }
   });
+
+//
