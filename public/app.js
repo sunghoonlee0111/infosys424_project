@@ -605,7 +605,7 @@ function displayPost() {
 
           //Get post username and post time information
           let postUsername = postData.username || "Anonymous";
-          var postTime = new Date(postData.timestamp.seconds);
+          var postTime = postData.timestamp.toDate().toLocaleString("en-US");
 
           postTime = postTime.toLocaleString("en-US");
 
