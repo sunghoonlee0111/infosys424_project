@@ -265,13 +265,11 @@ function hideAllForms() {
 
 // HomeBtn nav bar link
 HomeBtn.addEventListener("click", () => {
-  hideAllForms();
-  Home_hidden_form.classList.remove("is-hidden");
+  location.reload();
 });
 // HomeBtn_2 nav bar link
 HomeBtn_2.addEventListener("click", () => {
-  hideAllForms();
-  Home_hidden_form.classList.remove("is-hidden");
+  location.reload();
 });
 // AboutBtn nav bar link
 AboutBtn.addEventListener("click", () => {
@@ -800,7 +798,6 @@ async function saveComment(postid) {
   //record current time
   let timestamp = new Date();
   //record the user name
-  //시발 이거 되는건가 로그인이 안되있어서 모르겠다
   let user_uid = firebase.auth().currentUser.uid;
 
   //get user info from the firestore using user_uid
@@ -1012,5 +1009,33 @@ document
       deletePicture(timestamp);
     }
   });
+
+function displayMainGallery() {
+  let db = firebase.firestore();
+  db.collection("gallery")
+    .orderBy("timestamp", "desc")
+    .limit(4) // bring only 4 images
+    .get()
+    .then((querySnapshot) => {
+      let images = document.querySelectorAll(
+        ".index_gallery .gallery_pictures img"
+      );
+      let index = 0;
+      querySnapshot.forEach((doc) => {
+        if (index < images.length) {
+          let data = doc.data();
+          images[index].src = data.url; // update the image src
+          index = index + 1;
+        }
+      });
+    })
+    .catch((error) => {
+      console.error("Error fetching gallery images for main gallery: ", error);
+    });
+}
+
+document.addEventListener("DOMContentLoaded", function () {
+  displayMainGallery(); // display the main gallery images
+});
 
 //
