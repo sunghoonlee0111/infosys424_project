@@ -849,9 +849,9 @@ function displayComments(post_id) {
   let currentUser = firebase.auth().currentUser;
   let currentUserId = currentUser ? currentUser.uid : null;
   console.log("Current user ID:", currentUserId);
-  let isAdmin = false; // 관리자 여부를 저장하는 변수
+  let isAdmin = false; // check if auth
 
-  // 현재 사용자의 관리자 여부 확인
+  // check if current user is auth
   if (currentUser) {
     firebase
       .firestore()
@@ -874,7 +874,7 @@ function displayComments(post_id) {
 }
 
 function renderComments(post_id, isAdmin, currentUserId) {
-  console.log("Rendering comments for currentUser ID:", currentUserId);
+  // console.log("Rendering comments for currentUser ID:", currentUserId);
   firebase
     .firestore()
     .collection("comments")
@@ -898,10 +898,10 @@ function renderComments(post_id, isAdmin, currentUserId) {
           commentData.user_id
         );
 
-        // 삭제 버튼 표시 조건: 관리자이거나 댓글 작성자일 경우
+        // if auth or comment writer
         let showDeleteButton =
           isAdmin || commentData.user_uid === currentUserId;
-        console.log("showDeleteButton", showDeleteButton);
+        // console.log("showDeleteButton", showDeleteButton);
 
         commentsHTML += `
           <div class="inside_post_comment">
@@ -943,7 +943,7 @@ function deleteComment(docId, post_id) {
     .delete()
     .then(() => {
       alert("Comment deleted successfully!");
-      displayComments(post_id); // 코멘트를 다시 불러와서 변화를 반영
+      displayComments(post_id); // refresh the comments
     })
     .catch((error) => {
       console.error("Error deleting comment: ", error);
