@@ -209,6 +209,10 @@ document.addEventListener("DOMContentLoaded", function () {
 
         alert("Welcome!");
       })
+      .then(() => {
+        //reload the page
+        location.reload();
+      })
       .catch((err) => {
         // Handle sign-in errors
         console.error("Sign-in failed", err);
@@ -230,6 +234,10 @@ document.getElementById("user_signout").addEventListener("click", () => {
       alert("Successfully Signed Out!");
       displayPictures();
       displayPost();
+    })
+    .then(() => {
+      //reload the page
+      location.reload();
     })
     .catch((err) => alert(err.message));
 });
@@ -828,6 +836,7 @@ async function saveComment(postid) {
       comments: comments,
       timestamp: firebase.firestore.FieldValue.serverTimestamp(),
       user_id: user_id,
+      user_uid: user_uid,
     })
     .then(() => {
       alert("Comment added!");
@@ -839,35 +848,109 @@ async function saveComment(postid) {
     });
 }
 
-//function to display comments
 function displayComments(post_id) {
-  //get the comment from the firestore
+  let currentUser = firebase.auth().currentUser;
+  let currentUserId = currentUser ? currentUser.uid : null;
+  console.log("Current user ID:", currentUserId);
+  let isAdmin = false; // 관리자 여부를 저장하는 변수
+
+  // 현재 사용자의 관리자 여부 확인
+  if (currentUser) {
+    firebase
+      .firestore()
+      .collection("users")
+      .doc(currentUserId)
+      .get()
+      .then((doc) => {
+        if (doc.exists && doc.data().Authenticated === 1) {
+          isAdmin = true;
+        }
+        renderComments(post_id, isAdmin, currentUserId);
+      })
+      .catch((error) => {
+        console.error("Error fetching user data:", error);
+      });
+  } else {
+    // 로그인하지 않은 사용자의 경우
+    renderComments(post_id, false, null);
+  }
+}
+
+function renderComments(post_id, isAdmin, currentUserId) {
+  console.log("Rendering comments for currentUser ID:", currentUserId);
   firebase
     .firestore()
     .collection("comments")
-    .orderBy("timestamp", "desc")
     .where("post_id", "==", post_id)
+    .orderBy("timestamp", "desc")
     .get()
-    .then((e) => {
-      document.getElementById("comments_container").innerHTML = ``;
+    .then((querySnapshot) => {
+      let commentsHTML = "";
+      querySnapshot.forEach((doc) => {
+        const commentData = doc.data();
+        const commentTimestamp = commentData.timestamp
+          .toDate()
+          .toLocaleString("en-US");
 
-      e.forEach((doc) => {
-        let comment = doc.data().comments;
-        let user = doc.data().user_id || "Anonymous";
-        let timestamp = doc.data().timestamp;
-        timestamp = timestamp.toDate().toLocaleString("en-US");
+        console.log(
+          "isAdmin",
+          isAdmin,
+          "currentUserId",
+          currentUserId,
+          "commentData.user_id",
+          commentData.user_id
+        );
 
-        let html = `
-         <div class="inside_post_comment">
-           <div class="inside_post_comment_username">
-             <p>${user}</p>
-           </div>
-           <p class="inside_post_comment_content">${comment}</p>
-         </div>
-       `;
+        // 삭제 버튼 표시 조건: 관리자이거나 댓글 작성자일 경우
+        let showDeleteButton =
+          isAdmin || commentData.user_uid === currentUserId;
+        console.log("showDeleteButton", showDeleteButton);
 
-        document.getElementById("comments_container").innerHTML += html;
+        commentsHTML += `
+          <div class="inside_post_comment">
+            <div class="inside_post_comment_username">
+              <span>${commentData.user_id || "Anonymous"}</span>
+              <span>
+                <span>${commentTimestamp}</span>
+                ${
+                  showDeleteButton
+                    ? `<button class="delete_comment_button" value="${doc.id}" style="margin-left:5px">Delete</button>`
+                    : ""
+                }
+              </span>
+            </div>
+            <p class="inside_post_comment_content">${commentData.comments}</p>
+          </div>
+        `;
       });
+
+      const commentsContainer = document.getElementById("comments_container");
+      commentsContainer.innerHTML = commentsHTML;
+      attachDeleteHandlers(post_id);
+    });
+}
+
+function attachDeleteHandlers(post_id) {
+  document.querySelectorAll(".delete_comment_button").forEach((button) => {
+    button.addEventListener("click", () => {
+      deleteComment(button.value, post_id);
+    });
+  });
+}
+
+function deleteComment(docId, post_id) {
+  firebase
+    .firestore()
+    .collection("comments")
+    .doc(docId)
+    .delete()
+    .then(() => {
+      alert("Comment deleted successfully!");
+      displayComments(post_id); // 코멘트를 다시 불러와서 변화를 반영
+    })
+    .catch((error) => {
+      console.error("Error deleting comment: ", error);
+      alert("Failed to delete comment.");
     });
 }
 

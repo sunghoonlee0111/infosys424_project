@@ -822,6 +822,12 @@ footer {
   font-weight: bolder;
 }
 
+#comments_area {
+  /* space between */
+  display: flex;
+  justify-content: space-between;
+}
+
 /* Events */
 .events_main {
   padding: 0;
