@@ -1010,6 +1010,7 @@ document
     }
   });
 
+// Main Gallery Images Display Function
 function displayMainGallery() {
   let db = firebase.firestore();
   db.collection("gallery")
