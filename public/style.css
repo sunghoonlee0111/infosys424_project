@@ -298,11 +298,11 @@ nav {
   height: 450px;
   background-color: pink;
   border-radius: 20px;
-  background-image: url(image/Gallery/6.webp);
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
   border: none;
+  object-fit: cover;
 }
 
 .gallery_picture2 {
@@ -310,33 +310,33 @@ nav {
   height: 450px;
   background-color: pink;
   border-radius: 20px;
-  background-image: url(image/Gallery/14.webp);
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
   border: none;
+  object-fit: cover;
 }
 .gallery_picture3 {
   width: 250px;
   height: 450px;
   background-color: pink;
   border-radius: 20px;
-  background-image: url(image/Gallery/29.webp);
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
   border: none;
+  object-fit: cover;
 }
 .gallery_picture4 {
   width: 250px;
   height: 450px;
   background-color: pink;
   border-radius: 20px;
-  background-image: url(image/Gallery/32.webp);
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
   border: none;
+  object-fit: cover;
 }
 
 #add_picture_button {
