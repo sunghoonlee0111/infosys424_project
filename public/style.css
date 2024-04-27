@@ -669,6 +669,9 @@ footer {
   color: white;
   font-weight: bolder;
 }
+.delete_post_button:hover {
+  cursor: pointer;
+}
 #add_post_button {
   width: 200px;
   background-color: #fb8500;
