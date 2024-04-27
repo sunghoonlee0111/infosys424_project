@@ -208,8 +208,8 @@ nav {
 .main_2_icon {
   background-image: url(image/icons/check_2.svg);
   background-size: cover;
-  height: 12px;
-  width: 12px;
+  height: 20px;
+  width: 20px;
 }
 .main_2_icon_content {
   margin-left: 8px;
@@ -280,6 +280,7 @@ nav {
   margin-top: 0;
   margin-bottom: 0;
   font-weight: bolder;
+  margin-top: ;
 }
 
 .gallery_pictures {
@@ -407,7 +408,6 @@ nav {
   padding: 0;
   font-size: 18px;
   flex: 28;
-  font-weight: 600;
 }
 .icon1 {
   flex: 1;
@@ -660,6 +660,16 @@ footer {
 }
 
 /* POSTS */
+.delete_post_button {
+  background-color: #fb8500;
+  border: none;
+  height: 20px;
+
+  font-size: 10px;
+  border-radius: 5px;
+  color: white;
+  font-weight: bolder;
+}
 #add_post_button {
   width: 200px;
   background-color: #fb8500;
