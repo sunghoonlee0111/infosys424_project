@@ -1000,13 +1000,13 @@ footer {
 .about_main_3_title_1 {
   font-family: "Covered By Your Grace", cursive;
   color: #ffb703;
-  margin-bottom: 1px;
+  margin-bottom: -10px;
   font-size: 24px;
 }
 .about_main_3_title_2 {
   font-size: 30px;
   margin-top: 0;
-  margin-bottom: 0;
+  margin-bottom: -10px;
   font-weight: 1000;
   color: black;
 }
@@ -1059,8 +1059,8 @@ footer {
 }
 .about_main_3_photo_content_detail {
   height: 200px;
-  border-top-right-radius: 10%;
-  border-bottom-right-radius: 10%;
+  border-top-right-radius: 15px;
+  border-bottom-right-radius: 15px;
   background-color: rgba(243, 223, 174, 1);
   margin: auto;
   padding-left: 15px;
