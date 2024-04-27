@@ -393,9 +393,12 @@ function displayPictures() {
       e.forEach((doc) => {
         let data = doc.data();
         let timestamp = data.timestamp.toString();
-        html += `<img class="gallery_pics" src="${data.url}" value="${timestamp}" alt="gallery photo" />
-        <button class="delete_button" value="${timestamp}">Delete</button>
+        html += `
         
+        <div class="gallery_pics_container">
+        <img class="gallery_pics" src="${data.url}" value="${timestamp}" alt="gallery photo" />
+        <button class="delete_button" value="${timestamp}">Delete</button>
+        </div>
         
         
         `;
