@@ -607,7 +607,7 @@ function displayPost() {
 
       full_query.get().then((querySnapshot) => {
         totalSize = querySnapshot.size;
-        console.log("Total documents:", querySnapshot.size);
+        //"Total documents:", querySnapshot.size);
       });
 
       let query = full_query.limit(postsPerPage);
@@ -679,7 +679,7 @@ function displayPost() {
           totalSize - (querySnapshot.size + (currentPage - 1) * 5)
         );
         updatePrevButton(currentPage);
-        console.log(totalSize - (querySnapshot.size + (currentPage - 1) * 5));
+        //console.log(totalSize - (querySnapshot.size + (currentPage - 1) * 5));
       });
     }
 
