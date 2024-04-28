@@ -573,6 +573,9 @@ function displayPost() {
   document.addEventListener("DOMContentLoaded", function () {
     let postsContainer = document.querySelector("#post_container");
     let defaultThumbnail = "image/Banner.png"; // Default thumbnail if no image found
+    let currentPage = 1;
+    let postsPerPage = 5;
+    let lastVisibleDoc = null;
 
     // Function to limit the number of words in the excerpt
     function createExcerpt(content, wordLimit) {
@@ -596,11 +599,24 @@ function displayPost() {
     }
 
     // Fetch posts from Firestore
-    firebase
-      .firestore()
-      .collection("posts")
-      .orderBy("timestamp", "desc")
-      .onSnapshot((querySnapshot) => {
+    function fetchPosts() {
+      let full_query = firebase
+        .firestore()
+        .collection("posts")
+        .orderBy("timestamp", "desc");
+
+      full_query.get().then((querySnapshot) => {
+        totalSize = querySnapshot.size;
+        console.log("Total documents:", querySnapshot.size);
+      });
+
+      let query = full_query.limit(postsPerPage);
+
+      if (currentPage > 1) {
+        query = query.startAfter(lastVisibleDoc);
+      }
+
+      query.onSnapshot((querySnapshot) => {
         let postHTML = ``;
 
         querySnapshot.forEach((doc) => {
@@ -653,12 +669,63 @@ function displayPost() {
         `;
           html += `</div>`;
           postHTML += html;
+          lastVisibleDoc = doc;
         });
 
         document.querySelector("#post_container").innerHTML = postHTML;
         addEventListenersToPosts();
         checkAdminStatus();
+        updateNextButton(
+          totalSize - (querySnapshot.size + (currentPage - 1) * 5)
+        );
+        updatePrevButton(currentPage);
+        console.log(totalSize - (querySnapshot.size + (currentPage - 1) * 5));
       });
+    }
+
+    function updateNextButton(numberOfDocs) {
+      let nextButton = document.querySelector("#next_page_button");
+      if (numberOfDocs == 0) {
+        nextButton.disabled = true;
+      } else {
+        nextButton.disabled = false;
+      }
+    }
+    function updatePrevButton(currentPage) {
+      let prevButton = document.querySelector("#prev_page_button");
+      if (currentPage == 1) {
+        prevButton.disabled = true;
+      } else {
+        prevButton.disabled = false;
+      }
+    }
+
+    function handlePagination(direction) {
+      if (direction === "prev") {
+        currentPage = Math.max(1, currentPage - 1);
+      } else if (direction === "next") {
+        currentPage++;
+      }
+      fetchPosts();
+    }
+
+    // Initial fetch
+    fetchPosts();
+
+    // Previous page button
+    document
+      .querySelector("#prev_page_button")
+      .addEventListener("click", () => {
+        handlePagination("prev");
+      });
+
+    // Next page button
+    document
+      .querySelector("#next_page_button")
+      .addEventListener("click", () => {
+        handlePagination("next");
+      });
+
     function checkAdminStatus() {
       firebase.auth().onAuthStateChanged((user) => {
         if (user) {
